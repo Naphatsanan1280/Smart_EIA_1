@@ -1,0 +1,780 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            .map {
+                background-color: #fff;
+                width: 100%;
+                padding: 5px;
+                height: 700px;
+                float: left;
+            }
+            #map {
+                width: 100%;
+                height: 100%;
+            }
+            #areaALL, #Slope, #height, #Resulte, #RiverArea, #Areacross1Wild, #Areacross1nationalpark, #RiverArea2, #RiverArea, #Areacross1Wild2,#AreaProC,#AreaProP {
+                display: none;
+            }
+             
+            SELECT, INPUT[type="text"] {
+                width: 160px;
+                box-sizing: border-box;
+            }
+            SECTION {
+                justify-content: space-between;
+                padding: 8px;
+                background-color: #f0f0f0;
+                overflow: auto;
+            }
+            SECTION > DIV {
+                float: left;
+                padding: 4px;
+            }
+            SECTION > DIV + DIV {
+                width: 50px;
+                text-align: center;
+            }
+
+        </style>
+
+    </head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+        <div class="header-banner">
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="~/Image/icon/icon-21.png" alt="" width="90px" height="90px">
+                </div>
+                <p>
+                    10. ทางหลวงหรือถนน
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                            <div class="data-col">
+                                <div class="specify">
+                                    <p class="ddda" style="margin-top: 10px;">
+                                        2.ระบุรายละเอียดโครงการ
+                                    </p>
+                                    <!--class="form-control"-->
+                                    <div id="Type">
+                                        <p>
+                                            ประเภทกิจการ
+                                            <select id="selectType" class="form-control">
+                                                <option value="none" selected>--เลือกประเภทกิจการ--</option>
+                                                <option value="1">
+                                                    ทางหลวงหรือถนน ตามกฎหมายว่าด้วยทางหลวง
+                                                </option>
+                                                <option value="2">
+                                                    คันทาง
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="areaALL">
+                                        <p>พื้นที่ที่ตัดผ่าน   <label style="float:right;"><input type="checkbox" id="s4" onClick="Selec4()" checked />  กำหนดเอง</label></p>
+                                        <section class="container">
+                                            <div>
+                                                <select id="leftValues" size="10" multiple>
+                                                    <option value="0" selected>ไม่อยู่ในพื้นที่ทั้งหมด</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <input class="ee-bb" type="button" id="btnLeft" value="&lt;&lt; " />
+                                                <input class="ee-bb" type="button" id="btnRight" value="&gt;&gt;" />
+                                            </div>
+                                            <div>
+                                                <select id="rightValues" size="10" multiple>
+                                                    <option value="1">พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1</option>
+                                                    <option value="2">พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 2</option>
+                                                    <option value="3">พื้นที่เขตรักษาพันธุ์สัตว์ป่าและเขตห้ามล่าสัตว์ป่า</option>
+                                                    <option value="4">พื้นที่เขตอุทยานแห่งชาติ</option>
+                                                    <option value="5">พื้นที่ป่าชายเลนในเขตป่าสงวนแห่งชาติ</option>
+                                                    <option value="6">พื้นที่ชายฝั่งทะเลในระยะ 50 เมตร ห่างจากระดับน้ำทะเลขึ้นสูงสุดตามปกติทางธรรมชาติ</option>
+                                                    <option value="7">พื้นที่ที่อยู่ในหรือใกล้พื้นที่ชุ่มน้ำที่มีความสำคัญระหว่างประเทศ ในระยะทาง 2 กิโลเมตร</option>
+                                                    <option value="8">พื้นที่ที่อยู่ในหรือใกล้พื้นที่แหล่งมรดกโลกที่ขึ้นบัญชีแหล่งมรดกโลกตามอนุสัญญาระหว่างประเทศ ในระยะทาง 2 กิโลเมตร</option>
+                                                    <option value="9">พื้นที่ที่ตั้งอยู่ใกล้โบราณสถานแหล่งโบราณคดี แหล่งประวัติศาสตร์ หรืออุทยานประวัติศาสตร์ ในระยะทาง 1 กิโลเมตร ยกเว้น ถนนผังเมือง </option>
+                                                </select>
+                                                <div hidden>
+                                                    <input type="text" id="txtRight" />
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnareaALL">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="AreaProC">
+                                        <p>
+                                            พื้นที่คุ้มครองสิ่งแวดล้อม ชลบุรี <label style="float:right;"><input type="checkbox" id="s3" onClick="Select3()" checked />  กำหนดเอง</label>
+                                            <select id="selectAreaProC" class="form-control" >
+                                                <option value="1">
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnAreaProC">ตกลง</button>
+                                        </div>
+                                    </div>
+                                    <div id="AreaProP">
+                                        <p>
+                                            พื้นที่คุ้มครองสิ่งแวดล้อม ภูเก็ต <label style="float:right;"><input type="checkbox" id="s3" onClick="Select3()" checked />  กำหนดเอง</label>
+                                            <select id="selectAreaProP" class="form-control" >
+                                                <option value="1">
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnAreaProP">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="Slope">
+                                        <p>
+                                            ความลาดชันของพื้นที่ก่อสร้าง
+                                            <select id="selectSlope" class="form-control">
+
+                                                <option value="none" selected>--เลือกความลาดชันของพื้นที่ก่อสร้าง--</option>
+                                                <option value="1">
+                                                    น้อยกว่า ร้อยละ 15
+                                                </option>
+                                                <option value="2">
+                                                    ร้อยละ 15 ถึง ร้อยละ 25
+                                                </option>
+                                                <option value="3">
+                                                    มากกว่า ร้อยละ 25
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnSlope">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="height">
+                                        <p>
+                                            พื้นที่ก่อสร้างมีความสูงจากระดับน้ำทะเลปานกลางเกินกว่า 80 เมตร หรือไม่
+                                            <select id="selectheight" class="form-control">
+                                                <option value="none" selected>--เลือกพื้นที่ก่อสร้างมีความสูงจากระดับน้ำทะเล--</option>
+                                                <option value="1">
+                                                    ใช่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่ใช่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="Btnheight">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="RiverArea2">
+                                        <p>
+                                            พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 2 <label style="float:right;"><input type="checkbox" id="s3" onClick="Select3()" checked />  กำหนดเอง</label>
+                                            <select id="selectRiverArea2" class="form-control" disabled>
+                                                <option value="1">
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnRiverArea2">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="RiverArea">
+                                        <p>
+                                            พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ลุ่มน้ำ 1-->
+                                            <select id="selectRiverArea" class="form-control">
+                                                <option value="1" selected>
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnRiverArea">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="Areacross1Wild2">
+                                        <p>
+                                            พื้นที่ป่าอนุรักษ์เพิ่มเติม ตามมติครม. <label style="float:right;"><input type="checkbox" id="s2" onClick="Select2()" checked />  กำหนดเอง</label>
+                                            <select id="selectAreacross1Wild2" class="form-control">
+                                                <option value="1">
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnAreacross1Wild2">ตกลง</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="Resulte">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <p id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</p>
+                                    <hr />
+                                    <div id="inresulte">
+                                        <h5 id="label2">ประเภท</h5>
+                                        <p id="labeltype">
+                                            EHIA
+                                        </p>
+                                        <hr />
+                                        <h5 id="label3">เสนอต่อ</h5>
+                                        <p style="width:100%;">
+                                            <!-- <img id="imglogo" src="" width="50px" height="50px" style="background-color:white;" />-->
+                                        <p id="labeloffer">สผ.</p>
+                                        </p>
+                                        <hr />
+                                        <h5 id="label4">ตามกฎหมาย</h5>
+                                        <p id="labellaw">เรื่อง...</p>
+                                        <hr />
+                                    </div>
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+    function Select1() {
+        var isChecked = document.getElementById("s1").checked;
+        document.getElementById("selectRiverArea").disabled = !isChecked;
+    }
+    function Select2() {
+        var isChecked = document.getElementById("s2").checked;
+        document.getElementById("selectAreacross1Wild2").disabled = !isChecked;
+    }
+   
+        /*map*/
+        var map;
+        function initMap() {
+            var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+            var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        }
+         /*slide*/
+        function sliderr(n) {
+            var dis = $('#ss-' + n).css('display');
+            console.log(dis);
+            if (dis == 'none') {
+                $("#ss-" + n).css("display", "block");
+                $("#sd-" + n).css("height", "auto");
+
+            } else {
+                $("#ss-" + n).css("display", "none");
+                $("#sd-" + n).css("height", "0px");
+            }
+        }
+        function ss_l_menu() {
+            if ($(".ss-btn").hasClass("ww-100")) {
+                $(".ss-btn").removeClass("ww-100");
+                $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+            } else {
+                $(".ss-btn").addClass("ww-100");
+                $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+            }
+
+        }
+        function ss_r_menu() {
+            if ($(".ss-r-btn").hasClass("ww-100")) {
+                $(".ss-r-btn").removeClass("ww-100");
+                $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+            } else {
+                $(".ss-r-btn").addClass("ww-100");
+                $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+            }
+        }
+        function hideresulte() {
+             $("#Resulte").hide();
+             $("#resulteNext").hide();
+             $(".specify").show();
+         }
+    $(document).ready(function () {
+        $("#btnLeft").click(function () {
+            var selectedItem = $("#rightValues option:selected");
+            $("#leftValues").append(selectedItem);
+        });
+        $("#btnRight").click(function () {
+            var selectedItem = $("#leftValues option:selected");
+            $("#rightValues").append(selectedItem);
+        });
+        $("#rightValues").change(function () {
+            var selectedItem = $("#rightValues option:selected");
+            $("#txtRight").val(selectedItem.val());
+        });
+        /*------------------------------------------------------*/
+        $("#selectType").on('change', function () {
+            var type = $('#selectType').find(":selected").val();
+            if (type == "none") {
+                alert("กรุณาเลือกประเภททางพิเศษ");
+            }
+            else if (type == "2") {
+                $("#RiverArea").show();
+                $("#areaALL").hide();
+                   $("#hide").hide();
+                $("#BtnRiverArea").on('click', function () {
+                    var RiverArea = $('#selectRiverArea').find(":selected").val();
+                        if (RiverArea === "1") {
+                            //10.20 EIA                        
+                            EIA10_20();
+                        }
+                        else {                        
+                            $("#Areacross1Wild2").show();
+                            $("#BtnAreacross1Wild2").on('click', function () {
+                                var Areacross1Wild2 = $('#selectAreacross1Wild2').find(":selected").val();
+                                if (Areacross1Wild2 === "1") {
+                                    //10.21 IEE
+                                    EIA10_21();
+                                } else {
+                                    //10.22 noreport
+                                    NotdoReport();
+                                }
+                            });
+                        }
+                });
+            }
+            else if (type == "1") {
+                $("#areaALL").show();
+                $("#RiverArea").hide();
+                $("#Areacross1Wild2").hide();
+                $("#BtnareaALL").on('click', function () {
+                    var areaALL = $('#leftValues').find(":selected").val();    
+                    if (areaALL == "1") {
+                        //EIA 10.19 ลุ่มน้ำ 1
+                        EIA_2();
+                    }
+                    else if (areaALL == "2") {
+                         //EIA 10.1 ลุ่มน้ำ 2
+                        EIA_1();
+                    }
+                    else if (areaALL == "3") {
+                         //EIA 10.2 เขตรักษาพันธุ์สัตว์ป่าและเขตห้ามล่าสัตว์ป่า
+                        EIA_1();
+                    }
+                    else if (areaALL == "4") {
+                         //EIA 10.3 เขตอุทยานแห่งชาติ
+                        EIA_1();
+                    }
+                    else if (areaALL == "5") {
+                        //EIA 10.14 ป่าชายเลนในเขตป่าสงวนแห่งชาติ
+                        EIA_1();
+                    }
+                    else if (areaALL == "6") {
+                        // EIA 10.15 ชายฝั่งทะเลในระยะ 50 เมตร
+                        EIA_1();
+                    }
+                    else if (areaALL == "7") {
+                        // EIA 10.16 ที่อยู่ในหรือใกล้พื้นที่ชุ่มน้ำที่มีความสำคัญระหว่างประเทศ 
+                        EIA_1();
+                    }
+                    else if (areaALL == "8") {
+                        // EIA 10.17 พื้นที่แหล่งมรดกโลก
+                        EIA_1();
+                    }
+                    else if (areaALL == "9") {
+                        // EIA 10.18 ใกล้โบราณสถานแหล่งโบราณคดี
+                        EIA_1();
+                    } else {
+                        //ตรวจสอบพื้นที่ ชล ต่อด้วย ภูเก็ต
+                        $("#AreaProC").show();
+                        $("#BtnAreaProC").on('click', function () {                            
+                        $('#selectSlope').prop('selectedIndex', 0);
+                            var AreaProC = $('#selectAreaProC').find(":selected").val();
+                            if (AreaProC == "1") {
+                                $("#Slope").show();
+                                $("#AreaProP").hide();
+                                $("#BtnSlope").on('click', function () {
+                                    var Slope = $('#selectSlope').find(":selected").val();
+                                    if (Slope == "1") {
+                                        $("#Areacross1Wild2").show();
+                                        $("#BtnAreacross1Wild2").on('click', function () {
+                                            var Areacross1Wild2 = $('#selectAreacross1Wild2').find(":selected").val();
+                                            if (Areacross1Wild2 == "1") {
+                                                //IEE 10.4
+                                                IEE_1();
+                                            }
+                                            else {
+                                                //NotdoReport
+                                                NotdoReport();
+                                            }
+                                        });
+                                    }
+                                    else if (Slope == "2") {
+                                        //10.6
+                                        IEE_1();
+                                    }
+                                    else if (Slope == "3") {
+                                        //10.7
+                                        EIA_1();
+                                    }
+                                    else {
+                                        alert("กรุณาเลือกความลาดชันของพื้นที่ก่อสร้าง");
+                                    }
+                                });
+
+
+                            } else {
+                                 $("#Slope").hide();
+                                 $("#AreaProP").show();
+                                $("#BtnAreaProP").on('click', function () {
+                                    $('#selectSlope').prop('selectedIndex', 0);
+                                    var AreaProP = $('#selectAreaProP').find(":selected").val();
+                                    if (AreaProP == "1") {
+                                        $("#Areacross1Wild2").hide();
+                                        $("#Slope").show();
+                                        $("#BtnSlope").on('click', function () {
+                                            $('#selectheight').prop('selectedIndex', 0);
+                                            var Slope = $('#selectSlope').find(":selected").val();
+                                            if (Slope == "1") {
+                                                $("#height").show();
+                                                $("#Btnheight").on('click', function () {
+                                                    var height = $('#selectheight').find(":selected").val();
+                                                    if (height == "1") {
+                                                        //EIA 10.8
+                                                        EIA_1();
+                                                    } else {
+                                                        $("#Areacross1Wild2").show();
+                                                        $("#BtnAreacross1Wild2").on('click', function () {
+                                                            var Areacross1Wild2 = $('#selectAreacross1Wild2').find(":selected").val();
+                                                            if (Areacross1Wild2 === "1") {
+                                                                //10.9 IEE
+                                                                IEE_3();
+                                                            } else {
+                                                                //10.10 noreport
+                                                                NotdoReport();
+                                                            }
+                                                        });
+                                                    }
+                                                });
+
+                                            }
+                                            else if (Slope == "2") {
+                                            /****************************************************/
+                                                 $("#height").show();
+                                                $("#Btnheight").on('click', function () {
+                                                    var height = $('#selectheight').find(":selected").val();
+                                                    if (height == "1") {
+                                                        //EIA 10.11
+                                                        EIA_1();
+                                                    }
+                                                    else {
+                                                       //IEE 10.12
+                                                        IEE_2();
+
+                                                    }
+                                                });
+                                            }
+                                            else if (Slope == "3") {
+                                                // 10.13 EIA
+                                                EIA_1();
+                                            }
+
+                                        });
+
+                                    }
+                                    else {
+                                        $("#Areacross1Wild2").show();
+                                        $("#BtnAreacross1Wild2").on('click', function () {
+                                            var Areacross1Wild2 = $('#selectAreacross1Wild2').find(":selected").val();
+                                            if (Areacross1Wild2 === "1") {
+                                                //10.21 IEE
+                                                EIA10_21();
+                                            } else {
+                                                //10.22 noreport
+                                                NotdoReport();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                });               
+            }
+              else {
+                $("#RiverArea").hide();
+                $("#areaALL").hide();
+               }
+        });
+    });
+
+    function EIA10_20() {//10_20
+        $("#imglogo").hide;
+        $(".specify").hide();
+        $("#inresulte").show();
+        $("#Resulte").show();
+        document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+        document.getElementById('changeLabel').style.color = 'Red';
+        document.getElementById('labeltype').innerHTML = "รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)";
+         document.getElementById("labeloffer").innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)';
+        $("#im1").attr("src", "/Image/สผ.png");
+         document.getElementById('labellaw').innerHTML = " - ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA พ.ศ. 2562 (ลำดับที่ 33)";
+     }
+    function EIA10_21() {//10_21
+        $("#imglogo").hide;
+        $(".specify").hide();
+        $("#inresulte").show();
+        $("#Resulte").show();
+        document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+        document.getElementById('changeLabel').style.color = 'Red';
+        document.getElementById('labeltype').innerHTML = "รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)";
+         document.getElementById("labeloffer").innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)' + "<br /><br />"
+            + '<img id="im2" width="50px" height="50px" src="" /> &nbsp;กรมป่าไม้';
+            $("#im1").attr("src", "/Image/สผ.png");        
+            $("#im2").attr("src", "/Image/กรมป่าไม้.png");
+         document.getElementById('labellaw').innerHTML = " - มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ. 2554";
+    }    
+    function NotdoReport() {
+         /* ไม่ต้องจัดทำรายงาน */
+            $(".specify").hide();
+            $("#inresulte").hide();
+             $("#Resulte").show();
+             document.getElementById('changeLabel').innerText = "ไม่เข้าข่าย";
+             document.getElementById('changeLabel').style.color = 'Green';
+            $("#b1").hide();
+    }
+    function EIA_1() {
+        //10.1\10.2\ 10.3 \10.7 \ 10.14\ 10.15\ 10.16\ 10.17\ 10.18
+        /*
+         * รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)	
+         ** สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ. )
+         * ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA พ.ศ. 2562 (ลำดับที่ 20 )
+         * */
+
+         $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+         document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+         document.getElementById('changeLabel').style.color = 'Red';
+         document.getElementById('labeltype').innerHTML = "รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)";
+         document.getElementById('labeloffer').innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)';
+        document.getElementById('labellaw').innerHTML = " - ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA พ.ศ.2562 (ลำดับที่ 20)";
+         $("#im1").attr("src", "/Image/สผ.png");
+    }
+    function EIA_2() {
+        // 10.19\ 10.20
+        /*
+         * รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)
+         ** สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ. )
+         * ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA พ.ศ. 2562 (ลำดับที่ 33)
+         * */
+        $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+         document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+         document.getElementById('changeLabel').style.color = 'Red';
+         document.getElementById('labeltype').innerHTML = "รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)";
+         document.getElementById('labeloffer').innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)';
+        document.getElementById('labellaw').innerHTML = " - ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA พ.ศ.2562 (ลำดับที่ 33)";
+         $("#im1").attr("src", "/Image/สผ.png");
+    }
+    function IEE_1() {
+        // 10.4\ 10.6
+        /*
+         * รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)
+         ** สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ. )
+         * ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ.ชลบุรี พ.ศ. 2553
+         * */
+
+        $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+         document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+         document.getElementById('changeLabel').style.color = 'Red';
+         document.getElementById('labeltype').innerHTML = "รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)";
+         document.getElementById('labeloffer').innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)';
+        document.getElementById('labellaw').innerHTML = " - ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ.ชลบุรี พ.ศ.2553";
+         $("#im1").attr("src", "/Image/สผ.png");
+    }
+    function IEE_2() {
+        // 10.8\ 10.11\ 10.12\ 10.13
+        /*รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)
+         ** สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ. )
+         * ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ. ภูเก็ต พ.ศ. 2560
+         * */
+        $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+         document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+         document.getElementById('changeLabel').style.color = 'Red';
+         document.getElementById('labeltype').innerHTML = "รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)";
+         document.getElementById('labeloffer').innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)';
+        document.getElementById('labellaw').innerHTML = " - ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ.ภูเก็ต พ.ศ.2560";
+         $("#im1").attr("src", "/Image/สผ.png");
+
+    }
+    function IEE_3() {
+        //10.9
+        /*รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)	
+         * 
+         ** สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ. )
+         * ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ. ภูเก็ต พ.ศ. 2560
+         * 
+         ** กรมป่าไม้
+         * มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ. 2554
+         * */
+
+         $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+         document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+         document.getElementById('changeLabel').style.color = 'Red';
+         document.getElementById('labeltype').innerHTML = "รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)";
+        document.getElementById('labeloffer').innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
+            + "<br /><br />"
+            + '<img id="im2" width="50px" height="50px" src="" /> &nbsp;กรมป่าไม้';
+        document.getElementById('labellaw').innerHTML = " - ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ.ภูเก็ต พ.ศ.2560"
+            + "<br /><br />"
+            + 'มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ. 2554';
+        $("#im1").attr("src", "/Image/สผ.png");
+        $("#im2").attr("src", "/Image/กรมป่าไม้.png");
+
+    }
+    function IEE_4() {
+        //10.21
+        /*รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)
+         ** สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ. )
+         * มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ. 2554
+         ** กรมป่าไม้
+         * */
+         $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+         document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+         document.getElementById('changeLabel').style.color = 'Red';
+         document.getElementById('labeltype').innerHTML = "รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE)";
+        document.getElementById('labeloffer').innerHTML = '<img id="im1" width="50px" height="50px" src="" /> &nbsp;สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
+            + "<br /><br />"
+            + '<img id="im2" width="50px" height="50px" src="" /> &nbsp;กรมป่าไม้';
+        document.getElementById('labellaw').innerHTML = " - มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ. 2554";
+        $("#im1").attr("src", "/Image/สผ.png");
+        $("#im2").attr("src", "/Image/กรมป่าไม้.png");
+    }
+
+</script>
+

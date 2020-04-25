@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5529DB94-0F60-434E-9C45-E24C95C8614B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Smart_EIA_</RootNamespace>
+    <AssemblyName>Smart_EIA_</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44346</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\SmartEIAController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\template\img\banner-1.png" />
+    <Content Include="Content\template\img\icon-1.svg" />
+    <Content Include="Content\template\img\icon-2.svg" />
+    <Content Include="Content\template\img\icon-3.svg" />
+    <Content Include="Content\template\img\icon-4.svg" />
+    <Content Include="Content\template\img\icon-5.svg" />
+    <Content Include="Content\template\img\index-bg.png" />
+    <Content Include="Content\template\img\link-1.svg" />
+    <Content Include="Content\template\img\link-10.svg" />
+    <Content Include="Content\template\img\link-11.svg" />
+    <Content Include="Content\template\img\link-12.svg" />
+    <Content Include="Content\template\img\link-13.svg" />
+    <Content Include="Content\template\img\link-14.svg" />
+    <Content Include="Content\template\img\link-15.svg" />
+    <Content Include="Content\template\img\link-16.svg" />
+    <Content Include="Content\template\img\link-17.svg" />
+    <Content Include="Content\template\img\link-18.svg" />
+    <Content Include="Content\template\img\link-19.svg" />
+    <Content Include="Content\template\img\link-2.svg" />
+    <Content Include="Content\template\img\link-3.svg" />
+    <Content Include="Content\template\img\link-3s.svg" />
+    <Content Include="Content\template\img\link-4.svg" />
+    <Content Include="Content\template\img\link-5.svg" />
+    <Content Include="Content\template\img\link-6.svg" />
+    <Content Include="Content\template\img\link-7.svg" />
+    <Content Include="Content\template\img\link-8.svg" />
+    <Content Include="Content\template\img\link-9.svg" />
+    <Content Include="Content\template\img\login-bg.png" />
+    <Content Include="Content\template\img\logo.png" />
+    <Content Include="Content\template\img\maptest.PNG" />
+    <Content Include="Content\template\img\ptt-menu-logo.png" />
+    <Content Include="Content\template\img\Web ptt v9 16.9--13.jpg" />
+    <Content Include="Content\template\img\Web ptt v9 16.9--14.jpg" />
+    <Content Include="Content\template\img\Web ptt v9 16.9--15.jpg" />
+    <Content Include="Content\template\img\Web ptt v9 16.9--16.jpg" />
+    <Content Include="Content\template\styles\styles.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="geoxml3\kmz\geoxml3.js" />
+    <Content Include="geoxml3\kmz\geoxml3_gxParse_kmz.js" />
+    <Content Include="geoxml3\kmz\ZipFile.complete.js" />
+    <Content Include="geoxml3\polys\geoxml3.js" />
+    <Content Include="geoxml3\ProjectedOverlay.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Image\11-01.jpg" />
+    <Content Include="Image\12-01.jpg" />
+    <Content Include="Image\background%402x.png" />
+    <Content Include="Image\Backgroung\B10.jpg" />
+    <Content Include="Image\Backgroung\Web ptt v9 16.9---07.jpg" />
+    <Content Include="Image\bG.jpg" />
+    <Content Include="Image\BG3.jpg" />
+    <Content Include="Image\BG5.jpg" />
+    <Content Include="Image\Bld.png" />
+    <Content Include="Image\Blu.png" />
+    <Content Include="Image\Bmd.png" />
+    <Content Include="Image\Bmu.png" />
+    <Content Include="Image\Bpd.png" />
+    <Content Include="Image\Bpu.png" />
+    <Content Include="Image\Bsd.png" />
+    <Content Include="Image\Bsu.png" />
+    <Content Include="Image\document %281%29.png" />
+    <Content Include="Image\document.png" />
+    <Content Include="Image\footer.jpg" />
+    <Content Include="Image\icon\icon-01.jpg" />
+    <Content Include="Image\icon\icon-02.jpg" />
+    <Content Include="Image\icon\icon-03.jpg" />
+    <Content Include="Image\icon\icon-04.jpg" />
+    <Content Include="Image\icon\icon-05.jpg" />
+    <Content Include="Image\icon\icon-06.jpg" />
+    <Content Include="Image\icon\icon-07.jpg" />
+    <Content Include="Image\icon\icon-08.jpg" />
+    <Content Include="Image\icon\icon-09.jpg" />
+    <Content Include="Image\icon\icon-10.jpg" />
+    <Content Include="Image\icon\icon-11.jpg" />
+    <Content Include="Image\icon\icon-12.jpg" />
+    <Content Include="Image\icon\icon-13.jpg" />
+    <Content Include="Image\icon\icon-14.jpg" />
+    <Content Include="Image\icon\icon-15.jpg" />
+    <Content Include="Image\icon\icon-16.jpg" />
+    <Content Include="Image\icon\icon-17.jpg" />
+    <Content Include="Image\icon\icon-18.jpg" />
+    <Content Include="Image\icon\icon-19.jpg" />
+    <Content Include="Image\icon\icon-20.png" />
+    <Content Include="Image\icon\icon-21.png" />
+    <Content Include="Image\img.jpg" />
+    <Content Include="Image\Logo.png" />
+    <Content Include="Image\Logo\logo ptt-01.png" />
+    <Content Include="Image\LOGO_DMF_TH.gif" />
+    <Content Include="Image\picture.png" />
+    <Content Include="Image\กกพ.png" />
+    <Content Include="Image\กนอ.jpg" />
+    <Content Include="Image\กรมป่าไม้.png" />
+    <Content Include="Image\กรมเชื้อเพลิง.jpg" />
+    <Content Include="Image\กรอ.png" />
+    <Content Include="Image\กระทรวงพลังงาน.png" />
+    <Content Include="Image\สผ.png" />
+    <Content Include="Content\template\img\ThaiSansNeue-Black.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-BlackItalic.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-Bold.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-BoldItalic.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-ExtraBold.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-ExtraBoldItali.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-ExtraLight.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-ExtraLightItal.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-Italic.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-Light.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-LightItalic.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-Regular.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-SemiBold.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-SemiBoldItalic.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-UltraBold.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-UltraBoldItali.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-UltraLight.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue-UltraLightItal.otf" />
+    <Content Include="Content\template\img\ThaiSansNeue.rar" />
+    <Content Include="geoxml3\README.md" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\FlowScript\Industrial\Industrial_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\OilPetroChemical\Oil_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\Petrochemical\Petrochemical_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\Pipeline\PipeLine_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\PowerPlant_Typq1_A.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\PowerPlant_Typq1_B.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\PowerPlant_Typq2_1_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\PowerPlant_Typq2_2_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\PowerPlant_Typq2_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_BioGas_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_Bio_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_Carbon_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_GasNatural_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_IndrustrialWaste_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_Nuclear_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_Other_JavaScript.js" />
+    <Content Include="Scripts\FlowScript\PowerPlant\ThemalPowerPlant_type_1_Sweepings_JavaScript.js" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\FlowScript\Wastead\Wastead_JavaScript.js" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <None Include="Scripts\jquery-3.5.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.5.0.js" />
+    <Content Include="Scripts\jquery-3.5.0.min.js" />
+    <Content Include="Scripts\jquery-3.5.0.slim.js" />
+    <Content Include="Scripts\jquery-3.5.0.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.gitignore" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\All_json.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\dist\jszip.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\dist\jszip.min.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\docs\APPNOTE.TXT" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\docs\references.txt" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\docs\ZIP spec.txt" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\css\main.css" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\css\pygments.css" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\download-zip-file.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\download-zip-file.inc\blob.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\download-zip-file.inc\blob.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\download-zip-file.inc\data_uri.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\download-zip-file.inc\data_uri.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\downloader.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\downloader.inc\downloader.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\downloader.inc\downloader.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\downloader.inc\helpers.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\get-binary-files-ajax.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\get-binary-files-ajax.inc\fetch_api.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\get-binary-files-ajax.inc\fetch_api.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\get-binary-files-ajax.inc\jszip_utils.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\get-binary-files-ajax.inc\jszip_utils.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\read-local-file-api.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\read-local-file-api.inc\read.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples\read-local-file-api.inc\read.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\_layouts\default.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\Gruntfile.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\index.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\base64.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\compressedObject.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\compressions.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\crc32.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\defaults.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\external.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\flate.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\generate\index.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\generate\ZipFileWorker.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\index.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\license_header.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\load.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\nodejsUtils.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\nodejs\NodejsStreamInputAdapter.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\nodejs\NodejsStreamOutputAdapter.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\object.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\readable-stream-browser.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\reader\ArrayReader.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\reader\DataReader.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\reader\NodeBufferReader.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\reader\readerFor.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\reader\StringReader.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\reader\Uint8ArrayReader.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\signature.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\stream\ConvertWorker.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\stream\Crc32Probe.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\stream\DataLengthProbe.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\stream\DataWorker.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\stream\GenericWorker.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\stream\StreamHelper.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\support.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\utf8.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\utils.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\zipEntries.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\zipEntry.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\lib\zipObject.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\constructor.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\delete.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\deprecated.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\external.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\file.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\filter.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\foreach.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\generate.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\load.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\permissions.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\stream.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\unicode.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\asserts\version.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\helpers\browser-test-utils.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\helpers\node-test-utils.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\helpers\test-utils.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\index.html" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\smile.gif" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\vendor\FileSaver.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\SmartEIA\Index.cshtml" />
+    <Content Include="Views\Shared\Login_Layout.cshtml" />
+    <Content Include="Views\Shared\Content_Layout.cshtml" />
+    <Content Include="Views\SmartEIA\Login.cshtml" />
+    <Content Include="Views\SmartEIA\AirTransportation.cshtml" />
+    <Content Include="Views\SmartEIA\ConstructionOrExpensionAtSea.cshtml" />
+    <Content Include="Views\SmartEIA\Contact.cshtml" />
+    <Content Include="Views\SmartEIA\Docks.cshtml" />
+    <Content Include="Views\SmartEIA\EnvironmentalRegulartory.cshtml" />
+    <Content Include="Views\SmartEIA\EnvironmentalSmartImap.cshtml" />
+    <Content Include="Views\SmartEIA\ExpressWay.cshtml" />
+    <Content Include="Views\SmartEIA\Gis.cshtml" />
+    <Content Include="Views\SmartEIA\HighWayOrRoad.cshtml" />
+    <Content Include="Views\SmartEIA\Homepage.cshtml" />
+    <Content Include="Views\SmartEIA\Hospital.cshtml" />
+    <Content Include="Views\SmartEIA\Hotel.cshtml" />
+    <Content Include="Views\SmartEIA\Industrialestate.cshtml" />
+    <Content Include="Views\SmartEIA\Landallocation.cshtml" />
+    <Content Include="Views\SmartEIA\LandReclamationAtSea.cshtml" />
+    <Content Include="Views\SmartEIA\LargeBuildings.cshtml" />
+    <Content Include="Views\SmartEIA\LargeBuildingsNew.cshtml" />
+    <Content Include="Views\SmartEIA\MenuProject.cshtml" />
+    <Content Include="Views\SmartEIA\OliPetrochemical.cshtml" />
+    <Content Include="Views\SmartEIA\Petrochemical.cshtml" />
+    <Content Include="Views\SmartEIA\PetroliumDevelopment.cshtml" />
+    <Content Include="Views\SmartEIA\PipelineTransportation.cshtml" />
+    <Content Include="Views\SmartEIA\PipelineTransportation_master.cshtml" />
+    <Content Include="Views\SmartEIA\Register.cshtml" />
+    <Content Include="Views\SmartEIA\ResidentialBuildings.cshtml" />
+    <Content Include="Views\SmartEIA\SportDocks.cshtml" />
+    <Content Include="Views\SmartEIA\ThemalPowerPlant.cshtml" />
+    <Content Include="Views\SmartEIA\TransformGas.cshtml" />
+    <Content Include="Views\SmartEIA\TransportUseRails.cshtml" />
+    <Content Include="Views\SmartEIA\Wasteadjustment.cshtml" />
+    <Content Include="Views\Shared\Register_Layout.cshtml" />
+    <Content Include="Views\Shared\Menu_Layout.cshtml" />
+    <Content Include="Scripts\mng_view\data_DB.json" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.codeclimate.yml" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.editorconfig" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.jshintignore" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.jshintrc" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.npmignore" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\.travis.yml" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\bower.json" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\CHANGES.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\component.json" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\constructor.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\external.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\file_data.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\file_name.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\file_regex.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\filter.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\folder_name.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\folder_regex.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\for_each.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\generate_async.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\generate_internal_stream.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\generate_node_stream.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\load_async.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\load_async_object.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\remove.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\support.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_jszip\version.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_streamhelper.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_streamhelper\accumulate.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_streamhelper\on.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_streamhelper\pause.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_streamhelper\resume.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_zipobject.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_zipobject\async.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_zipobject\internal_stream.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\api_zipobject\node_stream.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\contributing.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\examples.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\faq.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\howto\read_zip.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\howto\write_zip.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\limitations.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\documentation\upgrade_guide.md" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\LICENSE.markdown" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\package-lock.json" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\package.json" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\README.markdown" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all-stream.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all.7zip.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all.windows.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all_appended_bytes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all_missing_bytes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\all_prepended_bytes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\archive_comment.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\backslash.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\complex_files\AntarcticaTemps.ods" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\complex_files\AntarcticaTemps.xlsx" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\complex_files\Franz Kafka - The Metamorphosis.epub" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\complex_files\Outlook2007_Calendar.xps" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\data_descriptor.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\deflate-stream.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\deflate.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\empty.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\encrypted.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\extra_attributes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\folder.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\image.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\invalid\bad_decompressed_size.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\invalid\bad_offset.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\invalid\compression.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\invalid\crc32.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\local_encoding_in_name.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\nested.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\nested_data_descriptor.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\nested_zip64.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\linux_7z.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\linux_ark.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\linux_file_roller-ubuntu.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\linux_file_roller-xubuntu.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\linux_zip.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\mac_finder.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\windows_7z.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\windows_compressed_folders.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\windows_izarc.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\permissions\windows_winrar.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\pile_of_poo.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\slashes_and_izarc.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\store-stream.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\store.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\subfolder.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\text.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\utf8.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\utf8_in_name.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\winrar_utf8_in_name.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\zip64.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\zip64_appended_bytes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\zip64_missing_bytes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\test\ref\zip64_prepended_bytes.zip" />
+    <Content Include="Scripts\mng_view\Stuk-jszip-bead269\_config.yml" />
+    <Content Include="Scripts\jquery-3.5.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.5.0.min.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\template\include\" />
+    <Folder Include="Content\template\js\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+    <TypeScriptCompile Include="Scripts\mng_view\Stuk-jszip-bead269\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54987</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44346/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

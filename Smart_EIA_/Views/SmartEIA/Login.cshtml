@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Login_Layout.cshtml";
+}
+    <head>
+        <style>
+            #hh {
+                line-height: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row mr-0">
+            <div class="col-12 w-100">
+                <div class="login-section">
+                    <div class="sys-logo">
+                        <img src="@Url.Content("~/Content/template/")img/logo.png" alt="">
+                    </div>
+                    <div class="sys-text">
+                        <p class="text-porp" id="hh">
+                            Smart Project Environmental
+                            <br />
+                            Management System
+                        </p>
+                    </div>
+                    <div class="login-header">
+                        <p>
+                            ลงชื่อเข้าใช้งาน
+                        </p>
+                    </div>
+                    <div class="login-box">
+                        <div class="user-form">
+                            <div class="form-text">
+                                <i class="fas fa-user"></i>
+                                <p>ชื่อผู้ใช้</p>
+                            </div>
+                            <div class="form-input">
+                                <input type="text" name="" id="">
+                            </div>
+                        </div>
+                        <div class="user-form">
+                            <div class="form-text">
+                                <i class="fas fa-lock"></i>
+                                <p>รหัสผ่าน</p>
+                            </div>
+                            <div class="form-input">
+                                <input type="password" name="" id="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prop-login">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input checker" name="" id="" value="checkedValue" checked>
+                                จำรหัสผ่าน
+                            </label>
+                        </div>
+                        <div class="forget-link">
+                            <a href="/SmartEIA/Register" class="fg-pass">ลงทะเบียนผู้ใช้งาน</a>
+                            <br>
+                            <a href="" class="fg-pass">*สำหรับบุคคลภายนอก ปตท.</a>
+                        </div>
+
+                    </div>
+                    <div class="login-btn">
+                        <a href="/SmartEIA/Homepage"><button>เข้าสู่ระบบ</button></a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </body>
+

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title :PTT-Smart EIA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .panel-footer {
+            background: linear-gradient(to right, rgba(38,32,101,1), rgba(64,190,239,1) );
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: red;
+            color: white;
+            font-family: Trebuchet MS;
+            font-size: 16px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 50px;
+            color: #E4E4E4;
+        }
+    </style>
+</head>
+<body>
+    @RenderBody()
+    <div class="panel-footer">
+        <!--<label id="labelfoot">©2020 Smart EIA Regulatory Screening System V 1.0</label>-->
+
+    </div>
+</body>
+
+</html>

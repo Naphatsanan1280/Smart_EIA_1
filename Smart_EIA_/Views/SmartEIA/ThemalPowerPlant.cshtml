@@ -1,0 +1,752 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+
+<head>
+
+    <style>
+        .map {
+            background-color: #fff;
+            width: 100%;
+            padding: 5px;
+            height: 700px;
+            float: left;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #a {
+            padding: 5px;
+            border: solid 2px black;
+        }
+
+        #b {
+            padding: 5px;
+            border: solid 2px gray;
+        }
+
+        #Resulte, #okbtn, #Fueltype, #Totalcapacity, #solidfuel,
+        #areaIndrustry, #areaProtect, #RiverArea,
+        #WildArea, #Factorytype, #Totalcapacity2, #Totalcapacity3, #Totalcapacity4,
+        #area80, #AreaAll, #Powersource, #maximum, #RoofOrBuilding, #Technology,
+        #maximum2, #WaterPower, #maximum3 {
+            display: none;
+            
+        }
+
+
+        #container {
+            display: flex; /* establish flex container */
+            flex-direction: row; /* default value; can be omitted */
+            flex-wrap: nowrap; /* default value; can be omitted */
+            justify-content: space-between; /* switched from default (flex-start, see below) */
+        }
+
+            #container > div {
+                width: 50%;
+                height: 100%;
+            }
+
+        SELECT, INPUT[type="text"] {
+            width: 160px;
+            box-sizing: border-box;
+        }
+
+        SECTION {
+            justify-content: space-between;
+            padding: 8px;
+            background-color: #f0f0f0;
+            overflow: auto;
+        }
+
+            SECTION > DIV {
+                float: left;
+                padding: 4px;
+            }
+
+                SECTION > DIV + DIV {
+                    width: 50px;
+                    text-align: center;
+                }
+    </style>
+
+</head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+        <div class="header-banner">
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="@Url.Content("~/Content/template/")img/link-6.svg" alt="" width="90px" height="90px">
+                </div>
+                <p>
+                    8. โรงไฟฟ้าพลังความร้อนและโรงไฟฟ้าประเภทอื่น
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                            <div class="data-col">
+                                <div class="specify">
+                                    <p class="ddda" style="margin-top: 10px;">
+                                        2.ระบุรายละเอียดโครงการ  <label style="font-size:18px; float:right;" onclick="reset()">reset</label>
+                                    </p>
+                                    <!--class="form-control"-->
+
+                                    <div id="Powerplanttype">
+                                        <p>
+                                            ประเภทโรงไฟฟ้าพลังความร้อน
+                                            <select id="selectPowerplanttype" class="form-control">
+
+                                                <option value="none" selected>--เลือกประเภทโรงไฟฟ้าพลังความร้อน--</option>
+                                                <option value="1">
+                                                    โรงไฟฟ้าพลังความร้อน
+                                                </option>
+                                                <option value="2">
+                                                    โรงไฟฟ้าประเภทอื่น
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Fueltype">
+                                        <p>
+                                            ประเภทเชื้อเพลิง
+
+                                            <select id="selectFueltype" class="form-control">
+
+                                                <option value="none" selected>--เลือกประเภทเชื้อเพลิง--</option>
+                                                <option value="1">
+                                                    ก๊าซธรรมชาติ
+                                                </option>
+                                                <option value="2">
+                                                    ชีวมวล (Biomass)
+                                                </option>
+                                                <option value="3">
+                                                    ถ่านหิน
+                                                </option>
+                                                <option value="4">
+                                                    ขยะมูลฝอย
+                                                </option>
+                                                <option value="5">
+                                                    ก๊าซชีวภาพ (Biogas)
+                                                </option>
+                                                <option value="6">
+                                                    ขยะอุตสาหกรรม
+                                                </option>
+                                                <option value="7">
+                                                    นิวเคลียร์
+                                                </option>
+                                                <option value="8">
+                                                    อื่น ๆ
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Powersource">
+                                        <p>
+                                            แหล่งพลังงาน
+                                            <select id="selectPowersource" class="form-control">
+                                                <option value="none" selected>--เลือกแหล่งพลังงาน--</option>
+                                                <option value="1">
+                                                    พลังงานแสงอาทิตย์
+                                                </option>
+                                                <option value="2">
+                                                    พลังงานน้ำ
+                                                </option>
+                                                <option value="3">
+                                                    พลังงานอื่น เช่น ลม
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Technology">
+                                        <p>
+                                            เทคโนโลยีที่ใช้
+                                            <select id="selectTechnology" class="form-control">
+                                                <option value="none" selected>--เลือกเทคโนโลยีที่ใช้--</option>
+                                                <option value="1">
+                                                    แผง โฟโตเวลเทอิก
+                                                </option>
+                                                <option value="2">
+                                                    ทุ่นลอยน้ำ โฟโตเวลเทอิก
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="maximum">
+                                        <p>
+                                            กำลังการผลิตสูงสุดรวมกัน (กิโลวัตต์)
+                                            <select id="selectmaximum" class="form-control">
+                                                <option value="none" selected>--เลือกกำลังการผลิตสูงสุดรวมกัน--</option>
+                                                <option value="1">
+                                                    น้อยกว่า หรือ เท่ากับ 1,000 กิโลวัตต์
+                                                </option>
+                                                <option value="2">
+                                                    มากกว่า 1,000 กิโลวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="maximum2">
+                                        <p>
+                                            กำลังการผลิตสูงสุดรวมกัน (เมกะวัตต์)
+                                            <select id="selectmaximum2" class="form-control">
+                                                <option value="none" selected>--เลือกกำลังการผลิตสูงสุดรวมกัน--</option>
+                                                <option value="1">
+                                                    น้อยกว่า 0.2 เมกะวัตต์
+                                                </option>
+                                                <option value="2">
+                                                    มากกว่า หรือ เท่ากับ 0.2 ถึง น้อกว่า 10 เมกะวัตต์
+                                                </option>
+                                                <option value="3">
+                                                    มากกว่า หรือ เท่ากับ 10 ถึง น้อกว่า 15 เมกะวัตต์
+                                                </option>
+                                                <option value="4">
+                                                    มากกว่า หรือ เท่ากับ 15 เมกะวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="maximum3">
+                                        <p>
+                                            กำลังการผลิตสูงสุดรวมกัน (เมกะวัตต์)
+                                            <select id="selectmaximum3" class="form-control">
+                                                <option value="none" selected>--เลือกกำลังการผลิตสูงสุดรวมกัน--</option>
+                                                <option value="1">
+                                                    น้อยกว่า 10 เมกะวัตต์
+                                                </option>
+                                                <option value="2">
+                                                    มากกว่า หรือ เท่ากับ 10 มกะวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="WaterPower">
+                                        <p>
+                                            แหล่งพลังงานน้ำ
+                                            <select id="selectWaterPower" class="form-control">
+                                                <option value="none" selected>--เลือกแหล่งพลังงานน้ำ--</option>
+                                                <option value="1">
+                                                    น้ำจากเขื่อนเก็บกักน้ำหรืออ่างเก็บน้ำ
+                                                </option>
+                                                <option value="2">
+                                                    น้ำจากฝาย
+                                                </option>
+                                                <option value="3">
+                                                    น้ำแบบสูบกลับ (Pumped-Storage)
+                                                </option>
+                                                <option value="4">
+                                                    น้ำจากท้ายเขื่อน
+                                                </option>
+                                                <option value="5">
+                                                    น้ำจากคลองส่งน้ำ
+                                                </option>
+                                                <option value="6">
+                                                    น้ำจากแหล่งอื่น
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="RoofOrBuilding">
+                                        <p>
+                                            ติดตั้งบนหลังคา ดาดฟ้า หรืออาคารซึ่งบุคคลใช้สอยหรือเข้าได้
+                                            <select id="selectRoofOrBuilding" class="form-control">
+                                                <option value="none" selected>--เลือกติดตั้งบนหลังคา ดาดฟ้า หรืออาคารซึ่งบุคคลใช้สอยหรือเข้าได้--</option>
+                                                <option value="1">
+                                                    ใช่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่ใช่
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Totalcapacity">
+                                        <p>
+                                            กำลังการผลิตรวม (เมกะวัตต์)
+
+                                            <select id="selectTotalcapacity" class="form-control">
+
+                                                <option value="none" selected>--เลือกกำลังการผลิตรวม--</option>
+                                                <option value="1">
+                                                    น้อยกว่า 10 เมกะวัตต์
+                                                </option>
+                                                <option value="2">
+                                                    มากกว่าหรือเท่ากับ 10 ถึง น้อยกว่า 3,000 เมกะวัตต์
+                                                </option>
+                                                <option value="3">
+                                                    มากกว่าหรือเท่ากับ 3,000 เมกะวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Totalcapacity2">
+                                        <p>
+                                            กำลังการผลิตรวม (เมกะวัตต์)
+                                            <select id="selectTotalcapacity2" class="form-control">
+
+                                                <option value="none" selected>--เลือกกำลังการผลิตรวม--</option>
+                                                <option value="1">
+                                                    น้อยกว่า 10 เมกะวัตต์
+                                                </option>
+                                                <option value="2">
+                                                    มากกว่าหรือเท่ากับ 10 ถึง น้อยกว่า 150 เมกะวัตต์
+                                                </option>
+                                                <option value="3">
+                                                    มากกว่าหรือเท่ากับ 150 เมกะวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Totalcapacity3">
+                                        <p>
+                                            กำลังการผลิตรวม (เมกะวัตต์)
+
+                                            <select id="selectTotalcapacity3" class="form-control">
+
+                                                <option value="none" selected>--เลือกกำลังการผลิตรวม--</option>
+                                                <option value="1">
+                                                    น้อยกว่า 10 เมกะวัตต์
+                                                </option>
+                                                <option value="2">
+                                                    มากกว่าหรือเท่ากับ 10 ถึง น้อยกว่า 100 เมกะวัตต์
+                                                </option>
+                                                <option value="3">
+                                                    มากกว่าหรือเท่ากับ 100 เมกะวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="Totalcapacity4">
+                                        <p>
+                                            กำลังการผลิตรวม (เมกะวัตต์)
+
+                                            <select id="selectTotalcapacity4" class="form-control">
+
+                                                <option value="none" selected>--เลือกกำลังการผลิตรวม--</option>
+                                                <option value="1">
+                                                    น้อยกว่า 10 เมกะวัตต์
+                                                </option>
+
+                                                <option value="3">
+                                                    มากกว่าหรือเท่ากับ 10 เมกะวัตต์
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="solidfuel">
+                                        <p>
+                                            ใช่/ไม่ใช่ เชื้อเพลิงแข็ง
+                                            <select id="selectsolidfuel" class="form-control">
+                                                <option value="none" selected>--เลือก ใช่/ไม่ใช่ เชื้อเพลิงแข็ง--</option>
+                                                <option value="1">
+                                                    ใช่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่ใช่
+                                                </option>
+                                            </select>
+                                        </p>
+                                    </div>
+
+                                    <div id="okbtn" class="pc-btn">
+                                        <hr />
+                                        <button class="ee-bb" id="Btnok">ตกลง</button>
+                                    </div>
+
+                                    <div id="areaIndrustry">
+                                        <p>
+                                            พื้นที่นิคมอุตสาหกรรม <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label>
+
+                                            <select id="selectareaIndrustry" class="form-control">
+                                                <option value="1">
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnareaIndrustry">ตกลง</button>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div id="areaProtect">
+                                        <p>
+                                            พื้นที่คุ้มครองสิ่งแวดล้อม <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label>
+
+                                            <select id="selectareaProtect" class="form-control">
+                                                <option value="1">
+                                                    ภูเก็ต
+                                                </option>
+                                                <option value="2">
+                                                    ชลบุรี
+                                                </option>
+                                                <option value="3">
+                                                    เพชรบุรี
+                                                </option>
+                                                <option value="4">
+                                                    ประจวบคีรีขันธ์
+                                                </option>
+                                                <option value="5">
+                                                    ไม่อยู่ในพื้นที่คุ้มครองสิ่งแวดล้อม
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnareaProtect">ตกลง</button>
+                                        </div>
+                                    </div>
+                                    <div id="RiverArea">
+                                        <p>
+                                            พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ลุ่มน้ำ 1-->
+
+                                            <select id="selectRiverArea" class="form-control">
+                                                <option value="1" selected>
+                                                    อยู่
+                                                </option>
+                                                <option value="2">
+                                                    ไม่อยู่
+                                                </option>
+                                            </select>
+                                        </p>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnRiverArea">ตกลง</button>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="WildArea">
+                                        <p>
+                                            พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.-->
+                                        </p>
+                                        <select id="selectWildArea" class="form-control">
+                                            <option value="1" selected>
+                                                อยู่
+                                            </option>
+                                            <option value="2">
+                                                ไม่อยู่
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnWildArea">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="area80">
+                                        <p>
+                                            พื้นที่ซึ่งมีระดับสารมลพิษทางอากาศสูงเกินกว่าร้อยละ 80 ของค่ามาตรฐานคุณภาพอากาศในบรรยากาศทั่วไป
+                                        </p>
+                                        <select id="selectarea80" class="form-control">
+                                            <option value="1" selected>
+                                                อยู่
+                                            </option>
+                                            <option value="2">
+                                                ไม่อยู่
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="Btnarea80">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="AreaAll">
+                                        <p>
+                                            พื้นที่ที่ตัดผ่าน   <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label>
+                                            <section class="container">
+                                                <div>
+                                                    <select id="leftValues" size="6" multiple>
+                                                        <option value="6" selected>ไม่อยู่ในพื้นที่ทั้งหมด</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <input class="ee-bb" type="button" id="btnLeft" value="&lt;&lt; " />
+                                                    <input class="ee-bb" type="button" id="btnRight" value="&gt;&gt;" />
+                                                </div>
+                                                <div>
+                                                    <select id="rightValues" size="6" multiple>
+                                                        <option value="1">พื้นที่ลุ่มน้ำชั้น 1</option>
+                                                        <option value="2">พื้นที่ลุ่มน้ำชั้น 2</option>
+                                                        <option value="3">พื้นที่คุ้มครองสิ่งแวดล้อม 7 จังหวัด</option>
+                                                        <option value="4">พื้นที่ป่าอนุรักษ์เพิ่มเติม</option>
+                                                        <option value="5">พื้นที่ชุ่มน้ำที่มีความสำคัญระหว่างประเทศ</option>
+                                                    </select>
+                                                    <div hidden>
+                                                        <input type="text" id="txtRight" />
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <div class="pc-btn">
+                                                <button class="ee-bb" id="BtnAreaAll">ตกลง</button>
+                                            </div>
+                                    </div>
+
+                                    <div id="Factorytype">
+                                        <p>
+                                            ประเภทโรงงาน
+                                            <select id="selectFactorytype" class="form-control">
+                                                <option value="none" selected>--เลือกประเภทโรงงาน--</option>
+                                                <option value="1">
+                                                    โรงงานประเภทที่ 1
+                                                </option>
+                                                <option value="2">
+                                                    โรงงานประเภทที่ 2
+                                                </option>
+                                                <option value="3">
+                                                    โรงงานประเภทที่ 3
+                                                </option>
+                                            </select>
+                                            <div class="pc-btn">
+                                                <button class="ee-bb" id="BtnFactorytype">ตกลง</button>
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="Resulte">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <h5 id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</h5>
+                                    <hr />
+                                    <div id="inresulte">
+                                        <h5 id="label2">ประเภท</h5>
+                                        <h5 id="labeltype">
+                                            EHIA
+                                        </h5>
+                                        <!--   <hr />
+                                         <h5 id="label3">เสนอต่อ</h5>
+                                         <p style="width:100%;">
+                                           <img id="imglogo" src="" width="50px" height="50px" style="background-color:white;" />
+                                        <p id="labeloffer">สผ.</p>
+                                        </p>
+                                        <hr />
+                                        <h5 id="label4">ตามกฎหมาย</h5>
+                                        <p id="labellaw">เรื่อง...</p>
+                                        <hr />-->
+                                    </div>
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+
+    $("#btnLeft").click(function () {
+        var selectedItem = $("#rightValues option:selected");
+        $("#leftValues").append(selectedItem);
+    });
+    $("#btnRight").click(function () {
+        var selectedItem = $("#leftValues option:selected");
+        $("#rightValues").append(selectedItem);
+    });
+    $("#rightValues").change(function () {
+        var selectedItem = $("#rightValues option:selected");
+        $("#txtRight").val(selectedItem.val());
+    });
+    /*------------------------------------------------------*/
+
+
+    function reset() {
+        $("select").prop('selectedIndex', 0);
+        $('#Fueltype').hide();
+        $('#Totalcapacity').hide();
+        $('#solidfuel').hide();
+        $('#areaIndrustry').hide();
+        $('#areaProtect').hide();
+        $('#RiverArea').hide();
+        $('#WildArea').hide();
+        $('#Factorytype').hide
+        $('#okbtn').hide();
+        $('#Totalcapacity2').hide();
+        $('#Factorytype').hide();
+        $('#Totalcapacity3').hide();
+        $('#Totalcapacity4').hide();
+        $('#Powersource').hide();
+        $('#maximum').hide();
+        $('#RoofOrBuilding').hide();
+        $('#Technology').hide();
+        $('#area80').hide();
+        $('#AreaAll').hide();
+        $('#maximum2').hide();
+        $('#maximum3').hide();
+        $('#WaterPower').hide();
+
+    }
+
+    /*map*/
+    var map;
+    function initMap() {
+        var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+        var myOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+    }
+    /*slide*/
+    function sliderr(n) {
+        var dis = $('#ss-' + n).css('display');
+        console.log(dis);
+        if (dis == 'none') {
+            $("#ss-" + n).css("display", "block");
+            $("#sd-" + n).css("height", "auto");
+
+        } else {
+            $("#ss-" + n).css("display", "none");
+            $("#sd-" + n).css("height", "0px");
+        }
+    }
+    function ss_l_menu() {
+        if ($(".ss-btn").hasClass("ww-100")) {
+            $(".ss-btn").removeClass("ww-100");
+            $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+        } else {
+            $(".ss-btn").addClass("ww-100");
+            $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+        }
+
+    }
+    function ss_r_menu() {
+        if ($(".ss-r-btn").hasClass("ww-100")) {
+            $(".ss-r-btn").removeClass("ww-100");
+            $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+        } else {
+            $(".ss-r-btn").addClass("ww-100");
+            $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+        }
+    }
+    function hideresulte() {
+        $("#Resulte").hide();
+        $("#resulteNext").hide();
+        $(".specify").show();
+    }
+</script>
+
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_BioGas_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_Bio_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_Carbon_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_GasNatural_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_IndrustrialWaste_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_Nuclear_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_Other_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/ThemalPowerPlant_type_1_Sweepings_JavaScript.js"></script>
+
+<script type="text/javascript" src="~/Scripts/FlowScript/PowerPlant_Typq1_A.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/PowerPlant_Typq1_B.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/PowerPlant_Typq2_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/PowerPlant_Typq2_1_JavaScript.js"></script>
+<script type="text/javascript" src="~/Scripts/FlowScript/PowerPlant_Typq2_2_JavaScript.js"></script>
+
+

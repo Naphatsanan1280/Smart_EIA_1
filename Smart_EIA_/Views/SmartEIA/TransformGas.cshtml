@@ -1,0 +1,319 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+
+    <head>
+        <script type="text/javascript" src="~/Scripts/FlowScript/OilPetroChemical/Oil_JavaScript.js"></script>
+        <style>
+            .map {
+                background-color: #fff;
+                width: 100%;
+                padding: 5px;
+                height: 700px;
+                float: left;
+            }
+
+            #map {
+                width: 100%;
+                height: 100%;
+            }
+
+            #Resulte, #StatusChange {
+                display: none;
+            }
+        </style>
+
+    </head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+        <div class="header-banner">
+
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="@Url.Content("~/Content/template/")img/link-8.svg" alt="" width="90px" height="90px">
+                </div>
+
+                <p>
+                    6. อุตสาหกรรมแยกหรือแปรสภาพก๊าซธรรมชาติ
+                </p>
+
+            </div>
+        </div>
+
+        
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+                            <!--
+        <div class="dt-slide" id="ss-4">
+            <div class="sl-input" id="sd-4">
+                <button>Add placemark</button>
+                <button>Draw line or shape</button>
+                <textarea class="txa-50" rows="5" cols="50">
+
+                </textarea>
+            </div>
+        </div>-->
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                            <div class="data-col">
+                                <div class="specify">
+                                    <p class="ddda" style="margin-top: 10px;">
+                                        2.ระบุรายละเอียดโครงการ
+                                    </p>
+                                    <!--class="form-control"-->
+
+                                    <div id="Typeofbusiness">
+                                        <label>
+                                            ประเภทกิจการ
+                                        </label>
+                                        <select id="selectTypeofbusiness" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือกประเภทกิจการ--
+                                            </option>
+                                            <option value="a">
+                                                การแยกก๊าซธรรมชาติ
+                                            </option>
+                                            <option value="b">
+                                                การแปรสภาพก๊าซโดยการเปลี่ยนโครงสร้าง (Reforming)
+                                            </option>
+                                            <option value="c">
+                                                การแปรสภาพก๊าซโดยการเปลี่ยนสถานะจากก๊าซเป็นของเหลว (Liquefaction)
+                                            </option>
+                                            <option value="d">
+                                                การแปรสภาพก๊าซโดยการเปลี่ยนสถานะของเหลวเป็นก๊าซ (Regasification)
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnTypeofbusiness">ตกลง</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="StatusChange">
+                                        <label>
+                                            ตัวกลางการเปลี่ยนสถานะ
+                                        </label>
+                                        <select id="selectStatusChange" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือกตัวกลางการเปลี่ยนสถานะ--
+                                            </option>
+                                            <option value="a">
+                                                น้ำจากแหล่งน้ำสาธารณะ
+                                            </option>
+                                            <option value="b">
+                                                น้ำทะเล
+                                            </option>
+                                            <option value="c">
+                                                อื่น ๆ
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnStatusChange">ตกลง</button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div id="Resulte">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <h5 id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</h5>
+                                    <hr />
+                                    <div id="inresulte">
+                                        <h5 id="label2">ประเภท</h5>
+                                        <h5 id="labeltype">
+                                            EHIA
+                                        </h5>
+                                        <!--   <hr />
+         <h5 id="label3">เสนอต่อ</h5>
+         <p style="width:100%;">
+           <img id="imglogo" src="" width="50px" height="50px" style="background-color:white;" />
+        <p id="labeloffer">สผ.</p>
+        </p>
+        <hr />
+        <h5 id="label4">ตามกฎหมาย</h5>
+        <p id="labellaw">เรื่อง...</p>
+        <hr />-->
+                                    </div>
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+        /*map*/
+        var map;
+        function initMap() {
+            var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+            var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        }
+         /*slide*/
+        function sliderr(n) {
+            var dis = $('#ss-' + n).css('display');
+            console.log(dis);
+            if (dis == 'none') {
+                $("#ss-" + n).css("display", "block");
+                $("#sd-" + n).css("height", "auto");
+
+            } else {
+                $("#ss-" + n).css("display", "none");
+                $("#sd-" + n).css("height", "0px");
+            }
+        }
+        function ss_l_menu() {
+            if ($(".ss-btn").hasClass("ww-100")) {
+                $(".ss-btn").removeClass("ww-100");
+                $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+            } else {
+                $(".ss-btn").addClass("ww-100");
+                $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+            }
+
+        }
+        function ss_r_menu() {
+            if ($(".ss-r-btn").hasClass("ww-100")) {
+                $(".ss-r-btn").removeClass("ww-100");
+                $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+            } else {
+                $(".ss-r-btn").addClass("ww-100");
+                $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+            }
+
+        }
+        function hideresulte() {
+            $("#Resulte").hide();
+        $("#resulteNext").hide();
+        $(".specify").show();
+    }
+
+
+    $(document).ready(function () {
+        $("#BtnTypeofbusiness").click(function () {
+            var Typeofbusiness = $('#selectTypeofbusiness').find(":selected").val();
+            if (Typeofbusiness == "d") {
+                $("#StatusChange").show();
+                $("#BtnStatusChange").click(function () {
+                    var StatusChange = $('#selectStatusChange').find(":selected").val();
+                    if (StatusChange == "none") {
+                        alert("กรุณาเลือก  ตัวกลางการเปลี่ยนสถานะ ");
+                    }
+                    else {
+                        GasTran_6_1();
+                    }
+                });
+            }
+
+            else if (Typeofbusiness == "none") {
+                  alert("กรุณาเลือก ประเภทกิจการ ");
+            }
+
+            else {
+            $("#StatusChange").hide();
+                GasTran_6_1();
+            }
+
+        });
+    });
+
+
+
+</script>
+
+

@@ -1,0 +1,639 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+<head>
+
+    <style>
+        .map {
+            background-color: #fff;
+            width: 100%;
+            padding: 5px;
+            height: 700px;
+            float: left;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+       .DistanceGis, #Resulte, #resulteNext, #costomtest, #kmztest, #areatest, .Protectedarea, #protectAll, #typeBuilding, #riverArea1, #riverArea2, #b1, #b2, #b3 {
+            display: none;
+        }
+  #actionsBtn {
+    text-align: center;
+    width: 100%;
+    height:5px;
+    background-color:#808080;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-top: 0;
+    margin-bottom: 20px;
+     
+   
+}
+#actionsBtn a {
+  color: #808080;
+}
+#container { 
+            display: flex;             /* establish flex container */  
+            flex-direction: row;            /* default value; can be omitted */ 
+            flex-wrap: nowrap;            /* default value; can be omitted */  
+            justify-content: space-between; /* switched from default (flex-start, see below) */  
+        }
+       #container > div {
+            width: 50%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+
+        <div class="header-banner">
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="@Url.Content("~/Content/template/")img/link-17.svg" alt="" width="90px" height="90px">
+
+                </div>
+
+                <p>
+                    19. โรงพยาบาลหรือสถานพยาบาล
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+                            <!--
+        <div class="dt-slide" id="ss-4">
+            <div class="sl-input" id="sd-4">
+                <button>Add placemark</button>
+                <button>Draw line or shape</button>
+                <textarea class="txa-50" rows="5" cols="50">
+
+                </textarea>
+            </div>
+        </div>-->
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                          
+                                <div class="data-col">
+                                    <div class="specify">
+                                        <p class="ddda" style="margin-top: 10px;">
+                                            2.ระบุรายละเอียดโครงการ
+                                        </p>
+                                            <!--class="form-control"-->
+                                            <!-- จำนวนเตียงผู้ป่วย -->
+                                            <div id="amountBed">
+                                                <p>
+                                                    จำนวนเตียงสำหรับผู้ป่วยไว้ค้างคืน
+                                                    <select id="selectamountbed" class="form-control">
+                                                        <option selected>--เลือกจำนวนเตียง--</option>
+                                                        <option value="less10">น้อยกว่า  10</option>
+                                                        <option value="less10to30">	มากกว่า หรือ เท่ากับ 10 ถึง น้อยกว่า 30 </option>
+                                                        <option value="less30to60">	มากกว่า หรือ เท่ากับ 30 ถึง น้อยกว่า 60</option>
+                                                        <option value="more60">	มากกว่า หรือ เท่ากับ 60</option>
+                                                    </select>
+                                                </p>                                       
+
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnamountBed">ตกลง </button>
+                                        </div>
+
+                                    </div>
+
+                                        <!--พื้นที่ระยะห่างจากทะเล-->
+                                        <div class="DistanceGis">
+                                            <p>
+                                                พื้นที่  <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" checked />  กำหนดเอง</label>
+                                                <div id="container">
+                                                    <div>
+                                                        <select id="gisselect2" class="form-control" size="5" style="width:200px;">
+                                                            <option value="1">ตั้งอยู่ใกล้แม่น้ำ</option>
+                                                            <option value="2">ตั้งอยู่ใกล้ฝั่งทะเล</option>
+                                                            <option value="3">ตั้งอยู่ใกล้ชายหาด</option>
+                                                        </select>
+                                                    </div>
+                                                    <div style="text-align:center">
+                                                        <label><button id="btnaddremove" style="width:120px;" class="ee-bb" onclick="remove()">Add >  </button></label>
+                                                        <br />
+                                                        <label><button id="btnaddremove" style="width:120px;" class="ee-bb" onclick="add()"> < Remove </button></label>
+                                                    </div>
+                                                    <div>
+                                                        <select id="gisselect1" class="form-control" size="5" style="width:200px;">
+                                                            <option value="0">ไม่อยู่ใกล้แม่น้ำ หรือ ใกล้ฝั่งทะเล หรือ ใกล้ชายหาด</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </p>
+                                            <div class="pc-btn"> <button class="ee-bb" id="BtnGis">ตกลง </button></div>
+                                        </div>
+
+                                            <!--พื้นที่คุ้มครอง-->
+                                            <div class="Protectedarea">
+
+                                                <p>
+                                                    พื้นที่คุ้มครองสิ่งแวดล้อมจังหวัด ชลบุรี ภูเก็ต สุราษฎร์ธานี <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" checked />  กำหนดเอง</label>
+
+                                                    <select id="selectProtectedarea" class="form-control">
+                                                        <option value="none" selected>--เลือกพื้นที่คุ้มครองสิ่งแวดล้อม--</option>
+                                                        <option value="inarea">
+                                                            อยู่
+                                                        </option>
+                                                        <option value="outarea">
+                                                            ไม่อยู่
+                                                        </option>
+                                                    </select>
+                                                </p>
+                                                <div class="pc-btn">
+                                                    <button class="ee-bb" id="BtnProtectedarea">ตกลง </button>
+                                                </div>
+
+                                                <hr />
+                                            </div>
+
+                                            <!--พื้นที่คุ้มครองสิ่งแวดล้อม พื้นที่อื่นๆ -->
+                                            <div id="protectAll">
+                                                <p>
+                                                    พื้นที่ <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" checked />  กำหนดเอง</label>
+
+                                                    <select id="selectprotectAll" class="form-control">
+                                                        <option selected value="none">--เลือกพื้นที่คุ้มครองสิ่งแวดล้อม--</option>
+                                                        <option value="etc">พื้นที่อื่นๆ</option>
+                                                        <option value="1">พื้นที่คุ้มครองสิ่งแวดล้อม ภูเก็ต ชลบุรี</option>
+                                                        <option value="2"> พื้นที่คุ้มครองสิ่งแวดล้อม พังงา เพชนบุรี ประจวบคีรีขันธ์ กระบี่</option>
+                                                        <option value="3">พื้นที่คุ้มครองสิ่งแวดล้อม สุราษฎร์ธานี</option>
+                                                    </select>
+                                                </p>
+                                                <div class="pc-btn">
+                                                    <button class="ee-bb" id="BtnprotectAll">ตกลง </button>
+                                                </div>
+
+
+                                            </div>
+
+                                            <!--พื้นที่ลุ่มน้ำ1-->
+                                            <div id="riverArea1" class="riverArea1">
+
+                                                <p>
+                                                    พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1 <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" checked />  กำหนดเอง</label>
+
+                                                    <select id="selectriver" class="form-control">
+                                                        <option value="none" selected>--เลือกเขตพื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1--</option>
+                                                        <option value="in">อยู่</option>
+                                                        <option value="out">ไม่อยู่</option>
+                                                    </select>
+                                                </p>
+                                                <div class="pc-btn">
+                                                    <button class="ee-bb" id="Btnselectriver">ตกลง </button>
+                                                </div>
+
+                                            </div>
+
+                                            <!--พื้นที่ลุ่มน้ำ2-->
+                                            <div id="riverArea2" class="riverArea2">
+                                                <p>
+                                                    พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1 <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" checked />  กำหนดเอง</label>
+
+                                                    <select id="selectriverArea2" class="form-control">
+                                                        <option value="none" selected>--เลือกเขตพื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1--</option>
+                                                        <option value="in">อยู่</option>
+                                                        <option value="out">ไม่อยู่</option>
+                                                    </select>
+                                                </p>
+                                                <div class="pc-btn">
+                                                    <button class="ee-bb" id="BtnProcess2">ตกลง </button>
+                                                </div>
+
+                                                <hr />
+
+                                            </div>
+
+                                            <!--ลักษณะโครงสร้าง-->
+                                            <div id="typeBuilding">
+
+                                                <p>
+                                                    ลักษณะโครงสร้าง <i class="fa fa-info-circle" data-toggle="tooltip" title="คำจำกัดความอาคารสูง"></i>
+                                                    <select id="selecttypebuilding" class="form-control">
+                                                        <option value="yes">อาคารสูง</option>
+                                                        <option value="no">ไม่เป็นอาคารสูง</option>
+                                                    </select>
+                                                </p>
+                                                <div class="pc-btn">
+                                                    <button class="ee-bb" id="BtntypeBuilding">ตกลง </button>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+
+                                    <div id="Resulte">
+                                        <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                        <p id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</p>
+                                        <hr />
+                                        <div id="inresulte">
+                                            <h5 id="label2">ประเภท</h5>
+                                            <p id="labeltype">
+                                                EHIA
+                                            </p>
+                                            <hr />
+                                            <h5 id="label3">เสนอต่อ</h5>
+                                            <p style="width:100%;">
+                                                <img id="imLogo" src="" width="50px" height="50px" style="background-color:white;" />
+                                                <label style="width:80%;" id="labeloffer">สผ.</label>
+                                            </p>
+                                            <hr />
+                                            <h5 id="label4">ตามกฎหมาย</h5>
+                                            <p id="labellaw">เรื่อง...</p>
+                                            <hr />
+                                        </div>
+                                        <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                    </div>
+
+                                    <div id="resulteNext">
+                                        <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                        <p>ตรวจสอบประเภทรายงานด้านสิ่งแวดล้อมที่ต้องจัดทำเพิ่มเติมในด้าน  <label id="labelresulte2"></label></p>
+                                        <br />
+                                        <p id="labelresulte3" style="width:100%;">
+                                            <button id="b1" style="width:100%;" onclick="window.location.href = '/SmartEIA/LargeBuildings';">
+                                                <img style="width:100px; height:100px; float:left;" src="~/Image/icon/icon-15.jpg" /> อาคารสูงหรืออาคารขนาดใหญ่พิเศษ
+                                            </button>
+                                        </p>
+                                        <hr />
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+    /*map*/
+    var map;
+    function initMap() {
+        var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+        var myOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+    }
+    /*slide*/
+    function sliderr(n) {
+        var dis = $('#ss-' + n).css('display');
+        console.log(dis);
+        if (dis == 'none') {
+            $("#ss-" + n).css("display", "block");
+            $("#sd-" + n).css("height", "auto");
+
+        } else {
+            $("#ss-" + n).css("display", "none");
+            $("#sd-" + n).css("height", "0px");
+        }
+    }
+    function ss_l_menu() {
+        if ($(".ss-btn").hasClass("ww-100")) {
+            $(".ss-btn").removeClass("ww-100");
+            $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+        } else {
+            $(".ss-btn").addClass("ww-100");
+            $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+        }
+
+    }
+    function ss_r_menu() {
+        if ($(".ss-r-btn").hasClass("ww-100")) {
+            $(".ss-r-btn").removeClass("ww-100");
+            $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+        } else {
+            $(".ss-r-btn").addClass("ww-100");
+            $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+        }
+
+    }
+    function hideresulte() {
+        $("#Resulte").hide();
+        $("#resulteNext").hide();
+        $(".specify").show();
+    }
+    function add() {
+        var Select = document.getElementById('gisselect1');
+        var Select2 = document.getElementById('gisselect2');
+        Select.options[Select.options.length] = new Option($('#gisselect2').find(":selected").text(), $('#gisselect2').find(":selected").val());
+        Select2.remove(Select2.selectedIndex);
+    }
+    function remove() {
+        var Select2 = document.getElementById('gisselect1');
+        var Select = document.getElementById('gisselect2');
+        Select.options[Select.options.length] = new Option($('#gisselect1').find(":selected").text(), $('#gisselect1').find(":selected").val());
+        Select2.remove(Select2.selectedIndex);
+    }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        /* เลือกจำนวนเตียง */
+        $("#BtnamountBed").click(function () {
+            var selectbed = $('#selectamountbed').find(":selected").val();
+            if (selectbed == "less10") {
+                /*<10 แสดง ลุ่มน้ำ eia/อาคาร*/
+                $("#riverArea1").show();
+                $("#typeBuilding").hide();
+                $(".DistanceGis").hide();
+                $("#protectAll").hide();
+                $(".Protectedarea").hide();
+                $("#riverArea2").hide();
+            }
+            else if (selectbed == "less10to30") {
+                $(".Protectedarea").show();
+                $("#riverArea1").hide();
+                $(".DistanceGis").hide();
+                $("#typeBuilding").hide();
+                $("#protectAll").hide();
+                $("#riverArea2").hide();
+            }
+            else if (selectbed == "less30to60") {
+                $(".DistanceGis").show();
+                $("#riverArea1").hide();
+                $("#riverArea2").hide();
+                $("#protectAll").hide();
+                $("#typeBuilding").hide();
+                $(".Protectedarea").hide();
+            }
+            else if (selectbed == "more60") {
+                $(".DistanceGis").hide();
+
+                $("#typeBuilding").hide();
+                $("#protectAll").hide();
+                $("#riverArea2").hide();
+                $(".Protectedarea").hide();
+             EIA();
+
+            } else {
+                $("#riverArea1").hide();
+                $("#typeBuilding").hide();
+                $(".DistanceGis").hide();
+                $("#protectAll").hide();
+                $("#riverArea2").hide();
+                $(".Protectedarea").hide();
+               
+            }
+        });
+        /* เลือกพื้นที่ลุ่มน้ำ */
+
+        $("#BtnProcess1").click(function () {
+            var selectriver1 = $('#selectriverArea1').find(":selected").val();
+            if (selectriver1 == "in") {
+                /*แสดงผล EIA*/
+                EIA();
+            }
+            else {
+                /*เลือกลักษณะโครงสร้าง ต่อ*/
+                $("#typeBuilding").show();
+                $("#riverArea2").hide();
+            }
+        });
+
+        $("#BtntypeBuilding").click(function () {
+            var selectBuilding = $('#selecttypebuilding').find(":selected").val();
+            if (selectBuilding == "yes") {
+                /*แสดงผล EIA*/
+                NextToBuilding();
+            }
+            else {
+                /*เลือกลักษณะโครงสร้าง ต่อ*/
+                NoReport();
+            }
+        });
+
+        $("#BtnProtectedarea").click(function () {
+            var selectProtectedarea = $('#selectProtectedarea').find(":selected").val();
+            if (selectProtectedarea == "inarea") {
+                /*แสดงผล EIA*/
+                $(".riverArea2").show();
+                $(".riverArea1").hide();
+            }
+            else {
+                /*เลือกลักษณะโครงสร้าง ต่อ*/
+                $(".riverArea1").show();
+                $(".riverArea2").hide();
+
+            }
+        });
+
+        $("#BtnProcess2").click(function () {
+            var selectBuilding = $('#selectriverArea2').find(":selected").val();
+            if (selectBuilding == "in") {
+                /*แสดงผล EIA*/
+                $("#typeBuilding").hide();
+
+                EIA();
+            }
+            else {
+                /*เลือกลักษณะโครงสร้าง ต่อ*/
+                IEE();
+            }
+        });
+
+        $("#Btnselectriver").click(function () {
+            var selectriver1 = $('#selectriver').find(":selected").val();
+            if (selectriver1 == "in") {
+                /*alert("eia");*/
+                $("#typeBuilding").hide();
+                EIA();
+            }
+            else {
+                /*alert("อาคาร");*/
+                $("#typeBuilding").show();
+            }
+        });
+
+        $("#BtnGis").click(function () {
+            var gisselect2 = $('#gisselect1').find(":selected").val();
+            if (gisselect2 == "0") {
+                $(".DistanceGis").hide();
+                $("#protectAll").show();
+            }
+            else {
+                $(".DistanceGis").hide();
+                $("#typeBuilding").hide();
+                EIA();
+            }
+
+
+        });
+        $("#BtnprotectAll").click(function () {
+            var selectprotectAll = $('#selectprotectAll').find(":selected").val();
+            if (selectprotectAll == "etc") {
+                $("#riverArea1").show();
+                $(".DistanceGis").hide();
+                $("#riverArea2").hide();
+            }
+            else if (selectprotectAll == "1") {
+
+                $("#typeBuilding").hide();
+                $("#riverArea1").hide();
+                $(".DistanceGis").hide();
+                $("#riverArea2").hide();
+               EIA();
+            }
+            else if (selectprotectAll == "2") {
+                $("#riverArea2").show();
+                $(".DistanceGis").hide();
+            }
+            else if (selectprotectAll == "3") {
+                $("#riverArea1").show();
+                $(".DistanceGis").hide();
+                $("#riverArea2").hide();
+            }
+            else {
+                $("#riverArea1").hide();
+                $(".DistanceGis").hide();
+                $("#riverArea2").hide();
+
+            }
+
+        });
+
+    });
+    
+    function EIA() {
+        $(".specify").hide();
+        $("#inresulte").show();
+        $("#Resulte").show();
+        $("#imLogo").attr("src", "/Image/สผ.png");
+        document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+        document.getElementById('changeLabel').style.color = 'Red';
+        document.getElementById('labeltype').innerHTML = " รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)";  
+        document.getElementById('labeloffer').innerHTML = "สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)";
+        document.getElementById('labellaw').innerHTML = "ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA (ลำดับที่ 27)";
+    }
+
+    function IEE() {
+        $(".specify").hide();
+         $("#inresulte").show();
+        $("#Resulte").show();
+        $("#imLogo").attr("src", "/Image/สผ.png");
+        document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+        document.getElementById('changeLabel').style.color = 'Red';
+        document.getElementById('labeltype').innerHTML = "รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (Initial Environmental Examination; IEE)";
+        document.getElementById('labeloffer').innerHTML = "สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)";
+        document.getElementById('labellaw').innerHTML = "ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำEIA (ลำดับที่ 27) http:// www.xxxx.co.th /DATA/PDF/2562/E/003?T_0001.PDF ";
+
+    }
+
+    function NextToBuilding() {
+         $(".specify").hide();
+             $("#resulteNext").show();
+             document.getElementById('labelresulte2').innerText = "อาคารสูงหรืออาคารขนาดใหญ่พิเศษ";
+             $("#b1").show();
+    }
+
+    function NoReport() {
+        $(".specify").hide();
+        $("#inresulte").hide();
+        $("#Resulte").show();
+        document.getElementById('changeLabel').innerText = "ไม่เข้าข่าย";
+        document.getElementById('changeLabel').style.color = 'Green';
+    }
+</script>
+
+

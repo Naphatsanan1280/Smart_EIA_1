@@ -1,0 +1,271 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+
+<head>
+
+    <style>
+        .map {
+            background-color: #fff;
+            width: 100%;
+            padding: 5px;
+            height: 700px;
+            float: left;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #Resulte {
+            display: none;
+        }
+    </style>
+
+</head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+        <div class="header-banner">
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="~/Image/icon/icon-20.png" alt="" width="90px" height="90px">
+                </div>
+                <p>
+                    9. ระบบทางพิเศษ
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+                            <!--
+                            <div class="dt-slide" id="ss-4">
+                                <div class="sl-input" id="sd-4">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+
+                                    </textarea>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                            <div class="data-col">
+                                <div class="specify">
+                                    <p class="ddda" style="margin-top: 10px;">
+                                        2.ระบุรายละเอียดโครงการ
+                                    </p>
+                                    <!--class="form-control"-->
+
+                                    <div id="Type">
+                                        <p>
+                                            ประเภททางพิเศษ
+                                        </p>
+                                        <select id="selectType" class="form-control">
+
+                                            <option value="none" selected>--เลือกประเภททางพิเศษ--</option>
+                                            <option value="1">
+                                                ทางพิเศษ (Expressway)
+                                            </option>
+                                            <option value="2">
+                                                ทางหลวงพิเศษระหว่างเมือง (Motorway)
+                                            </option>
+                                            <option value="3">
+                                                ทางยกระดับเก็บค่าผ่านทาง (Tollway)
+                                            </option>
+                                            <option value="4">
+                                                ทางด่วนพิเศษของรถโดยสารด่วนพิเศษ (Bus Rapid Transit; BRT)
+                                            </option>
+                                            <option value="5">
+                                                ทางวิ่งเฉพาะของระบบขนส่งมวลชนนำทางอัตโนมัติ (Automatic Guiderail Transit; AGT)
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnType">ตกลง</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="Resulte">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <p>โครงการ กิจการ หรือการดำเนินการ <u style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</p>
+                                    <hr />
+                                    <h5>ประเภท</h5>
+                                    <p id="labeltype">
+                                        EHIA
+                                    </p>
+                                    <hr />
+                                    <h5>เสนอต่อ</h5>
+                                    <p style="width:100%;">
+                                        <img id="imLogo" src="" width="50px" height="50px" style="background-color:white;" />
+                                        <label style="width:80%;" id="labeloffer">สผ.</label>
+                                    </p>
+                                    <hr />
+                                    <h5>ตามกฎหมาย</h5>
+                                    <p id="labellaw">เรื่อง...</p>
+                                    <hr />
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+        /*map*/
+        var map;
+        function initMap() {
+            var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+            var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        }
+         /*slide*/
+        function sliderr(n) {
+            var dis = $('#ss-' + n).css('display');
+            console.log(dis);
+            if (dis == 'none') {
+                $("#ss-" + n).css("display", "block");
+                $("#sd-" + n).css("height", "auto");
+
+            } else {
+                $("#ss-" + n).css("display", "none");
+                $("#sd-" + n).css("height", "0px");
+            }
+        }
+        function ss_l_menu() {
+            if ($(".ss-btn").hasClass("ww-100")) {
+                $(".ss-btn").removeClass("ww-100");
+                $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+            } else {
+                $(".ss-btn").addClass("ww-100");
+                $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+            }
+
+        }
+        function ss_r_menu() {
+            if ($(".ss-r-btn").hasClass("ww-100")) {
+                $(".ss-r-btn").removeClass("ww-100");
+                $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+            } else {
+                $(".ss-r-btn").addClass("ww-100");
+                $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+            }
+        }
+        function hideresulte() {
+            $("#Resulte").hide();
+        $("#resulteNext").hide();
+        $(".specify").show();
+    }
+    $(document).ready(function () {
+        $("#BtnType").click(function () {
+            var type = $('#selectType').find(":selected").val();
+            if (type == "none") {
+                alert("กรุณาเลือกประเภททางพิเศษ");
+            }  else {
+                $("#imLogo").attr("src", "/Image/สผ.png");
+                $(".specify").hide();
+                $("#Resulte").show();
+                document.getElementById('labeltype').innerHTML = "รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)";
+                document.getElementById('labeloffer').innerHTML = "สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)";
+                document.getElementById('labellaw').innerHTML = "ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแดล้อม เรื่อง กำหนดโครงการกิจการ หรือดำเนินการ ซึ่งต้องจัดทำรายงาน EIA (ลำดับที่ 27)";
+   
+            }
+        });
+    });
+
+
+</script>
+

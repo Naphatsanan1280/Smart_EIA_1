@@ -1,0 +1,1079 @@
+﻿
+@{
+    ViewBag.Title = "LargeBuildingsNew";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+
+<head>
+
+    <style>
+        .map {
+            background-color: #fff;
+            width: 100%;
+            padding: 5px;
+            height: 700px;
+            float: left;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #Resulte,#Ownership,#Area1,#RiverArea,#WildArea,#sizeArea,#sizeAreabenefit,#AreaGis,#sizebuilding,#b1,#b2,#b3,#resulteNext,#okbtn {
+            display: none;
+        }
+          #container { 
+            display: flex;             /* establish flex container */  
+            flex-direction: row;            /* default value; can be omitted */ 
+            flex-wrap: nowrap;            /* default value; can be omitted */  
+            justify-content: space-between; /* switched from default (flex-start, see below) */  
+        }
+       #container > div {
+            width: 50%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+        <div class="header-banner">
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="@Url.Content("~/Content/template/")img/link-15.svg" alt="" width="90px" height="90px">
+                </div>
+                <p>
+                    17. อาคารสูงหรืออาคารขนาดใหญ่พิเศษ
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+                            <!--
+        <div class="dt-slide" id="ss-4">
+            <div class="sl-input" id="sd-4">
+                <button>Add placemark</button>
+                <button>Draw line or shape</button>
+                <textarea class="txa-50" rows="5" cols="50">
+
+                </textarea>
+            </div>
+        </div>-->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                            <div class="data-col">
+                                <div class="specify">
+                                    <p class="ddda" style="margin-top: 10px;">
+                                        2.ระบุรายละเอียดโครงการ
+                                    </p>
+                                    <!--class="form-control"-->
+
+                                    <div id="benefit">
+                                        <label>
+                                            การใช้ประโยชน์อาคาร
+                                        </label>
+                                        <select id="selectbenefit" class="form-control">
+                                            <option selected value="none"> --เลือกการใช้ประโยชน์อาคาร--</option>
+                                            <option value="1">
+                                                อาคารที่ใช้ในการประกอบธุรกิจ
+                                                ค้าปลีกหรือค้าส่ง
+                                            </option>
+                                            <option value="2">
+                                                อาคารที่ใช้เป็นสำนักงานหรือที่ทำการ
+                                            </option>
+                                            <option value="3">
+                                                อาคารใช้ประโยชน์อื่นๆ
+                                                <!-- ที่มิใช่ อาคารประกอบธุรกิจค้าปลีกหรือค้าส่ง อาคารสำนักงานหรือที่ทำการ อาคารอยู่อาศัยรวม อาคารโรงพยาบาลหรือสถานพยาบาล และอาคารโรงแรมหรือสถานที่พักตากอากาศ-->
+                                            </option>
+                                            <option value="4">
+                                                อาคารอยู่อาศัยรวม
+                                            </option>
+                                            <option value="5">
+                                                อาคารโรงพยาบาลหรือสถานพยาบาล
+                                            </option>
+                                            <option value="6">
+                                                อาคารโรงแรมหรือสถานที่พักตากอากาศ
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div id="Ownership">
+                                        <label>
+                                            สถานภาพความเป็นเจ้าของอาคาร
+                                            (เอกชน หรือ รัฐ)
+                                        </label>
+                                        <select id="selectOwnership" class="form-control">
+                                            <option selected value="none">--เลือกสถานภาพความเป็นเจ้าของอาคาร--</option>
+                                            <option value="1">
+                                                เอกชน
+                                            </option>
+                                            <option value="2">
+                                                รัฐ
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                    <div id="sizeArea">
+                                        <label>
+                                            ขนาดพื้นที่อาคาร (รวมกันทุกชั้นหรือชั้นหนึ่งชั้นใดในหลังเดียวกัน)
+                                        </label>
+                                        <select id="selectsizeArea" class="form-control">
+                                            <option selected value="none">--เลือกขนาดพื้นที่อาคาร--</option>
+                                            <option value="1">
+                                                น้อยกว่า 10,000 ตาราเมตร
+                                            </option>
+                                            <option value="2">
+                                                มากกว่าหรือเท่ากับ 10,000 ตารางเมตร
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                    <div id="sizeAreabenefit">
+                                        <label>
+                                            ขนาดพื้นที่ใช้ประโยชน์เพื่อการค้าปลีกหรือค้าส่ง /เพื่อสำนักงานหรือที่ทำการ
+                                        </label>
+                                        <select id="selectsizeAreabenefit" class="form-control">
+                                            <option selected value="none">--เลือกขนาดพื้นที่อาคาร--</option>
+                                            <option value="1">
+                                                น้อยกว่า 1,000 ตาราเมตร
+                                            </option>
+                                            <option value="2">
+                                                มากกว่าหรือเท่ากับ 1,000 ตารางเมตร
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                    <div id="sizebuilding">
+                                        <label>
+                                            ความสูงอาคาร
+                                        </label>
+                                        <select id="selectsizebuilding" class="form-control">
+                                            <option selected value="none">--เลือกขนาดพื้นที่อาคาร--</option>
+                                            <option value="1">
+                                                น้อยกว่า 23 เมตร
+                                            </option>
+                                            <option value="2">
+                                                มากกว่าหรือเท่ากับ 23 เมตร
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div id="okbtn" class="pc-btn">
+                                        <hr />
+                                        <button class="ee-bb" id="Btnok">ตกลง</button>
+                                    </div>
+
+                                    <div id="AreaGis">
+                                        <hr />
+                                        <p>พื้นที่ <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" checked />  กำหนดเอง</label></p>
+                                        
+                                            <div id="container">
+                                                <div>
+                                                    <select id="gisselect2" class="form-control" size="5" style="width: 100%; height: auto;">
+                                                        <option value="1">อยู่ริมแม่น้ำ</option>
+                                                        <option value="2">ริมทะเล หรือทะเลสาบ หรือชายหาด</option>
+                                                        <option value="3">อยู่ใกล้หรืออยู่ในอุทยานแห่งชาติ</option>
+                                                    </select>
+
+                                                </div>
+
+                                                <div style="text-align:center">
+                                                    <label><button id="btnaddremove" style="width:120px;" class="ee-bb" onclick="remove()">Add >  </button></label>
+                                                    <br />
+                                                    <label><button id="btnaddremove" style="width:120px;" class="ee-bb" onclick="add()"> < Remove </button></label>
+                                                </div>
+
+                                                <div>
+                                                    <select id="gisselect1" class="form-control" size="5" style="width: 100%; height: auto;">
+                                                        <option value="0" selected>ไม่อยู่ใกล้แม่น้ำ หรือ ริมทะเล หรือฝั่งทะเลสาป หรือใกล้อุทยาน</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="pc-btn"><button class="ee-bb" id="BtnGis">ตกลง </button></div>
+                                            <hr />
+                                        
+                                    </div>
+
+                                    <div id="Area1">
+                                        <p>
+                                            พื้นที่ <!--พื้นที่คุ้มครองสิ่งแวดล้อม ชลบุรี--><label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label>
+                                        </p>
+                                        <select id="selectArea1" class="form-control">
+                                            <option value="1" selected>
+                                                อยู่ในพื้นที่คุ้มครองสิ่งแวดล้อม ชลบุรี
+                                            </option>
+                                            <option value="2">
+                                                ไม่อยู่ในพื้นที่คุ้มครองสิ่งแวดล้อม ชลบุรี
+                                            </option>
+
+                                        </select><br />
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnArea1">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="RiverArea">
+                                        <p>
+                                            พื้นที่  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ลุ่มน้ำ 1-->
+                                        </p>
+                                        <select id="selectRiverArea" class="form-control">
+                                            <option value="1" selected>
+                                                อยู่ในพื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1
+                                            </option>
+                                            <option value="2">
+                                                ไม่อยู่ในพื้นชั้นคุณภาพลุ่มน้ำชั้น 1
+                                            </option>
+
+                                        </select><br />
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnRiverArea">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="WildArea">
+                                        <p>
+                                            พื้นที่  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.-->
+                                        </p>
+                                        <select id="selectWildArea" class="form-control">
+                                            <option value="1" selected>
+                                                อยู่ในพื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.
+                                            </option>
+                                            <option value="2">
+                                                ไม่อยู่ในพื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.
+                                            </option>
+                                        </select><br />
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnWildArea">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="Resulte">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <p id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</p>
+                                    <hr />
+                                    <div id="inresulte">
+                                        <h5 id="label2">ประเภท</h5>
+                                        <p id="labeltype">
+                                            EHIA
+                                        </p>
+                                        <hr />
+                                        <h5 id="label3">เสนอต่อ</h5>
+                                        <p style="width:100%;">
+                                            <img src="~/Image/สผ.png" width="50px" height="50px" style="background-color:white;" />
+                                            <label style="width:80%;" id="labeloffer">สผ.</label>
+                                        </p>
+                                        <hr />
+                                        <h5 id="label4">ตามกฎหมาย</h5>
+                                        <p id="labellaw">เรื่อง...</p>
+                                        <hr />
+                                    </div>
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+
+                                <div id="resulteNext">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <p id="l1">ตรวจสอบประเภทรายงานด้านสิ่งแวดล้อมที่ต้องจัดทำเพิ่มเติมในด้าน  <label id="labelresulte2"></label></p>
+                                    <p id="labelresulte3" style="width:100%;">
+                                        <button id="b1" style="width:100%;" onclick="window.location.href = '/SmartEIA/ResidentialBuildings';">
+                                            <img style="width:100px; height:100px; float:left;" src="~/Image/icon/icon-19.jpg" /> อาคารอยู่อาศัยรวม
+                                        </button>
+                                        <button id="b2" style="width:100%;" onclick="window.location.href = '/SmartEIA/Hotel';">
+                                            <img style="width:100px; height:100px; float:left;" src="~/Image/icon/icon-18.jpg" /> โรงแรมหรือสถานที่พักตากอากาศ
+                                        </button>
+                                        <button id="b3" style="width:100%; " onclick="window.location.href = '/SmartEIA/Hospital';">
+                                            <img style="width:100px; height:100px; float:left;" src="~/Image/icon/icon-17.jpg" /> โรงพยาบาลหรือสถานพยาบาล
+                                        </button>
+                                    </p>
+                                    <p> เนื่องจาก <u style="color:green;">ไม่เข้าข่าย</u> ที่ต้องจัดทำรายงายด้านสิ่งแวดล้อมตามกฎหมายที่เกี่ยวข้องกับโครงการอาคารสูงหรืออาคารขนาดใหญ่พิเศษ </p>
+                                    <hr />
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+        /*map*/
+        var map;
+        function initMap() {
+            var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+            var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
+    }
+    function add() {
+        var Select = document.getElementById('gisselect1');
+        var Select2 = document.getElementById('gisselect2');
+        Select.options[Select.options.length] = new Option($('#gisselect2').find(":selected").text(), $('#gisselect2').find(":selected").val());
+        Select2.remove(Select2.selectedIndex);
+    }
+
+    function remove() {
+        var Select2 = document.getElementById('gisselect1');
+        var Select = document.getElementById('gisselect2');
+        Select.options[Select.options.length] = new Option($('#gisselect1').find(":selected").text(), $('#gisselect1').find(":selected").val());
+        Select2.remove(Select2.selectedIndex);
+    }
+
+         /*slide*/
+        function sliderr(n) {
+            var dis = $('#ss-' + n).css('display');
+            console.log(dis);
+            if (dis == 'none') {
+                $("#ss-" + n).css("display", "block");
+                $("#sd-" + n).css("height", "auto");
+
+            } else {
+                $("#ss-" + n).css("display", "none");
+                $("#sd-" + n).css("height", "0px");
+            }
+        }
+        function ss_l_menu() {
+            if ($(".ss-btn").hasClass("ww-100")) {
+                $(".ss-btn").removeClass("ww-100");
+                $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+            } else {
+                $(".ss-btn").addClass("ww-100");
+                $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+            }
+
+        }
+        function ss_r_menu() {
+            if ($(".ss-r-btn").hasClass("ww-100")) {
+                $(".ss-r-btn").removeClass("ww-100");
+                $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+            } else {
+                $(".ss-r-btn").addClass("ww-100");
+                $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+            }
+
+        }
+        function hideresulte() {
+            $("#Resulte").hide();
+        $("#resulteNext").hide();
+        $(".specify").show();
+    }
+
+        $(document).ready(function () {
+
+            $("#selectbenefit").on('change', function () {/* การใช้ประโยชน์อาคาร*/
+                var benefit = $('#selectbenefit').find(":selected").val();
+                if (benefit == "1") {
+                    $("#okbtn").hide();
+                    $("#sizeArea").show();/*ขนาดพื้นที่อาคาร*/
+                    $("#selectsizeArea").on('change', function () {
+                        var sizeArea = $('#selectsizeArea').find(":selected").val();
+                        if (sizeArea == "1") {/* <10,000 */
+                            $("#okbtn").hide();
+                            $("#sizebuilding").show();/*ความสูงอาคาร*/
+                            $("#selectsizebuilding").on('change', function () { 
+                            var sizebuilding = $("#selectsizebuilding").find(":selected").val();
+                            if (sizebuilding == "1") {/*<23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                      $("#AreaGis").hide();
+                                    $("#RiverArea").show();/*พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1*/
+                                    $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                            else if (sizebuilding == "2") {/*>=23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                    $("#RiverArea").hide();
+                                    $("#AreaGis").show();/*พื้นที่ GIS*/
+                                    $("#BtnGis").click(function () {
+                                        var AreaGis = $('#gisselect1').find(":selected").val();
+                                        if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                            EIA();
+                                        } else {
+                                            $("#Area1").show();
+                                            $("#BtnArea1").click(function () {
+                                                var Area1 = $('#selectArea1').find(":selected").val();
+                                                if (Area1 == "1") {
+                                                    EIA();
+                                                } else {
+                                                    $("#RiverArea").show();
+                                                     $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                                }
+
+                                            });
+                                        }
+
+                                    });
+                                });
+                                }
+                            });
+
+
+                        } else {/*>=10,000*/
+                            $("#sizeAreabenefit").show();
+                            $("#selectsizeAreabenefit").on('change', function () {
+                                 var sizeAreabenefit = $('#selectsizeAreabenefit').find(":selected").val();
+                                if (sizeAreabenefit == "1") {
+                                    $("#okbtn").hide();
+                                    $("#sizebuilding").show();/*ความสูงอาคาร*/
+                                    $("#selectsizebuilding").on('change', function () {
+                                        var sizebuilding = $("#selectsizebuilding").find(":selected").val();
+                                        $("#okbtn").show();
+                                        $("#Btnok").click(function () {
+                                            $("#AreaGis").show();/*พื้นที่ GIS*/
+                                            $("#BtnGis").click(function () {
+                                                var AreaGis = $('#gisselect1').find(":selected").val();
+                                                if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                                    EIA();
+                                                } else {
+                                                    $("#Area1").show();
+                                                    $("#BtnArea1").click(function () {
+                                                        var Area1 = $('#selectArea1').find(":selected").val();
+                                                        if (Area1 == "1") {
+                                                            EIA();
+                                                        } else {
+                                                            $("#RiverArea").show();
+                                                            $("#BtnRiverArea").click(function () {
+                                                                var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                                                if (RiverArea == "1") {
+                                                                    EIA();
+                                                                }
+                                                                else {
+                                                                    $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                                                    $("#BtnWildArea").click(function () {
+                                                                        var WildArea = $('#selectWildArea').find(":selected").val();
+                                                                        if (WildArea == "1") {
+                                                                            Environment();
+                                                                        }
+                                                                        else {
+                                                                            NotdoReport();
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        });
+                                    });
+                                } else {
+                                     $("#okbtn").show();
+                                    $("#Btnok").click(function () {
+                                        EIA();
+                                    });
+                                }
+
+                            });
+                        }
+                    });
+                }
+                else if (benefit == "2") {
+                    $("#okbtn").hide();
+                    $("#Ownership").show();
+                    $("#selectOwnership").on('change', function () {
+                        var Ownership = $('#selectOwnership').find(":selected").val();
+                        if (Ownership == "1") {/*เอกชน*/
+                             $("#okbtn").hide();
+                    $("#sizeArea").show();/*ขนาดพื้นที่อาคาร*/
+                    $("#selectsizeArea").on('change', function () {
+                        var sizeArea = $('#selectsizeArea').find(":selected").val();
+                        if (sizeArea == "1") {/* <10,000 */
+                            $("#okbtn").hide();
+                            $("#sizebuilding").show();/*ความสูงอาคาร*/
+                            $("#selectsizebuilding").on('change', function () { 
+                            var sizebuilding = $("#selectsizebuilding").find(":selected").val();
+                            if (sizebuilding == "1") {/*<23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                      $("#AreaGis").hide();
+                                    $("#RiverArea").show();/*พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1*/
+                                    $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                            else if (sizebuilding == "2") {/*>=23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                    $("#RiverArea").hide();
+                                    $("#AreaGis").show();/*พื้นที่ GIS*/
+                                    $("#BtnGis").click(function () {
+                                        var AreaGis = $('#gisselect1').find(":selected").val();
+                                        if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                            EIA();
+                                        } else {
+                                            $("#Area1").show();
+                                            $("#BtnArea1").click(function () {
+                                                var Area1 = $('#selectArea1').find(":selected").val();
+                                                if (Area1 == "1") {
+                                                    EIA();
+                                                } else {
+                                                    $("#RiverArea").show();
+                                                     $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                                }
+
+                                            });
+                                        }
+
+                                    });
+                                });
+                                }
+                            });
+
+
+                        } else {/*>=10,000*/
+                            $("#sizeAreabenefit").show();
+                            $("#selectsizeAreabenefit").on('change', function () {
+                                 var sizeAreabenefit = $('#selectsizeAreabenefit').find(":selected").val();
+                                if (sizeAreabenefit == "1") {
+                                    $("#okbtn").hide();
+                                    $("#sizebuilding").show();/*ความสูงอาคาร*/
+                                    $("#selectsizebuilding").on('change', function () {
+                                        var sizebuilding = $("#selectsizebuilding").find(":selected").val();
+                                        $("#okbtn").show();
+                                        $("#Btnok").click(function () {
+                                            $("#AreaGis").show();/*พื้นที่ GIS*/
+                                            $("#BtnGis").click(function () {
+                                                var AreaGis = $('#gisselect1').find(":selected").val();
+                                                if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                                    EIA();
+                                                } else {
+                                                    $("#Area1").show();
+                                                    $("#BtnArea1").click(function () {
+                                                        var Area1 = $('#selectArea1').find(":selected").val();
+                                                        if (Area1 == "1") {
+                                                            EIA();
+                                                        } else {
+                                                            $("#RiverArea").show();
+                                                            $("#BtnRiverArea").click(function () {
+                                                                var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                                                if (RiverArea == "1") {
+                                                                    EIA();
+                                                                }
+                                                                else {
+                                                                    $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                                                    $("#BtnWildArea").click(function () {
+                                                                        var WildArea = $('#selectWildArea').find(":selected").val();
+                                                                        if (WildArea == "1") {
+                                                                            Environment();
+                                                                        }
+                                                                        else {
+                                                                            NotdoReport();
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        });
+                                    });
+                                } else {
+                                     $("#okbtn").show();
+                                    $("#Btnok").click(function () {
+                                        EIA();
+                                    });
+                                }
+
+                            });
+                        }
+                    });
+                        }
+                        else {/*รัฐ*/
+                             $("#sizeArea").show();/*ขนาดพื้นที่อาคาร*/
+                    $("#selectsizeArea").on('change', function () {
+                        var sizeArea = $('#selectsizeArea').find(":selected").val();
+                        if (sizeArea == "1") {/* <10,000 */
+                            $("#okbtn").hide();
+                            $("#sizebuilding").show();/*ความสูงอาคาร*/
+                            $("#selectsizebuilding").on('change', function () { 
+                            var sizebuilding = $("#selectsizebuilding").find(":selected").val();
+                            if (sizebuilding == "1") {/*<23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                      $("#AreaGis").hide();
+                                    $("#RiverArea").show();/*พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1*/
+                                    $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                            else if (sizebuilding == "2") {/*>=23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                    $("#RiverArea").hide();
+                                    $("#AreaGis").show();/*พื้นที่ GIS*/
+                                    $("#BtnGis").click(function () {
+                                        var AreaGis = $('#gisselect1').find(":selected").val();
+                                        if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                            EIA();
+                                        } else {
+                                            $("#Area1").show();
+                                            $("#BtnArea1").click(function () {
+                                                var Area1 = $('#selectArea1').find(":selected").val();
+                                                if (Area1 == "1") {
+                                                    EIA();
+                                                } else {
+                                                    $("#RiverArea").show();
+                                                     $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                                }
+
+                                            });
+                                        }
+
+                                    });
+                                });
+                                }
+                            });
+
+
+                        } else {/*>=10,000*/
+                             $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                    $("#RiverArea").hide();
+                                    $("#AreaGis").show();/*พื้นที่ GIS*/
+                                    $("#BtnGis").click(function () {
+                                        var AreaGis = $('#gisselect1').find(":selected").val();
+                                        if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                            EIA();
+                                        } else {
+                                            $("#Area1").show();
+                                            $("#BtnArea1").click(function () {
+                                                var Area1 = $('#selectArea1').find(":selected").val();
+                                                if (Area1 == "1") {
+                                                    EIA();
+                                                } else {
+                                                    $("#RiverArea").show();
+                                                     $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                                }
+
+                                            });
+                                        }
+
+                                    });
+                                });
+                         }
+                    });
+                   
+                        }
+
+
+
+                    });
+
+                }
+                else if (benefit == "3") {
+                    $("#okbtn").hide();
+                     $("#sizeArea").show();/*ขนาดพื้นที่อาคาร*/
+                    $("#selectsizeArea").on('change', function () {
+                        var sizeArea = $('#selectsizeArea').find(":selected").val();
+                        if (sizeArea == "1") {/* <10,000 */
+                            $("#okbtn").hide();
+                            $("#sizebuilding").show();/*ความสูงอาคาร*/
+                            $("#selectsizebuilding").on('change', function () { 
+                            var sizebuilding = $("#selectsizebuilding").find(":selected").val();
+                            if (sizebuilding == "1") {/*<23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                      $("#AreaGis").hide();
+                                    $("#RiverArea").show();/*พื้นที่ชั้นคุณภาพลุ่มน้ำชั้น 1*/
+                                    $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                            else if (sizebuilding == "2") {/*>=23*/
+                                $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                    $("#RiverArea").hide();
+                                    $("#AreaGis").show();/*พื้นที่ GIS*/
+                                    $("#BtnGis").click(function () {
+                                        var AreaGis = $('#gisselect1').find(":selected").val();
+                                        if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                            EIA();
+                                        } else {
+                                            $("#Area1").show();
+                                            $("#BtnArea1").click(function () {
+                                                var Area1 = $('#selectArea1').find(":selected").val();
+                                                if (Area1 == "1") {
+                                                    EIA();
+                                                } else {
+                                                    $("#RiverArea").show();
+                                                     $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                                }
+
+                                            });
+                                        }
+
+                                    });
+                                });
+                                }
+                            });
+
+
+                        } else {/*>=10,000*/
+                             $("#okbtn").show();
+                                $("#Btnok").click(function () {
+                                    $("#RiverArea").hide();
+                                    $("#AreaGis").show();/*พื้นที่ GIS*/
+                                    $("#BtnGis").click(function () {
+                                        var AreaGis = $('#gisselect1').find(":selected").val();
+                                        if (AreaGis == "1" || AreaGis == "2" || AreaGis == "3") {
+                                            EIA();
+                                        } else {
+                                            $("#Area1").show();
+                                            $("#BtnArea1").click(function () {
+                                                var Area1 = $('#selectArea1').find(":selected").val();
+                                                if (Area1 == "1") {
+                                                    EIA();
+                                                } else {
+                                                    $("#RiverArea").show();
+                                                     $("#BtnRiverArea").click(function () {
+                                        var RiverArea = $('#selectRiverArea').find(":selected").val();
+                                        if (RiverArea == "1") {
+                                            EIA();
+                                        }
+                                        else {
+                                            $("#WildArea").show();/*พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.*/
+                                            $("#BtnWildArea").click(function () {
+                                                var WildArea = $('#selectWildArea').find(":selected").val();
+                                                if (WildArea == "1") {
+                                                    Environment();
+                                                }
+                                                else {
+                                                    NotdoReport();
+                                                }
+                                            });
+                                        }
+                                    });
+                                                }
+
+                                            });
+                                        }
+
+                                    });
+                                });
+                         }
+                    });
+                }
+                else if (benefit == "4") {
+                    $("#okbtn").show();
+                    $("#Btnok").click(function () {
+                        ResidentBuilding();
+                    });
+                }
+                else if (benefit == "5") {
+                    $("#okbtn").show();
+                    $("#Btnok").click(function () {
+                        Hospital();
+                    });
+                }
+                else if (benefit == "6") {
+                    $("#okbtn").show();
+                    $("#Btnok").click(function () {
+                        Hotel();
+                    });
+                }
+            });
+        });
+     function EIA() {
+        $(".specify").hide();
+             $("#inresulte").show();
+             $("#Resulte").show();
+             document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+             document.getElementById('changeLabel').style.color = 'Red';
+             document.getElementById('labeltype').innerHTML = "รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA)";
+             document.getElementById('labeloffer').innerHTML = "สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)";
+             document.getElementById('labellaw').innerHTML = "ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดโครงการ กิจการหรือการดำเนินการ ซึ่งต้องจัดทำ EIA (ลำดับที่ 27)";
+    }
+    function Environment() {
+        $(".specify").hide();
+            $("#inresulte").show();
+            $("#Resulte").show();
+            document.getElementById('changeLabel').innerHTML = "เข้าข่าย";
+            document.getElementById('changeLabel').style.color = 'Red';
+            document.getElementById('labeltype').innerHTML = "รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist)";
+            document.getElementById('labeloffer').innerHTML = "สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)";
+            document.getElementById('labellaw').innerHTML = "มติคณะรัฐมนตรี เรื่อง การทบทวนการกำหนดประเภทและขนาดโครงการของหน่วยงานของรัฐที่ต้อเสนอรายงานการวิเคราะห์ผลกระทบสิ่งแวดล้อม ตามมติคณะรัฐมนตรีเกี่ยวกับป่านอนุรักษ์เพิ่มเติม";}
+    function NotdoReport() {
+         /* ไม่ต้องจัดทำรายงาน */
+            $(".specify").hide();
+            $("#inresulte").hide();
+             $("#Resulte").show();
+             document.getElementById('changeLabel').innerText = "ไม่เข้าข่าย";
+             document.getElementById('changeLabel').style.color = 'Green';
+            $("#b1").hide();
+    }
+    function Hospital() {
+        $(".specify").hide();
+                $("#resulteNext").show();
+                $(".areawater").hide();
+
+                document.getElementById('labelresulte2').innerHTML = " โรงพยาบาลหรือสถานพยาบาล";
+                $("#b1").hide();
+                $("#b2").hide();
+                $("#b3").show();
+    }
+    function Hotel() {
+         $(".specify").hide();
+                $("#resulteNext").show();
+                $(".areawater").hide();
+
+                document.getElementById('labelresulte2').innerHTML = " โรงแรมหรือสถานที่พักตากอากาศ";
+                $("#b1").hide();
+                $("#b2").show();
+                $("#b3").hide();
+    }
+    function ResidentBuilding() {
+                $(".specify").hide();
+                $("#resulteNext").show();
+                $(".areawater").hide();
+                document.getElementById('labelresulte2').innerHTML = " อาคารอยู่อาศัยรวม";
+                $("#b1").show();
+                $("#b2").hide();
+                $("#b3").hide();
+    }
+</script>
+

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+
+    @*template file*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/template/")styles/styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/29ba5ebcbb.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div>
+        <div class="contain-index">
+            <div class="menu-header">
+
+                <div class="logo-box">
+                    <img src="@Url.Content("~/Content/template/")img/ptt-menu-logo.png" alt="">
+                </div>
+                <div class="wd-s">
+                    <div class="menu-list">
+                        <div class="sch-box">
+                            <input type="text" name="" id="" placeholder="Search">
+                            <div class="sch-icon"><i class="fas fa-search"></i></div>
+                        </div>
+                        <ul class="sys-menu">
+                            <li>
+                                <a href="/SmartEIA/Login">เข้าสู่ระบบ</a>
+                            </li>
+
+                            <li>
+                                <a href="">ติดต่อเรา</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div id="flip" class="mb-s">
+                    <div class="icon-box">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+
+            </div>
+            <div class="m_menu" id="mb_m">
+                <div class="m_menu-list">
+                    <div class="sch-box">
+                        <input type="text" name="" id="">
+                        <div class="sch-icon"><i class="fas fa-search"></i></div>
+                    </div>
+                    <ul class="m-sys-menu">
+                        <li>
+                            <a href="/SmartEIA/Login">เข้าสู่ระบบ</a>
+                        </li>
+
+                        <li>
+                            <a href="">ติดต่อเรา</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $("#flip").click(function () {
+            //$("#mb_m").css("display","block");
+            var dp = $('#mb_m').css('display');
+            if (dp == 'none') {
+                $("#mb_m").css("display", "block");
+            } else {
+                $("#mb_m").css("display", "none");
+            }
+        });
+    });
+</script>

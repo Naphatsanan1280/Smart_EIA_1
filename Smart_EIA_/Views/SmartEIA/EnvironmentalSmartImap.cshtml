@@ -1,0 +1,347 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/template/")styles/styles.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/29ba5ebcbb.js" crossorigin="anonymous"></script>
+
+</html>
+<body>
+    <div class="contain-index">
+
+        <div class="menu-header">
+            <div class="logo-box">
+                <img src="@Url.Content("~/Content/template/")img/ptt-menu-logo.png" alt="">
+            </div>
+            <div class="menu-list">
+                <div class="sch-box">
+                    <input type="text" name="" id="">
+                    <div class="sch-icon"><i class="fas fa-search"></i></div>
+                </div>
+                <ul class="sys-menu">
+                    <li>
+                        <a href="/SmartEIA/Homepage">หน้าแรก</a>
+                    </li>
+                    <li>
+                        <a href="">จัดการข้อมูลผู้ใช้</a>
+                    </li>
+                    <li>
+                        <a href="">ตั้งค่าระบบ</a>
+                    </li>
+                    <li>
+                        <a href="">ติดต่อเรา</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+        <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+            <div class="header-banner">
+
+                <div class="btx-3">
+                    <div class="img-ss">
+                        <img src="@Url.Content("~/Content/template/")img/icon-5.svg" alt="" width="90px" height="90px">
+                    </div>
+                    <p>
+                        Environmental SMARTi Map
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+            <div class="row " style=" margin-right: 0px;margin-left: 0px;">
+                <div class="col-lg-12 nopadding">
+                    <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                    <div class="l-menu bg-gg nopadding">
+                        <div class="tab-col">
+
+                            <div class="tab-ccdd">
+                                <div class="l-tab">
+                                    <button class="dbtabb btn-active" id="btn-1" onclick="active_btn(1)">ชั้นข้อมูล</button>
+                                </div>
+                                <div class="r-tab">
+                                    <button class="dbtabb" id="btn-2" onclick="active_btn(2)">ระบุที่ตั้ง</button>
+                                </div>
+                            </div>
+                            <div id="tab-1">
+                                <div class="row" style="padding: 10px 30px;">
+                                    <div class="col-lg-12 sadss" style="background-color: #fff; padding: 15px; margin-top: 20px; max-height: 550px;">
+                                        <div class="tab-sldd" id='tab-g-1'>
+                                            <div class="lss-box">
+                                                <div class="sl-hdd-0" id="sdd-1" onclick="list_ssdd(1)">
+                                                    <p class="sll-sm-text-1">
+                                                        Physical Environment
+                                                    </p>
+                                                </div>
+                                                <div class="select-list" id="lss-1">
+                                                    <ul>
+                                                        <li onclick="slt_this_list(1)"> <span class="ssed" id="list-1"></span> พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                        <li onclick="slt_this_list(2)"> <span class="ssed" id="list-2"></span> พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                        <li onclick="slt_this_list(3)"> <span class="ssed" id="list-3"></span> พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                        <li onclick="slt_this_list(4)"> <span class="ssed" id="list-4"></span> พื้นที่อุทยานประวัติศาสตร์</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="lss-box">
+                                                <div class="sl-hdd-0" id="sdd-2" onclick="list_ssdd(2)">
+                                                    <p class="sll-sm-text-2">
+                                                        Biological Environment
+                                                    </p>
+                                                </div>
+                                                <div class="select-list" id="lss-2">
+                                                    <ul>
+                                                        <li onclick="slt_this_list(5)"><span class="ssed" id="list-5"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                        <li onclick="slt_this_list(6)"><span class="ssed" id="list-6"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                        <li onclick="slt_this_list(7)"><span class="ssed" id="list-7"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                        <li onclick="slt_this_list(8)"><span class="ssed" id="list-8"></span>พื้นที่อุทยานประวัติศาสตร์</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="lss-box">
+                                                <div class="sl-hdd-0" id="sdd-3" onclick="list_ssdd(3)">
+                                                    <p class="sll-sm-text-3">
+                                                        Human Use
+                                                    </p>
+                                                </div>
+                                                <div class="select-list" id="lss-3">
+                                                    <ul>
+                                                        <li onclick="slt_this_list(9)"><span id="list-9"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                        <li onclick="slt_this_list(10)"><span class="ssed" id="list-10"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                        <li onclick="slt_this_list(11)"><span class="ssed" id="list-11"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                        <li onclick="slt_this_list(12)"><span class="ssed" id="list-12"></span>พื้นที่อุทยานประวัติศาสตร์</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="lss-box">
+                                                <div class="sl-hdd-0" id="sdd-4" onclick="list_ssdd(4)">
+                                                    <p class="sll-sm-text-4">
+                                                        Quality of Life
+                                                    </p>
+
+                                                </div>
+                                                <div class="select-list" id="lss-4">
+                                                    <ul>
+                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-13"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-14"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-15"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-16"></span>พื้นที่อุทยานประวัติศาสตร์</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-2">
+                                <div class="row">
+                                    <div class="col-lg-12 sadss">
+                                        <div class="tab-sldd" id='tab-g-2'>
+                                            <div class="pp-list">
+                                                <div class="list-p" onclick="sliderr(4)">
+                                                    <p class="hh">
+                                                        พื้นที่
+                                                    </p>
+                                                </div>
+                                                <div class="dt-slide" id="ss-4">
+                                                    <div class="sl-input" id="sd-4">
+                                                        <button>Add placemark</button>
+                                                        <button>Draw line or shape</button>
+                                                        <textarea class="txa-50" rows="5" cols="50">
+                                                        
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="list-p" onclick="sliderr(1)">
+                                                    <p class="hh">
+                                                        พิกัดที่ตั้ง
+                                                    </p>
+                                                </div>
+                                                <div class="dt-slide" id="ss-1">
+                                                    <div class="sl-input" id="sd-1">
+                                                        <button>Add placemark</button>
+                                                        <button>Draw line or shape</button>
+                                                        <textarea class="txa-50" rows="5" cols="50">
+                                                    
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="list-p" onclick="sliderr(2)">
+                                                    <p class="hh">
+                                                        กำหนดเอง
+                                                    </p>
+                                                </div>
+                                                <div class="dt-slide" id="ss-2">
+                                                    <div class="sl-input" id="sd-2">
+                                                        <button>Add placemark</button>
+                                                        <button>Draw line or shape</button>
+                                                        <textarea class="txa-50" rows="5" cols="50">
+                                                        
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="list-p" onclick="sliderr(3)">
+                                                    <p class="hh">
+                                                        ตำแหน่งจากข้อมูล kmz ไฟล์
+                                                    </p>
+
+                                                </div>
+                                                <div class="dt-slide" id="ss-3">
+                                                    <div class="sl-input" id="sd-3">
+                                                        <button>Add placemark</button>
+                                                        <button>Draw line or shape</button>
+                                                        <textarea class="txa-50" rows="5" cols="50">
+                                                        
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <img src="@Url.Content("~/Content/template/")img/maptest.PNG" alt="" width="100%" height="700px" style="object-fit: cover;">
+                    <span class="ss-r-btn" onclick="ss_r_menu()"><i class="fas fa-chevron-left"></i></span>
+                    <div class="r-menu nopadding ">
+                        <div class="data-col bg-gg ">
+                            <div class="cds-lr">
+                                <p class="rr-h-tt">
+                                    ข้อมูลพื้นที่
+                                </p>
+                                <input type="text" name="" class="form-control it-11" id="">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="footer-banner">
+            <div class="ffff">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        active_btn(1);
+    });
+    function active_btn(a) {
+        if (a == 1) {
+            if ($("#btn-" + a).hasClass("btn-active")) {
+                $("#tab-" + a).css("display", "block");
+                $("#tab-2").css("display", "none");
+                $("#btn-2").removeClass("btn-active");
+            } else {
+                $("#btn-" + a).addClass("btn-active");
+                $("#tab-" + a).css("display", "block");
+                $("#tab-2").css("display", "none");
+                $("#btn-2").removeClass("btn-active");
+            }
+        } else {
+            if ($("#btn-" + a).hasClass("btn-active")) {
+                $("#tab-" + a).css("display", "block");
+                $("#tab-1").css("display", "none");
+                $("#btn-1").removeClass("btn-active");
+            } else {
+                $("#btn-" + a).addClass("btn-active");
+                $("#tab-" + a).css("display", "block");
+                $("#tab-1").css("display", "none");
+                $("#btn-1").removeClass("btn-active");
+            }
+        }
+
+    }
+    function sliderr(n) {
+
+        var dis = $('#ss-' + n).css('display');
+        if (dis == 'none') {
+            $("#ss-" + n).css("display", "block");
+            $("#sd-" + n).css("height", "auto");
+
+        } else {
+            $("#ss-" + n).css("display", "none");
+            $("#sd-" + n).css("height", "0px");
+        }
+
+    }
+    function list_ssdd(i) {
+        var dis = $('#lss-' + i).css('display');
+
+        if (dis == 'none') {
+            $("#lss-" + i).css("display", "block");
+
+            var styleElem = document.head.appendChild(document.createElement("style"));
+            styleElem.innerHTML = ".sll-sm-text-" + i + "::before {content: '-';}";
+        } else {
+            $("#lss-" + i).css("display", "none");
+            var styleElem = document.head.appendChild(document.createElement("style"));
+            styleElem.innerHTML = ".sll-sm-text-" + i + "::before {content: '+';}";
+        }
+    }
+    function slt_this_list(j) {
+        $(".ssed").css("background-color", "#fff");
+        var dis = $('#list-' + j).css('background-color');
+        if (dis == '#fff' || dis == 'rgb(255, 255, 255)') {
+
+            $("#list-" + j).css("background-color", "#ffff00");
+
+        } else {
+
+            $("#list-" + j).css("background-color", "#fff");
+        }
+    }
+    function ss_l_menu() {
+        if ($(".ss-btn").hasClass("ww-100")) {
+            $(".ss-btn").removeClass("ww-100");
+            $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+        } else {
+            $(".ss-btn").addClass("ww-100");
+            $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+        }
+
+    }
+    function ss_r_menu() {
+        if ($(".ss-r-btn").hasClass("ww-100")) {
+            $(".ss-r-btn").removeClass("ww-100");
+            $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+        } else {
+            $(".ss-r-btn").addClass("ww-100");
+            $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+        }
+
+    }
+</script>
+

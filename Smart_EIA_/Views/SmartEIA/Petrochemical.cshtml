@@ -1,0 +1,1007 @@
+﻿
+@{
+    ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/Content_Layout.cshtml";
+}
+
+    <head>
+        <script type="text/javascript" src="~/Scripts/FlowScript/Petrochemical/Petrochemical_JavaScript.js"></script>
+        <style>
+            .map {
+                background-color: #fff;
+                width: 100%;
+                padding: 5px;
+                height: 700px;
+                float: left;
+            }
+
+            #map {
+                width: 100%;
+                height: 100%;
+            }
+
+            #okbtn, #areaIndrustry, #ResulteNone, #Resulte, #Chemicaltype, #Construction, #Capacity, #AllCapacity, #typefactory, #riverArea, #areaWild {
+                display: none;
+            }
+
+            #actionsBtn {
+                text-align: center;
+                width: 100%;
+                height: 5px;
+                background-color: #808080;
+                margin: 0 auto;
+                margin-top: 0px;
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+
+                #actionsBtn a {
+                    color: #808080;
+                }
+
+            #container {
+                display: flex; /* establish flex container */
+                flex-direction: row; /* default value; can be omitted */
+                flex-wrap: nowrap; /* default value; can be omitted */
+                justify-content: space-between; /* switched from default (flex-start, see below) */
+            }
+
+                #container > div {
+                    width: 50%;
+                    height: 100%;
+                }
+
+            SELECT, INPUT[type="text"] {
+                width: 160px;
+                box-sizing: border-box;
+            }
+
+            SECTION {
+                justify-content: space-between;
+                padding: 8px;
+                background-color: #f0f0f0;
+                overflow: auto;
+            }
+
+                SECTION > DIV {
+                    float: left;
+                    padding: 4px;
+                }
+
+                    SECTION > DIV + DIV {
+                        width: 50px;
+                        text-align: center;
+                    }
+
+            
+        </style>
+
+    </head>
+<body onload="initMap()">
+    <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
+        <div class="header-banner">
+            <div class="btx">
+                <div class="img-ss">
+                    <img src="@Url.Content("~/Content/template/")img/link-4.svg" alt="" width="90px" height="90px">
+                </div>
+
+                <p>
+                    4. อุตสาหกรรมปิโตรเคมีที่มีกระบวนการผลิตทางเคมี
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+        <div class="row" style=" margin-right: 0px;margin-left: 0px;">
+            <div class="col-lg-12 nopadding">
+                <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                <div class="l-menu bg-gg nopadding">
+                    <div class="data-col">
+                        <p class="ddda">
+                            1.ระบุที่ตั้งโครงการ
+                        </p>
+                        <div class="pp-list">
+                            <div class="list-p" onclick="sliderr(1)">
+                                <p class="hh">
+                                    พิกัดที่ตั้ง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-1">
+                                <div class="sl-input" id="sd-1">
+                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
+                                    <hr />
+                                    <p>East:  <input type="text" /></p>
+                                    <p>North: <input type="text" /></p>
+                                    <button class="ee-bb">OK</button>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(2)">
+                                <p class="hh">
+                                    กำหนดเอง
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-2">
+                                <div class="sl-input" id="sd-2">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(3)">
+                                <p class="hh">
+                                    ตำแหน่งจากข้อมูล kmz ไฟล์
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-3">
+                                <div class="sl-input" id="sd-3">
+                                    <button>Import Kmz</button>
+                                    <button>Clear</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" onclick="sliderr(4)">
+                                <p class="hh">
+                                    ไม่ระบุที่ตั้งโครงการ
+                                </p>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row no_mr">
+                    <div class="col-md-8">
+                        <div class="map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nopadding ">
+                            <div class="data-col">
+                                <div class="specify">
+                                    <p class="ddda" style="margin-top: 10px;">
+                                        2.ระบุรายละเอียดโครงการ
+                                    </p>
+                                    <!--class="form-control"-->
+
+                                    <div id="Typeofbusiness">
+                                        <label>
+                                            ประเภทกิจการ
+                                        </label>
+                                        <select id="selectTypeofbusiness" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือกประเภทกิจการ--
+                                            </option>
+                                            <option value="a">
+                                                อุตสาหกรรมปิโตรเคมีขั้นต้น
+                                                (Upstream petrochemical industry)*
+                                            </option>
+                                            <option value="b">
+                                                อุตสาหกรรมปิโตรเคมีขั้นกลาง
+                                                (Intermediate petrochemical industry)*
+                                            </option>
+                                            <option value="c">อุตสาหกรรมปิโตรเคมีขั้นปลาย </option>
+                                        </select>
+
+
+                                    </div>
+
+                                    <div id="Chemicaltype">
+
+                                        <label>
+                                            ชนิดสารเคมีที่ผลิต หรือใช้เป็นวัตถุดิบ
+                                        </label>
+                                        <select id="selectChemicaltype" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือก ชนิดสารเคมีที่ผลิต หรือใช้เป็นวัตถุดิบ--
+                                            </option>
+                                            <option value="a">
+                                                สารก่อมะเร็ง กลุ่ม 1**
+                                            </option>
+                                            <option value="b">
+                                                สารก่อมะเร็ง กลุ่ม 2A**
+                                            </option>
+                                            <option value="c">
+                                                สารอื่นที่ไม่ใช่สารก่อมะเร็ง กลุ่ม 1 และ 2A
+                                            </option>
+                                        </select>
+
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnChemicaltype">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="Construction">
+                                        <label>
+                                            ก่อสร้าง/ขยายกำลังผลิต
+                                        </label>
+                                        <select id="selectConstruction" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือก ก่อสร้าง/ขยายกำลังผลิต--
+                                            </option>
+                                            <option value="a">
+                                                โรงงานใหม่
+                                            </option>
+                                            <option value="b">
+                                                ขยายกำลังผลิต
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnConstruction">ตกลง</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="Capacity">
+
+                                        <label>
+                                            กำลังการผลิต
+                                        </label>
+                                        <select id="selectCapacity" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือก กำลังการผลิต--
+                                            </option>
+                                            <option value="a">
+                                                น้อยกว่า 35 % ของกำลังการผลิตเดิม
+                                            </option>
+                                            <option value="b">
+                                                มากกว่าหรือเท่ากับ 35 % ของกำลังการผลิตเดิม
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnCapacity">ตกลง</button>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div id="AllCapacity">
+                                        <label>
+                                            กำลังการผลิตหรือขยายกำลังการผลิตรวม
+                                        </label>
+                                        <select id="selectAllCapacity" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือก กำลังการผลิตหรือขยายกำลังการผลิตรวม--
+                                            </option>
+                                            <option value="a">
+                                                น้อยกว่า 100 ตัน/วัน
+                                            </option>
+                                            <option value="b">
+                                                มากกว่าหรือเท่ากับ 100 ถึง น้อยกว่า 700 ตัน/วัน
+                                            </option>
+                                            <option value="c">
+                                                มากกว่าหรือเท่ากับ 700 ตัน/วัน
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnAllCapacity">ตกลง</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="okbtn" class="pc-btn">
+                                        <hr />
+                                        <button class="ee-bb" id="Btnok">ตกลง</button>
+                                    </div>
+
+
+                                    <div id="areaIndrustry">
+                                        <p>
+                                            พื้นที่นิคมอุตสาหกรรม  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label>
+                                            <section class="container">
+                                                <div>
+                                                    <select id="leftValues" size="6" multiple>
+                                                        <option value="6" selected>ไม่อยู่ในพื้นที่นิคมอุตสาหกรรม</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <input class="ee-bb" type="button" id="btnLeft" value="&lt;&lt; " />
+                                                    <input class="ee-bb" type="button" id="btnRight" value="&gt;&gt;" />
+                                                </div>
+                                                <div>
+                                                    <select id="rightValues" size="6" multiple>
+                                                        <option value="1">นิคมเอเชีย</option>
+                                                        <option value="2">นิคมอาร์ ไอ แอล</option>
+                                                        <option value="3">นิคมดับบลิว เอช เอตะวันออก (มาบตาพุด)</option>
+                                                        <option value="4">นิคมมาบตาพุด</option>
+                                                        <option value="5">นิคมผาแดง</option>
+                                                    </select>
+                                                    <div hidden>
+                                                        <input type="text" id="txtRight" />
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <div class="pc-btn">
+                                                <button class="ee-bb" id="btnareaIndrustry">ตกลง</button>
+                                            </div>
+                                    </div>
+
+
+                                    <div id="riverArea">
+                                        <p>
+                                            พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1 <label style="float:right;"><input type="checkbox" id="s3" onClick="Select3()" checked />  กำหนดเอง</label>
+                                        </p>
+                                        <select id="selectriver" class="form-control">
+                                            <option value="in" selected>อยู่</option>
+                                            <option value="out" >อยู่บางส่วน</option>
+                                            <option value="out">ไม่อยู่</option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="BtnriverArea">ตกลง</button>
+                                        </div>
+                                        <hr />
+                                    </div>
+
+                                    <div id="areaWild">
+                                        <p>
+                                            พื้นที่ป่าอนุรักษ์เพิ่มเติม ตามมติครม.  <label style="float:right;"><input type="checkbox" id="s2" onClick="Select2()" checked />  กำหนดเอง</label>
+                                        </p>
+
+                                        <select id="selectareaWild" class="form-control">
+                                            <option value="y" selected> อยู่</option>
+                                            <option value="n">ไม่อยู่</option>
+                                        </select>
+
+                                        <div class="pc-btn">
+
+                                            <button class="ee-bb" id="btnareaWild">ตกลง</button>
+
+                                        </div>
+
+                                        <hr />
+
+
+                                    </div>
+
+                                    <div id="typefactory">
+
+                                        <label>
+                                            ประเภทโรงงาน
+                                        </label>
+                                        <select id="selecttypefactory" class="form-control">
+                                            <option value="none" selected>
+                                                --เลือก ประเภทโรงงาน--
+                                            </option>
+                                            <option value="1">
+                                                โรงงานจำพวกที่ 1
+                                            </option>
+                                            <option value="2">
+                                                โรงงานจำพวกที่ 2
+                                            </option>
+                                            <option value="3">
+                                                โรงงานจำพวกที่ 3
+                                            </option>
+                                        </select>
+                                        <div class="pc-btn">
+                                            <button class="ee-bb" id="Btntypefactory">ตกลง</button>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                                <div id="Resulte">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <h5 id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</h5>
+                                    <hr />
+                                    <div id="inresulte">
+                                        <h5 id="label2">ประเภท</h5>
+                                        <h5 id="labeltype">
+                                            EHIA
+                                        </h5>
+                                        <!--   <hr />
+         <h5 id="label3">เสนอต่อ</h5>
+         <p style="width:100%;">
+           <img id="imglogo" src="" width="50px" height="50px" style="background-color:white;" />
+        <p id="labeloffer">สผ.</p>
+        </p>
+        <hr />
+        <h5 id="label4">ตามกฎหมาย</h5>
+        <p id="labellaw">เรื่อง...</p>
+        <hr />-->
+                                    </div>
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+                                <div id="ResulteNone">
+                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                    <p> เนื่องจาก <u style="color:green;">ไม่เข้าข่าย</u> ที่ต้องจัดทำรายงายด้านสิ่งแวดล้อมตามกฎหมายที่เกี่ยวข้องกับ อุตสาหกรรมปิโตรเคมีที่มีกระบวนการผลิตทางเคมี </p>
+                                    <hr />
+                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        <div class="ffff">
+
+        </div>
+    </div>
+</body>
+
+<script>
+        $("#btnLeft").click(function () {
+            var selectedItem = $("#rightValues option:selected");
+            $("#leftValues").append(selectedItem);
+        });
+        $("#btnRight").click(function () {
+            var selectedItem = $("#leftValues option:selected");
+            $("#rightValues").append(selectedItem);
+        });
+        $("#rightValues").change(function () {
+            var selectedItem = $("#rightValues option:selected");
+            $("#txtRight").val(selectedItem.val());
+        });
+        /*------------------------------------------------------*/
+    
+
+
+   function Select1()
+    {
+             var isChecked = document.getElementById("s1").checked;
+         document.getElementById("selectareaIndrustry1").disabled = !isChecked;
+          document.getElementById("selectareaIndrustry2").disabled = !isChecked;
+
+    }
+
+    function Select2()
+    {
+             var isChecked = document.getElementById("s2").checked;
+             document.getElementById("selectareaWild").disabled = !isChecked;
+    }
+    function Select3()
+    {
+             var isChecked = document.getElementById("s3").checked;
+             document.getElementById("selectriver").disabled = !isChecked;
+    }
+
+    /*map*/
+
+    /* เหลือประเภทสุดท้าย */
+        var map;
+        function initMap() {
+            var latlng = new google.maps.LatLng(13.7651624, 100.893642);
+            var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        }
+         /*slide*/
+        function sliderr(n) {
+            var dis = $('#ss-' + n).css('display');
+            console.log(dis);
+            if (dis == 'none') {
+                $("#ss-" + n).css("display", "block");
+                $("#sd-" + n).css("height", "auto");
+
+            } else {
+                $("#ss-" + n).css("display", "none");
+                $("#sd-" + n).css("height", "0px");
+            }
+        }
+        function ss_l_menu() {
+            if ($(".ss-btn").hasClass("ww-100")) {
+                $(".ss-btn").removeClass("ww-100");
+                $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+            } else {
+                $(".ss-btn").addClass("ww-100");
+                $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+                $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+                $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+            }
+
+        }
+        function ss_r_menu() {
+            if ($(".ss-r-btn").hasClass("ww-100")) {
+                $(".ss-r-btn").removeClass("ww-100");
+                $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+            } else {
+                $(".ss-r-btn").addClass("ww-100");
+                $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+                $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+                $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+            }
+
+        }
+        function hideresulte() {
+          $("#Resulte").hide();
+            $(".specify").show();
+            $("#ResulteNone").hide();
+    }
+
+    
+    $(document).ready(function () {
+        $("#selectTypeofbusiness").on('change', function () {
+
+            var Typeofbusiness = $('#selectTypeofbusiness').find(":selected").val();
+            /* ประเภทกิจการที่ 1 */
+            if (Typeofbusiness == "none") { alert("กรุณาเลือก ประเภทกิจการ"); }     /* ///////////////////////////////////// */
+            else if (Typeofbusiness == "a") {
+                $("#Construction").show();
+                $("#BtnConstruction").on('click', function () {
+                    var Construction = $('#selectConstruction').find(":selected").val();
+                    if (Construction == "a") {
+                       
+                    /*EHIA*/
+                        Pe_4_1();
+                   
+                    }
+                    else if (Construction == "none") {
+                        alert("กรุณาเลือก ก่อสร้าง/ขยายกำลังผลิต");  /* ///////////////////////////////////// */
+                    }
+                    else {
+                        $("#Capacity").show();
+                        $("#BtnCapacity").click(function () {
+                            var Capacity = $('#selectCapacity').find(":selected").val();
+                            if (Capacity == "none") { alert("กรุณาเลือก กำลังการผลิต"); } /* ///////////////////////////////////// */
+                            else if (Capacity == "a") {
+                                $("#areaIndrustry").show();
+                                $("#btnareaIndrustry").click(function () {
+                                    var areaIndrustry = $('#leftValues').find(":selected").val();
+                                    if (areaIndrustry == "6") {
+                                        $("#areaWild").hide();
+                                        $("#riverArea").show();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == 'in') {
+                                                //4.3
+                                                Pe_4_3();
+                                            }
+                                            else {
+                                                $("#areaWild").show();
+                                                $("#typefactory").hide();
+                                                $("#btnareaWild").click(function () {
+                                                    var areaWild = $('#selectareaWild').find(":selected").val();
+                                                    if (areaWild == "y") {
+                                                        $("#typefactory").show();
+                                                        $("#btntypefactory").click(function () {
+                                                            var typefactory = $('#selecttypefactory').find(":selected").val();
+                                                            if (typefactory == "1") {
+                                                                //4.5
+                                                                Pe_4_5();
+                                                            }
+                                                            else if (typefactory == "2") {
+                                                                //4.6
+                                                                Pe_4_6();
+                                                            }
+                                                            else if (typefactory == "3") {
+                                                                //4.7
+                                                                Pe_4_7();
+                                                            }
+                                                            else {
+                                                                alert("กรุณาเลือกประเภทโรงงาน");
+                                                            }
+                                                        });
+
+                                                    }
+                                                    else {
+                                                        //4.4
+                                                        Pe_4_4();
+                                                    }
+
+
+                                                });
+                                            }
+
+                                        });
+
+
+
+
+                                    }
+                                    else {
+                                        $("#riverArea").show();
+                                        $("#typefactory").hide();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == "none") { alert("กรุณาเลือก พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1"); } /* ///////////////////////////////////// */
+                                            else if (riverArea == "in") {
+                                                /*EIA*/
+                                                //4.3
+                                                Pe_4_3();
+                                            }
+                                            else {
+                                                //4.4
+                                                Pe_4_4();
+                                            }
+                                        });
+                                    }
+                                });
+                            } else {
+                                /*EHIA*/
+                                //4.1
+                                Pe_4_1();
+
+                            }
+
+                        });
+                    }
+
+                });
+            }
+            /* ประเภทกิจการที่ 2 */
+            else if (Typeofbusiness == "b") {
+                $("#Chemicaltype").show();
+                $("#Construction").hide();
+                $("#Capacity").hide();
+                $("#areaIndrustry").hide();
+                $("#typefactory").hide();
+                $("#riverArea").hide();
+                $("#BtnChemicaltype").click(function () {
+                    var Chemicaltype = $('#selectChemicaltype').find(":selected").val();
+                    if (Chemicaltype == "none") { alert("กรุณาเลือก ชนิดสารเคมีที่ผลิตหรือใช้เป็นวัตถุดิบ"); } /* ///////////////////////////////////// */
+                    else if (Chemicaltype == "a") {
+                        /*สารก่อมะเร็ง 1*/
+                        $("#AllCapacity").show();
+                        $("#BtnAllCapacity").click(function () {
+                            var AllCapacity = $('#selectAllCapacity').find(":selected").val();
+                            if (AllCapacity == "none") { alert("กรุณาเลือก  กำลังการผลิตหรือขยายกำลังการผลิตรวม"); }  /* ///////////////////////////////////// */
+                            else if (AllCapacity == "a") {
+                                /*< 100*/
+                                $("#areaIndrustry").show();
+                                $("#btnareaIndrustry").click(function () {
+                                    var areaIndrustry = $('#selectareaIndrustry2').find(":selected").val();
+                                    if (areaIndrustry == "6") {
+                                        $("#areaWild").hide();
+                                        $("#riverArea").show();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == 'in') {
+                                                //4.3
+                                                Pe_4_3();
+                                            }
+                                            else {
+                                                $("#areaWild").show();
+                                                $("#typefactory").hide();
+                                                $("#btnareaWild").click(function () {
+                                                    var areaWild = $('#selectareaWild').find(":selected").val();
+                                                    if (areaWild == "y") {
+                                                        $("#typefactory").show();
+                                                        $("#btntypefactory").click(function () {
+                                                            var typefactory = $('#selecttypefactory').find(":selected").val();
+                                                            if (typefactory == "1") {
+                                                                //4.5
+                                                                Pe_4_5();
+                                                            }
+                                                            else if (typefactory == "2") {
+                                                                //4.6
+                                                                Pe_4_6();
+                                                            }
+                                                            else if (typefactory == "3") {
+                                                                //4.7
+                                                                Pe_4_7();
+                                                            }
+                                                            else {
+                                                                alert("กรุณาเลือกประเภทโรงงาน");
+                                                            }
+                                                        });
+
+                                                    }
+                                                    else {
+                                                        //4.4
+                                                        Pe_4_4();
+                                                    }
+
+                                                });
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        $("#riverArea").show();
+                                        $("#typefactory").hide();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == "none") { alert("กรุณาเลือก พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1"); } /* ///////////////////////////////////// */
+                                            else if (riverArea == "in") {
+                                                //4.3
+                                                Pe_4_3();
+                                            }
+                                            else {
+                                                //4.2
+                                                Pe_4_2();
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                            else if (AllCapacity == "b" || AllCapacity == "c") {
+                                //4.1
+                                Pe_4_1();
+                            }
+                        });
+                    }
+                    else if (Chemicaltype == "b") {
+                        /*สารก่อมะเร็ง 2*/
+                        $("#AllCapacity").show();
+                        $("#BtnAllCapacity").click(function () {
+                            var AllCapacity = $('#selectAllCapacity').find(":selected").val();
+                            if (AllCapacity == "none") { alert("กรุณาเลือก  กำลังการผลิตหรือขยายกำลังการผลิตรวม"); }  /* ///////////////////////////////////// */
+                            else if (AllCapacity == "a") {
+                                /*< 100*/
+                                $("#areaIndrustry").show();
+                                $("#btnareaIndrustry").click(function () {
+                                    var areaIndrustry = $('#selectareaIndrustry2').find(":selected").val();
+                                    if (areaIndrustry == "6") {
+                                        $("#areaWild").hide();
+                                        $("#riverArea").show();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == "in") {
+                                                //4.9
+                                                Pe_4_9();
+                                            }
+                                            else {
+                                                $("#areaWild").show();
+                                                $("#typefactory").hide();
+                                                $("#btnareaWild").click(function () {
+                                                    var areaWild = $('#selectareaWild').find(":selected").val();
+                                                    if (areaWild == "y") {
+                                                        $("#typefactory").show();
+                                                        $("#btntypefactory").click(function () {
+                                                            var typefactory = $('#selecttypefactory').find(":selected").val();
+                                                            if (typefactory == "1") {
+                                                                //4.11
+                                                                Pe_4_11();
+                                                            }
+                                                            else if (typefactory == "2") {
+                                                                //4.12
+                                                                Pe_4_12();
+                                                            }
+                                                            else if (typefactory == "3") {
+                                                                //4.13
+                                                                Pe_4_13();
+                                                            }
+                                                            else {
+                                                                alert("กรุณาเลือกประเภทโรงงาน");
+                                                            }
+                                                        });
+
+                                                    }
+                                                    else {
+                                                        //4.10
+                                                        Pe_4_10();
+                                                    }
+
+                                                });
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        $("#riverArea").show();
+                                        $("#typefactory").hide();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == "none") { alert("กรุณาเลือก พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1"); } /* ///////////////////////////////////// */
+                                            else if (riverArea == "in") {
+                                                //4.9
+                                                Pe_4_9();
+                                            }
+                                            else {
+                                                //4.8
+                                                Pe_4_8();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                            else if (AllCapacity == "b") {
+                                /*>= 100 - < 700*/
+                                Pe_4_14();
+                            }
+                            else if (AllCapacity == "c") {
+                                /* >=700 */
+                                Pe_4_15();
+                            }
+                        });
+                    }
+                    else if (Chemicaltype == "c") {
+                        /*สารก่อมะเร็ง 3*/
+                        $("#AllCapacity").show();
+                        $("#BtnAllCapacity").click(function () {
+                            var AllCapacity = $('#selectAllCapacity').find(":selected").val();
+                            if (AllCapacity == "none") { alert("กรุณาเลือก  กำลังการผลิตหรือขยายกำลังการผลิตรวม"); }  /* ///////////////////////////////////// */
+                            else if (AllCapacity == "a") {
+                                /*< 100*/
+                                $("#areaIndrustry").show();
+                                $("#btnareaIndrustry").click(function () {
+                                    var areaIndrustry = $('#selectareaIndrustry2').find(":selected").val();
+                                    if (areaIndrustry == "6") {
+                                        $("#areaWild").hide();
+                                        $("#riverArea").show();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == "in") {
+                                                //4.17
+                                                Pe_4_17();
+                                            }
+                                            else {
+                                                $("#areaWild").show();
+                                                $("#typefactory").hide();
+                                                $("#btnareaWild").click(function () {
+                                                    var areaWild = $('#selectareaWild').find(":selected").val();
+                                                    if (areaWild == "y") {
+                                                        $("#typefactory").show();
+                                                        $("#btntypefactory").click(function () {
+                                                            var typefactory = $('#selecttypefactory').find(":selected").val();
+                                                            if (typefactory == "1") {
+                                                                //4.19
+                                                                Pe_4_19();
+                                                            }
+                                                            else if (typefactory == "2") {
+                                                                //4.20
+                                                                Pe_4_20();
+                                                            }
+                                                            else if (typefactory == "3") {
+                                                                //4.21
+                                                                Pe_4_21();
+                                                            }
+                                                            else {
+                                                                alert("กรุณาเลือกประเภทโรงงาน");
+                                                            }
+                                                        });
+
+                                                    }
+                                                    else {
+                                                        //4.18
+                                                        Pe_4_18();
+                                                    }
+
+                                                });
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        $("#riverArea").show();
+                                        $("#typefactory").hide();
+                                        $("#BtnriverArea").click(function () {
+                                            var riverArea = $('#selectriver').find(":selected").val();
+                                            if (riverArea == "none") { alert("กรุณาเลือก พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1"); } /* ///////////////////////////////////// */
+                                            else if (riverArea == "in") {
+                                                //4.9
+                                                Pe_4_17();
+                                            }
+                                            else {
+                                                //4.8
+                                                Pe_4_16();
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                            else if (AllCapacity == "b" || AllCapacity == "c") {
+                                /*>= 100 - < 700  || >=700 */
+                                //4.22
+                                Pe_4_22();
+                            }
+
+                        });
+
+                    }
+                });
+            }
+            /* ประเภทกิจการที่ 3 */
+            else if (Typeofbusiness == "c") {
+
+                $("#Chemicaltype").hide();
+                $("#Construction").hide();
+                $("#Capacity").hide();
+                $("#areaIndrustry").hide();
+                $("#typefactory").hide();
+                $("#riverArea").hide();
+                /*ประเภทที่ 3 */
+                $("#AllCapacity").show();
+                $("#BtnAllCapacity").click(function () {
+                    var AllCapacity = $('#selectAllCapacity').find(":selected").val();
+                    if (AllCapacity == "none") { alert("กรุณาเลือก  กำลังการผลิตหรือขยายกำลังการผลิตรวม"); }  /* ///////////////////////////////////// */
+                    else if (AllCapacity == "a") {
+                        /*< 100*/
+                        $("#areaIndrustry").show();
+                        $("#btnareaIndrustry").click(function () {
+                            var areaIndrustry = $('#selectareaIndrustry2').find(":selected").val();
+                            if (areaIndrustry == "6") {
+                                $("#areaWild").hide();
+                                $("#riverArea").show();
+                                $("#BtnriverArea").click(function () {
+                                    var riverArea = $('#selectriver').find(":selected").val();
+                                    if (riverArea == "in") {
+                                        //4.24
+                                        Pe_4_24();
+                                    }
+                                    else {
+                                        $("#areaWild").show();
+                                        $("#typefactory").hide();
+                                        $("#btnareaWild").click(function () {
+                                            var areaWild = $('#selectareaWild').find(":selected").val();
+                                            if (areaWild == "y") {
+                                                $("#typefactory").show();
+                                                $("#btntypefactory").click(function () {
+                                                    var typefactory = $('#selecttypefactory').find(":selected").val();
+                                                    if (typefactory == "1") {
+                                                        //4.26
+                                                        Pe_4_26();
+                                                    }
+                                                    else if (typefactory == "2") {
+                                                        //4.27
+                                                        Pe_4_27();
+                                                    }
+                                                    else if (typefactory == "3") {
+                                                        //4.28
+                                                        Pe_4_28();
+                                                    }
+                                                    else {
+                                                        alert("กรุณาเลือกประเภทโรงงาน");
+                                                    }
+                                                });
+
+                                            }
+                                            else {
+                                                //4.25
+                                                Pe_4_25();
+                                            }
+
+                                        });
+                                    }
+                                });
+                            }
+                            else {
+                                $("#riverArea").show();
+                                $("#typefactory").hide();
+                                $("#BtnriverArea").click(function () {
+                                    var riverArea = $('#selectriver').find(":selected").val();
+                                    if (riverArea == "none") { alert("กรุณาเลือก พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1"); } /* ///////////////////////////////////// */
+                                    else if (riverArea == "in") {
+                                        //4.24
+                                        Pe_4_24();
+                                    }
+                                    else {
+                                        //4.23
+                                        Pe_4_23();
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                    else if (AllCapacity == "b" || AllCapacity == "c") {
+                        /*>= 100 - < 700  || >=700 */
+                        Pe_4_29();
+
+                    }
+                });
+
+
+
+
+            }
+
+        });
+
+    });
+   
+
+    
+     
+</script>
+
