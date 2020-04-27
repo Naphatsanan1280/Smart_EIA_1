@@ -15,6 +15,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <script type="text/javascript" src="~/Scripts/FlowScript/Pipeline/PipeLine_JavaScript.js"></script>
+
         <style>
 
             .map {
@@ -236,7 +237,7 @@
                                             <input type="text" id="show_detail_upload_file" />
                                             <select id="selectarea" class="form-control" disabled>
                                                 <option value="in" selected>อยู่</option>
-                                                <option value="out">อยู่บางส่วน</option>
+                                                <option value="out1">อยู่บางส่วน</option>
                                                 <option value="out">ไม่อยู่</option>
 
                                             </select>
@@ -295,7 +296,7 @@
 </body>
 
 <script>
-    var file_map_data = ["C:/Users/Admin/source/repos/PTT_Smart_EIA/PTT_Smart_EIA/App_Data/UploadedFiles/data_DB.json"];
+  //  var file_map_data = ["C:/Users/Admin/source/repos/PTT_Smart_EIA/PTT_Smart_EIA/App_Data/UploadedFiles/data_DB.json"];
     var countyLayer = [];//["test.geojson"];
     var data_obj = {};
     var status_check_position_inlocation;
@@ -605,7 +606,7 @@
     // function in menu
     //'/../Views/mng_view/data_DB.json
     //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\Views\SmartEIA\mng_view\Stuk-jszip-bead269\dist\jszip.js
-    $.getScript('@Url.Content("/Scripts/mng_view/Stuk-jszip-bead269/dist/jszip.js")', function () // get scrip in file
+    $.getScript("http://58.82.155.218/Smart_EIA/jzip/dist/jszip.js", function () // get scrip in file
     {
 
         let getDom = xml => (new DOMParser()).parseFromString(xml, "text/xml")
