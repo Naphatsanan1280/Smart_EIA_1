@@ -76,15 +76,11 @@
                 <div class="img-ss">
                     <img src="@Url.Content("~/Content/template/")img/link-9.svg" alt="" width="90px" height="90px">
                 </div>
-
                 <p>
                     7. โรงงานปรับคุณภาพของเสียรวมเฉพาะสิ่งปฏิกูลหรือวัสดุที่ไม่ใช้แล้ว
                 </p>
-
             </div>
         </div>
-
-        
     </div>
     <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
         <div class="row" style=" margin-right: 0px;margin-left: 0px;">
@@ -172,7 +168,7 @@
                                             <option value="none" selected>
                                                 --เลือกประเภทกิจการ--
                                             </option>
-                                            
+
                                             <option value="b">สถานที่ที่ใช้ในการกำจัดขยะมูลฝอย</option>
                                             <option value="c"> โรงงานประกอบกิจการเกี่ยวกับการคัดแยกหรือการฝังกลบสิ่งปฏิกูลหรือวัสดุไม่ใช้แล้วในชุมชน และ โรงงานปรับคุณภาพของเสียรวมชุมชน </option>
                                             <option value="d">โรงงานปรับคุณภาพของเสียรวม (รง. 101) ได้แก่ โรงงานบำบัดน้ำเสียรวม โรงงานเผาของเสียรวม</option>
@@ -383,9 +379,6 @@
                                         </div>
                                         <hr />
                                     </div>
-
-
-                                   
                                     <div id="areaIndrustry">
                                         <p>
                                             พื้นที่นิคมอุตสาหกรรม  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label>
@@ -422,7 +415,7 @@
                                     <div id="protectareaChonburi">
                                         <p>
                                             พื้นที่คุ้มครองสิ่งแวดล้อม ชลบุรี <label style="float:right;"><input type="checkbox" id="s5" onClick="Selec5()" />  กำหนดเอง</label>
-                                            <select name="" id="selectprotectareaChonburi" class="form-control" >
+                                            <select name="" id="selectprotectareaChonburi" class="form-control">
                                                 <option value="1" selected>
                                                     อยู่
                                                 </option>
@@ -440,7 +433,7 @@
                                     <div id="riverarea">
                                         <p>
                                             พื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1 <label style="float:right;"><input type="checkbox" id="s1" onClick="Selec1()" />  กำหนดเอง</label>
-                                            <select name="" id="selectriverarea" class="form-control" >
+                                            <select name="" id="selectriverarea" class="form-control">
                                                 <option value="1" selected>
                                                     อยู่
                                                 </option>
@@ -454,44 +447,45 @@
                                         </div>
                                         <hr />
                                     </div>
-                                </div>
 
-                                <div id="WildArea">
-                                    <p>
-                                        พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.-->
-                                    </p>
-                                    <select id="selectWildArea" class="form-control">
-                                        <option value="1" selected>
-                                            อยู่
-                                        </option>
-                                        <option value="2">
-                                            ไม่อยู่
-                                        </option>
-                                    </select>
-                                    <div class="pc-btn">
-                                        <button class="ee-bb" id="BtnWildArea">ตกลง</button>
-                                    </div>
-                                </div>
 
-                                <div id="Factorytype">
-                                    <p>
-                                        ประเภทโรงงาน
-                                        <select id="selectFactorytype" class="form-control">
-                                            <option value="none" selected>--เลือกประเภทโรงงาน--</option>
-                                            <option value="1">
-                                                โรงงานประเภทที่ 1
+                                    <div id="WildArea">
+                                        <p>
+                                            พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.  <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" checked />  กำหนดเอง</label><!--พื้นที่ป่าอนุรักษ์เพิ่มเติมตามมติ ครม.-->
+                                        </p>
+                                        <select id="selectWildArea" class="form-control">
+                                            <option value="1" selected>
+                                                อยู่
                                             </option>
                                             <option value="2">
-                                                โรงงานประเภทที่ 2
-                                            </option>
-                                            <option value="3">
-                                                โรงงานประเภทที่ 3
+                                                ไม่อยู่
                                             </option>
                                         </select>
                                         <div class="pc-btn">
-                                            <button class="ee-bb" id="BtnFactorytype">ตกลง</button>
+                                            <button class="ee-bb" id="BtnWildArea">ตกลง</button>
                                         </div>
-                                    </p>
+                                    </div>
+
+                                    <div id="Factorytype">
+                                        <p>
+                                            ประเภทโรงงาน
+                                            <select id="selectFactorytype" class="form-control">
+                                                <option value="none" selected>--เลือกประเภทโรงงาน--</option>
+                                                <option value="1">
+                                                    โรงงานประเภทที่ 1
+                                                </option>
+                                                <option value="2">
+                                                    โรงงานประเภทที่ 2
+                                                </option>
+                                                <option value="3">
+                                                    โรงงานประเภทที่ 3
+                                                </option>
+                                            </select>
+                                            <div class="pc-btn">
+                                                <button class="ee-bb" id="BtnFactorytype">ตกลง</button>
+                                            </div>
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div id="Resulte">
@@ -754,11 +748,11 @@
                                         $("#BtnWildArea").click(function () {
                                             var WildArea = $("#selectWildArea").find(":selected").val();
                                             if (WildArea == "1") {
-                                                //7.9
-                                                was_7_9();
-                                            } else {
                                                 //7.10
                                                 was_7_10();
+                                            } else {//7.9
+                                                was_7_9();
+                                                
                                             }
                                         });
                                     }

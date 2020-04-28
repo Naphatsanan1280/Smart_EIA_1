@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.5.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/template/")styles/styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/29ba5ebcbb.js" crossorigin="anonymous"></script>
+
+    <link rel="icon" href="~/Image/iconPTT.png" />
+</head>
+<body>
+    <div class="contain-index">
+
+        <div class="menu-header">
+
+            <div class="logo-box">
+                <img src="@Url.Content("~/Content/template/")img/ptt-menu-logo.png" alt="">
+            </div>
+            <div class="wd-s">
+                <div class="menu-list">
+                    <div class="sch-box">
+                        <input type="text" name="" id="">
+                        <div class="sch-icon"><i class="fas fa-search"></i></div>
+                    </div>
+                    <ul class="sys-menu">
+                        <li>
+                            <a href="/SmartEIA/Homepage">หน้าแรก</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div id="flip" class="mb-s">
+                <div class="icon-box">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="m_menu" id="mb_m">
+            <div class="m_menu-list">
+                <div class="sch-box">
+                    <input type="text" name="" id="">
+                    <div class="sch-icon"><i class="fas fa-search"></i></div>
+                </div>
+                <ul class="m-sys-menu">
+                    <li>
+                        <a href="/SmartEIA/Homepage">หน้าแรก</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+        <div>
+            @RenderBody()
+        </div>
+
+        <div class="footer-banner">
+            <div class="ffff">
+
+            </div>
+        </div>
+</body>
+</html>
+<script>
+    $(function () {
+        active_btn(1);
+    });
+    function active_btn(a) {
+        if (a == 1) {
+            if ($("#btn-" + a).hasClass("btn-active")) {
+                $("#tab-" + a).css("display", "block");
+                $("#tab-2").css("display", "none");
+                $("#btn-2").removeClass("btn-active");
+            } else {
+                $("#btn-" + a).addClass("btn-active");
+                $("#tab-" + a).css("display", "block");
+                $("#tab-2").css("display", "none");
+                $("#btn-2").removeClass("btn-active");
+            }
+        } else {
+            if ($("#btn-" + a).hasClass("btn-active")) {
+                $("#tab-" + a).css("display", "block");
+                $("#tab-1").css("display", "none");
+                $("#btn-1").removeClass("btn-active");
+            } else {
+                $("#btn-" + a).addClass("btn-active");
+                $("#tab-" + a).css("display", "block");
+                $("#tab-1").css("display", "none");
+                $("#btn-1").removeClass("btn-active");
+            }
+        }
+
+    }
+    function sliderr(n) {
+
+        var dis = $('#ss-' + n).css('display');
+        if (dis == 'none') {
+            $("#ss-" + n).css("display", "block");
+            $("#sd-" + n).css("height", "auto");
+
+        } else {
+            $("#ss-" + n).css("display", "none");
+            $("#sd-" + n).css("height", "0px");
+        }
+
+    }
+    function list_ssdd(i) {
+        var dis = $('#lss-' + i).css('display');
+
+        if (dis == 'none') {
+            $("#lss-" + i).css("display", "block");
+
+            var styleElem = document.head.appendChild(document.createElement("style"));
+            styleElem.innerHTML = ".sll-sm-text-" + i + "::before {content: '-';}";
+        } else {
+            $("#lss-" + i).css("display", "none");
+            var styleElem = document.head.appendChild(document.createElement("style"));
+            styleElem.innerHTML = ".sll-sm-text-" + i + "::before {content: '+';}";
+        }
+    }
+    function slt_this_list(j) {
+        $(".ssed").css("background-color", "#fff");
+        var dis = $('#list-' + j).css('background-color');
+        if (dis == '#fff' || dis == 'rgb(255, 255, 255)') {
+
+            $("#list-" + j).css("background-color", "#ffff00");
+
+        } else {
+
+            $("#list-" + j).css("background-color", "#fff");
+        }
+    }
+    function ss_l_menu() {
+        if ($(".ss-btn").hasClass("ww-100")) {
+            $(".ss-btn").removeClass("ww-100");
+            $(".l-menu").animate({ "left": "-400px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-right"></i>')
+        } else {
+            $(".ss-btn").addClass("ww-100");
+            $(".l-menu").animate({ "left": "0px" }, 300, "swing");
+            $(".ss-btn").animate({ "left": "360px" }, 300, "swing");
+            $(".ss-btn").html('<i class="fas fa-chevron-left"></i>')
+        }
+
+    }
+    function ss_r_menu() {
+        if ($(".ss-r-btn").hasClass("ww-100")) {
+            $(".ss-r-btn").removeClass("ww-100");
+            $(".r-menu").animate({ "right": "-400px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-left"></i>')
+        } else {
+            $(".ss-r-btn").addClass("ww-100");
+            $(".r-menu").animate({ "right": "0px" }, 300, "swing");
+            $(".ss-r-btn").animate({ "right": "360px" }, 300, "swing");
+            $(".ss-r-btn").html('<i class="fas fa-chevron-right"></i>')
+        }
+
+    }
+</script>

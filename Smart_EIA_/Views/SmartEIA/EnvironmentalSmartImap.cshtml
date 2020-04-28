@@ -1,284 +1,613 @@
 ﻿
 @{
     ViewBag.Title = "PTT Smart EIA Regulatory";
+    Layout = "~/Views/Shared/SmartImap_Layout.cshtml";
 }
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="~/Scripts/jquery-3.5.0.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd33TLAVehao--qEJ9u7j7ZNSjN1315C0&libraries=drawing&callback=initMap"
+                async defer></script>
+        <style>
+            .map {
+                background-color: #fff;
+                width: 100%;
+                padding: 5px;
+                height: 700px;
+                float: left;
+            }
 
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-</head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/template/")styles/styles.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/29ba5ebcbb.js" crossorigin="anonymous"></script>
+            #map {
+                width: 100%;
+                height: 100%;
+            }
 
-</html>
-<body>
-    <div class="contain-index">
+            #Infomation {
+                background-color: white;
+                color: black;
+            }
+        </style>
 
-        <div class="menu-header">
-            <div class="logo-box">
-                <img src="@Url.Content("~/Content/template/")img/ptt-menu-logo.png" alt="">
-            </div>
-            <div class="menu-list">
-                <div class="sch-box">
-                    <input type="text" name="" id="">
-                    <div class="sch-icon"><i class="fas fa-search"></i></div>
-                </div>
-                <ul class="sys-menu">
-                    <li>
-                        <a href="/SmartEIA/Homepage">หน้าแรก</a>
-                    </li>
-                    <li>
-                        <a href="">จัดการข้อมูลผู้ใช้</a>
-                    </li>
-                    <li>
-                        <a href="">ตั้งค่าระบบ</a>
-                    </li>
-                    <li>
-                        <a href="">ติดต่อเรา</a>
-                    </li>
-                </ul>
 
-            </div>
 
-        </div>
-        <div class="xxx" style="padding: 5px 0px 5px 5px; display: flex; flex-wrap:wrap;">
-            <div class="header-banner">
+    </head>
+    <body>
+        
+            <div class="xxx" style="  padding: 5px 0px 5px 5px;
+        display: flex;
+        flex-wrap: wrap;">
+                <div class="header-banner">
 
-                <div class="btx-3">
-                    <div class="img-ss">
-                        <img src="@Url.Content("~/Content/template/")img/icon-5.svg" alt="" width="90px" height="90px">
+                    <div class="btx-3">
+                        <div class="img-ss">
+                            <img src="@Url.Content("~/Content/template/")img/icon-5.svg" alt="" width="90px" height="90px">
+                        </div>
+                        <p>
+                            Environmental SMARTi Map
+                        </p>
+
                     </div>
-                    <p>
-                        Environmental SMARTi Map
-                    </p>
-
                 </div>
             </div>
-        </div>
-        <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
-            <div class="row " style=" margin-right: 0px;margin-left: 0px;">
-                <div class="col-lg-12 nopadding">
-                    <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
-                    <div class="l-menu bg-gg nopadding">
-                        <div class="tab-col">
+            <div class="contain-index" style="padding: 15px 0px; background-color: #e7eef1; overflow-x: hidden;">
+                <div class="row " style=" margin-right: 0px;margin-left: 0px;">
+                    <div class="col-lg-12 nopadding">
+                        <span class="ss-btn" onclick="ss_l_menu()"><i class="fas fa-chevron-right"></i></span>
+                        <div class="l-menu bg-gg nopadding">
+                            <div class="tab-col">
 
-                            <div class="tab-ccdd">
-                                <div class="l-tab">
-                                    <button class="dbtabb btn-active" id="btn-1" onclick="active_btn(1)">ชั้นข้อมูล</button>
+                                <div class="tab-ccdd">
+                                    <div class="l-tab">
+                                        <button class="dbtabb btn-active" id="btn-1" onclick="active_btn(1)">ชั้นข้อมูล</button>
+                                    </div>
+                                    <div class="r-tab">
+                                        <button class="dbtabb" id="btn-2" onclick="active_btn(2)">ระบุที่ตั้ง</button>
+                                    </div>
                                 </div>
-                                <div class="r-tab">
-                                    <button class="dbtabb" id="btn-2" onclick="active_btn(2)">ระบุที่ตั้ง</button>
-                                </div>
-                            </div>
-                            <div id="tab-1">
-                                <div class="row" style="padding: 10px 30px;">
-                                    <div class="col-lg-12 sadss" style="background-color: #fff; padding: 15px; margin-top: 20px; max-height: 550px;">
-                                        <div class="tab-sldd" id='tab-g-1'>
-                                            <div class="lss-box">
-                                                <div class="sl-hdd-0" id="sdd-1" onclick="list_ssdd(1)">
-                                                    <p class="sll-sm-text-1">
-                                                        Physical Environment
-                                                    </p>
+                                <div id="tab-1">
+                                    <div class="row" style="padding: 10px 30px;">
+                                        <div class="col-lg-12 sadss" style="background-color: #fff; padding: 15px; margin-top: 20px; max-height: 550px;">
+                                            <div class="tab-sldd" id='tab-g-1'>
+                                                <div class="lss-box">
+                                                    <div class="sl-hdd-0" id="sdd-1" onclick="list_ssdd(1)">
+                                                        <p class="sll-sm-text-1">
+                                                            Physical Environment
+                                                        </p>
+                                                    </div>
+                                                    <div class="select-list" id="lss-1">
+                                                        <ul>
+                                                            <li onclick="slt_this_list(1)"> <span class="ssed" id="list-1"></span> พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                            <li onclick="slt_this_list(2)"> <span class="ssed" id="list-2"></span> พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                            <li onclick="slt_this_list(3)"> <span class="ssed" id="list-3"></span> พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                            <li onclick="slt_this_list(4)"> <span class="ssed" id="list-4"></span> พื้นที่อุทยานประวัติศาสตร์</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div class="select-list" id="lss-1">
-                                                    <ul>
-                                                        <li onclick="slt_this_list(1)"> <span class="ssed" id="list-1"></span> พื้นที่มรดกโลกทางธรรมชาติ</li>
-                                                        <li onclick="slt_this_list(2)"> <span class="ssed" id="list-2"></span> พื้นที่มรดกโลกทางวัฒนธรรม</li>
-                                                        <li onclick="slt_this_list(3)"> <span class="ssed" id="list-3"></span> พื้นที่ตำแหน่งโบราณสถาน</li>
-                                                        <li onclick="slt_this_list(4)"> <span class="ssed" id="list-4"></span> พื้นที่อุทยานประวัติศาสตร์</li>
-                                                    </ul>
+                                                <div class="lss-box">
+                                                    <div class="sl-hdd-0" id="sdd-2" onclick="list_ssdd(2)">
+                                                        <p class="sll-sm-text-2">
+                                                            Biological Environment
+                                                        </p>
+                                                    </div>
+                                                    <div class="select-list" id="lss-2">
+                                                        <ul>
+                                                            <li onclick="slt_this_list(5)"><span class="ssed" id="list-5"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                            <li onclick="slt_this_list(6)"><span class="ssed" id="list-6"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                            <li onclick="slt_this_list(7)"><span class="ssed" id="list-7"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                            <li onclick="slt_this_list(8)"><span class="ssed" id="list-8"></span>พื้นที่อุทยานประวัติศาสตร์</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="lss-box">
-                                                <div class="sl-hdd-0" id="sdd-2" onclick="list_ssdd(2)">
-                                                    <p class="sll-sm-text-2">
-                                                        Biological Environment
-                                                    </p>
+                                                <div class="lss-box">
+                                                    <div class="sl-hdd-0" id="sdd-3" onclick="list_ssdd(3)">
+                                                        <p class="sll-sm-text-3">
+                                                            Human Use
+                                                        </p>
+                                                    </div>
+                                                    <div class="select-list" id="lss-3">
+                                                        <ul>
+                                                            <li onclick="slt_this_list(9)"><span id="list-9"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                            <li onclick="slt_this_list(10)"><span class="ssed" id="list-10"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                            <li onclick="slt_this_list(11)"><span class="ssed" id="list-11"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                            <li onclick="slt_this_list(12)"><span class="ssed" id="list-12"></span>พื้นที่อุทยานประวัติศาสตร์</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div class="select-list" id="lss-2">
-                                                    <ul>
-                                                        <li onclick="slt_this_list(5)"><span class="ssed" id="list-5"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
-                                                        <li onclick="slt_this_list(6)"><span class="ssed" id="list-6"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
-                                                        <li onclick="slt_this_list(7)"><span class="ssed" id="list-7"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
-                                                        <li onclick="slt_this_list(8)"><span class="ssed" id="list-8"></span>พื้นที่อุทยานประวัติศาสตร์</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="lss-box">
-                                                <div class="sl-hdd-0" id="sdd-3" onclick="list_ssdd(3)">
-                                                    <p class="sll-sm-text-3">
-                                                        Human Use
-                                                    </p>
-                                                </div>
-                                                <div class="select-list" id="lss-3">
-                                                    <ul>
-                                                        <li onclick="slt_this_list(9)"><span id="list-9"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
-                                                        <li onclick="slt_this_list(10)"><span class="ssed" id="list-10"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
-                                                        <li onclick="slt_this_list(11)"><span class="ssed" id="list-11"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
-                                                        <li onclick="slt_this_list(12)"><span class="ssed" id="list-12"></span>พื้นที่อุทยานประวัติศาสตร์</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="lss-box">
-                                                <div class="sl-hdd-0" id="sdd-4" onclick="list_ssdd(4)">
-                                                    <p class="sll-sm-text-4">
-                                                        Quality of Life
-                                                    </p>
+                                                <div class="lss-box">
+                                                    <div class="sl-hdd-0" id="sdd-4" onclick="list_ssdd(4)">
+                                                        <p class="sll-sm-text-4">
+                                                            Quality of Life
+                                                        </p>
 
+                                                    </div>
+                                                    <div class="select-list" id="lss-4">
+                                                        <ul>
+                                                            <li onclick="slt_this_list()"><span class="ssed" id="list-13"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
+                                                            <li onclick="slt_this_list()"><span class="ssed" id="list-14"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
+                                                            <li onclick="slt_this_list()"><span class="ssed" id="list-15"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
+                                                            <li onclick="slt_this_list()"><span class="ssed" id="list-16"></span>พื้นที่อุทยานประวัติศาสตร์</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div class="select-list" id="lss-4">
-                                                    <ul>
-                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-13"></span>พื้นที่มรดกโลกทางธรรมชาติ</li>
-                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-14"></span>พื้นที่มรดกโลกทางวัฒนธรรม</li>
-                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-15"></span>พื้นที่ตำแหน่งโบราณสถาน</li>
-                                                        <li onclick="slt_this_list()"><span class="ssed" id="list-16"></span>พื้นที่อุทยานประวัติศาสตร์</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
 
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="tab-2">
-                                <div class="row">
-                                    <div class="col-lg-12 sadss">
-                                        <div class="tab-sldd" id='tab-g-2'>
-                                            <div class="pp-list">
-                                                <div class="list-p" onclick="sliderr(4)">
-                                                    <p class="hh">
-                                                        พื้นที่
-                                                    </p>
-                                                </div>
-                                                <div class="dt-slide" id="ss-4">
-                                                    <div class="sl-input" id="sd-4">
-                                                        <button>Add placemark</button>
-                                                        <button>Draw line or shape</button>
-                                                        <textarea class="txa-50" rows="5" cols="50">
-                                                        
-                                                        </textarea>
+                                <div id="tab-2">
+                                    <div class="row">
+                                        <div class="col-lg-12 sadss">
+                                            <div class="tab-sldd" id='tab-g-2'>
+                                                <div class="pp-list">
+                                                    <div class="list-p" onclick="sliderr(1)">
+                                                        <p class="hh">
+                                                            พิกัดที่ตั้ง
+                                                        </p>
                                                     </div>
-                                                </div>
-                                                <div class="list-p" onclick="sliderr(1)">
-                                                    <p class="hh">
-                                                        พิกัดที่ตั้ง
-                                                    </p>
-                                                </div>
-                                                <div class="dt-slide" id="ss-1">
-                                                    <div class="sl-input" id="sd-1">
-                                                        <button>Add placemark</button>
-                                                        <button>Draw line or shape</button>
-                                                        <textarea class="txa-50" rows="5" cols="50">
-                                                    
-                                                        </textarea>
+                                                    <div class="dt-slide" id="ss-1">
+                                                        <div class="sl-input" id="sd-1">
+                                                            <h5> ระบุพิกัด UTM WGS 84 </h5>
+                                                            <p>Zone:  <select id="zone_data"><option>47</option> <option>48</option></select></p>
+                                                            <hr />
+                                                            <p>East: <!--lat--> <input id="lat" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /></p>
+                                                            <p>North:<!--lng--> <input id="lng" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /></p>
+                                                            <button class="ee-bb" onclick="check_inmap(1)">OK</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="list-p" onclick="sliderr(2)">
-                                                    <p class="hh">
-                                                        กำหนดเอง
-                                                    </p>
-                                                </div>
-                                                <div class="dt-slide" id="ss-2">
-                                                    <div class="sl-input" id="sd-2">
-                                                        <button>Add placemark</button>
-                                                        <button>Draw line or shape</button>
-                                                        <textarea class="txa-50" rows="5" cols="50">
-                                                        
-                                                        </textarea>
+                                                    <div class="list-p" onclick="sliderr(2)">
+                                                        <p class="hh">
+                                                            กำหนดเอง
+                                                        </p>
                                                     </div>
-                                                </div>
-                                                <div class="list-p" onclick="sliderr(3)">
-                                                    <p class="hh">
-                                                        ตำแหน่งจากข้อมูล kmz ไฟล์
-                                                    </p>
+                                                    <div class="dt-slide" id="ss-2">
+                                                        <div class="sl-input" id="sd-2">
+                                                            <button onclick="">Add placemark</button>
+                                                            <button onclick="call()">Draw line or shape</button>
+                                                            <select id="testdraw" class="txa-50" size="5" onchange="test()">
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                                </div>
-                                                <div class="dt-slide" id="ss-3">
-                                                    <div class="sl-input" id="sd-3">
-                                                        <button>Add placemark</button>
-                                                        <button>Draw line or shape</button>
-                                                        <textarea class="txa-50" rows="5" cols="50">
-                                                        
-                                                        </textarea>
+                                                    <div class="list-p" onclick="sliderr(3)">
+                                                        <p class="hh">
+                                                            ตำแหน่งจากข้อมูล kmz ไฟล์
+                                                        </p>
                                                     </div>
+                                                    @* add file  *@
+                                                    <div class="dt-slide" id="ss-3">
+                                                        <div class="sl-input" id="sd-3">
+                                                            <button id="buttonfile" onclick="thisFileUpload()">Import Kmz</button>
+                                                            <button onclick="removeAll()">Clear</button>
+                                                            <button class="ee-bb" onclick="check_inmap(2)">OK</button>
+                                                            <input type="file" id="files" hidden />
+                                                            <select class="txa-50" size="5" id="list">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="list-p" onclick="sliderr(4)">
+                                                        <p class="hh">
+                                                            ไม่ระบุที่ตั้งโครงการ
+                                                        </p>
+                                                    </div>
+
                                                 </div>
 
                                             </div>
-
                                         </div>
                                     </div>
+
                                 </div>
 
-                            </div>
 
-
-                        </div>
-
-                    </div>
-                    <img src="@Url.Content("~/Content/template/")img/maptest.PNG" alt="" width="100%" height="700px" style="object-fit: cover;">
-                    <span class="ss-r-btn" onclick="ss_r_menu()"><i class="fas fa-chevron-left"></i></span>
-                    <div class="r-menu nopadding ">
-                        <div class="data-col bg-gg ">
-                            <div class="cds-lr">
-                                <p class="rr-h-tt">
-                                    ข้อมูลพื้นที่
-                                </p>
-                                <input type="text" name="" class="form-control it-11" id="">
                             </div>
 
                         </div>
+                        <div class="row no_mr">
+
+                            <div class="col-md-8">
+                                <div class="map">
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="nopadding ">
+                                    <div class="data-col bg-gg ">
+                                        <div class="cds-lr">
+                                            <p class="rr-h-tt">
+                                                ข้อมูลพื้นที่
+                                            </p>
+                                            <div id="Infomation" >
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <span class="ss-r-btn" onclick="ss_r_menu()"><i class="fas fa-chevron-left"></i></span> -->
+
                     </div>
+
+
                 </div>
-
-
             </div>
-        </div>
+         
+            </body>
 
-        <div class="footer-banner">
-            <div class="ffff">
+    <script>
+  //  var file_map_data = ["C:/Users/Admin/source/repos/PTT_Smart_EIA/PTT_Smart_EIA/App_Data/UploadedFiles/data_DB.json"];
+    var countyLayer = [];//["test.geojson"];
+    var data_obj = {};
+    var status_check_position_inlocation;
+    var list_position_inlocation = [];
+    var bermudaTriangle = [];
+    var check_data_in_area = [];
 
-            </div>
-        </div>
-    </div>
-</body>
-<script>
-    $(function () {
-        active_btn(1);
+
+    function del() {
+        bermudaTriangle.setMap(null);
+    }
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            output.push('<option>', f.name, '</option>');
+        }
+        document.getElementById('list').innerHTML = output.join('');
+    }
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    /*map*/
+    var map;
+    var drawingManager;
+    var selectedShape;
+    var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
+    var selectedColor;
+    var colorButtons = {};
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 13.847860, lng: 100.604274 },
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
+            fullscreenControl: true,
+            fullscreenControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
+            zoom: 10
+        });
+
+        var polyOptions = {
+            strokeWeight: 0,
+            fillOpacity: 0.45,
+            editable: true,
+            draggable: true
+        };
+        // add data file to map
+        //for (var fl = 0; fl < file_map_data.length; fl++) {
+            countyLayer = new google.maps.Data();
+        //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\App_Data\UploadedFiles\data_DB.json
+        //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\Views\SmartEIA\PipelineTransportation.cshtml;
+            countyLayer.loadGeoJson('/Scripts/mng_view/data_DB.json');//data_DB.json
+            countyLayer.setStyle({
+                strokeColor: 'red',
+                strokeWeight: 1
+            });
+            countyLayer.setMap(map);
+       // }
+
+
+    }
+
+    // function in menu
+    //'/../Views/mng_view/data_DB.json
+    //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\Views\SmartEIA\mng_view\Stuk-jszip-bead269\dist\jszip.js
+    $.getScript("http://58.82.155.218/Smart_EIA/jzip/dist/jszip.js", function () // get scrip in file
+    {
+        let getDom = xml => (new DOMParser()).parseFromString(xml, "text/xml")
+        let getExtension = fileName => fileName.split(".").pop()
+
+        let getKmlDom = (kmzFile) => {
+            var zip = new JSZip()
+            return zip.loadAsync(kmzFile)
+                .then(zip => {
+                    let kmlDom = null
+                    zip.forEach((relPath, file) => {
+                        if (getExtension(relPath) === "kml" && kmlDom === null) {
+                            kmlDom = file.async("string").then(getDom)
+                        }
+                    })
+                    return kmlDom || Promise.reject("No kml file found")
+                });
+        }
+
+
+        var f = document.getElementById("files")
+        f.addEventListener("change", e => {
+            var last_name = e.target.files[0].name.split('.');
+            //alert(last_name[1]);
+            if (last_name[1] == "kmz" || last_name[1] == "KMZ") {
+                let geoJson = getKmlDom(e.target.files[0]).then(kmlDom => {
+                    let geoJsonObject = toGeoJSON.kml(kmlDom)
+                    return JSON.stringify(geoJsonObject)
+                })
+                //geoJson.then(value => document.getElementById("output").innerText = value);
+                geoJson.then(function (val) {
+                    set_data_kmz_file(val);
+                });
+            }
+            else {
+                alert("ใช้ไฟล์ KMZ เท่านั้น");
+            }
+
+        })
     });
-    function active_btn(a) {
-        if (a == 1) {
-            if ($("#btn-" + a).hasClass("btn-active")) {
-                $("#tab-" + a).css("display", "block");
-                $("#tab-2").css("display", "none");
-                $("#btn-2").removeClass("btn-active");
-            } else {
-                $("#btn-" + a).addClass("btn-active");
-                $("#tab-" + a).css("display", "block");
-                $("#tab-2").css("display", "none");
-                $("#btn-2").removeClass("btn-active");
+    function set_data_kmz_file(data) {
+        data_obj = JSON.parse(data);
+
+    }
+
+    function check_inmap(type_mng) {
+        var point_is1 = [];
+        var status = false;
+        var loop_add = 0;
+        if (bermudaTriangle.length > 0) {
+            console.log(bermudaTriangle.length);
+            for (var i = 0; i < bermudaTriangle.length; i++) {
+                bermudaTriangle[i].setMap(null);
             }
-        } else {
-            if ($("#btn-" + a).hasClass("btn-active")) {
-                $("#tab-" + a).css("display", "block");
-                $("#tab-1").css("display", "none");
-                $("#btn-1").removeClass("btn-active");
-            } else {
-                $("#btn-" + a).addClass("btn-active");
-                $("#tab-" + a).css("display", "block");
-                $("#tab-1").css("display", "none");
-                $("#btn-1").removeClass("btn-active");
+
+        }
+        if (type_mng == 1) {
+            status = true;
+            var East = $('#lat').val(),
+                North = $('#lng').val(),
+                zone = $('#zone_data').val();
+            var list_data = utmToLatLng(zone, East, North);
+            console.log(list_data);
+            point_is1 = [
+                [list_data.latitude, list_data.longitude],
+            ];
+             bermudaTriangle[loop_add] = new google.maps.Marker({
+                position: point_is1,
+                map: map
+             });
+             loop_add++;
+            console.log(point_is1);
+        }
+        else if (type_mng == 2) {
+            status = true;
+            var sub_data = [];
+            var data_all = [];
+            var array_set = [];
+            var opts = {};
+            var path = [];//
+            for (var i = 0; i < data_obj.features.length; i++) {
+                var data_sort = data_obj.features[i].geometry; //
+                if (data_sort.type == "GeometryCollection") {
+
+                    for (var j = 0; j < data_sort.geometries[0].coordinates.length; j++) {
+                        var ll = new google.maps.LatLng(data_sort.geometries[0].coordinates[j][1], data_sort.geometries[0].coordinates[j][0]);
+                        path.push(ll);
+                        point_is1.push([data_sort.geometries[0].coordinates[j][1], data_sort.geometries[0].coordinates[j][0]]);
+                    }
+                }
+                else {
+                    for (var j = 0; j < data_sort.coordinates.length; j++) {
+                        var ll = new google.maps.LatLng(data_sort.coordinates[j][1], data_sort.coordinates[j][0]);
+                        path.push(ll);
+                        point_is1.push([data_sort.coordinates[j][1], data_sort.coordinates[j][0]]);
+                    }
+                    //"LineString"
+
+                }
             }
+            opts.path = path;
+            bermudaTriangle[loop_add] = new google.maps.Polyline(opts);
+            bermudaTriangle[loop_add].setMap(map);
+            loop_add++;
+            //console.log(data_obj);
+
+        }
+        else if (type_mng == 3) {
+            status = true;
+
+        }
+        if (status) {
+            var point = "";
+            status_check_position_inlocation = false;
+            list_position_inlocation = [];
+
+            $.getJSON('@Url.Content("/Scripts/mng_view/data_DB.json")' , function (data) {
+                for (var lo_ch = 0; lo_ch < point_is1.length; lo_ch++) {
+                    point = new google.maps.LatLng(point_is1[lo_ch][0], point_is1[lo_ch][1]);
+                    //bermudaTriangle[i] = new google.maps.Marker(point);
+
+                    //console.log(data.features[0].geometry.coordinates[0][0]);
+                    var data_all = [];
+                    var array_set = [];
+                    for (var i = 0; i < data.features.length; i++) {
+                        var data_sort = data.features[i].geometry.coordinates[0][0];
+                        var data_set = [];
+                        var data_add = "";
+                        for (var j = 0; j < data_sort.length; j++) {
+                            // point_is = new google.maps.LatLng(data_sort[j][1], data_sort[j][0]);
+                            data_set.push({
+                                lat: data_sort[j][1], lng: data_sort[j][0]
+                            });
+                        }
+                        array_set.push({
+                            name_polygon: data.features[i].properties.Name,
+                            own_polygon: data.features[i].properties.Owner,
+                            location: data_set
+                        });
+                    }
+                    data_all.push({
+                        type: "MultiPolygon",
+                        coordinates: array_set
+                    });
+                    //console.log(data_all);
+
+
+                    for (var i = 0; i < data_all[0].coordinates.length; i++) {
+                        check_data_in_area[i] = new google.maps.Polygon({
+                            paths: data_all[0].coordinates[i].location,
+                        });
+                        if (google.maps.geometry.poly.containsLocation(point, check_data_in_area[i]) == true) {
+                            //console.log(data_all[0].coordinates[i].name_polygon);
+                            set_data_show(true, data_all[0].coordinates[i].name_polygon);
+                        }
+                    }
+                    //console.log(data_all[0].coordinates.length);
+                }
+                if (status_check_position_inlocation) {
+                    var name_position = "<p>";
+                    for (var i = 0; i < list_position_inlocation.length; i++) {
+                        name_position += list_position_inlocation[i] + '<br>';
+                    }
+                    name_position += '</p>';
+                    $('.detail_duplicate_location').html('<h1 style="color:green;">อยู่ในพื้นที่</h1><br>' + name_position);
+                     $("#selectarea").val("in").change();
+                     //out
+                }
+                else {
+                    //alert("N");
+                   // $('.area').html('<h1 style="color:red;">ไม่อยู่ในพื้นที่</h1>');
+                    $("#selectarea").val("out").change();
+                }
+            });
+
+        }
+        else {
+            alert("กรุณาป้อนข้อมูล");
+
+        }
+    }
+
+    function set_data_show(conditon, name_location_dupli) {
+        status_check_position_inlocation = conditon;
+        if (list_position_inlocation.indexOf(name_location_dupli) < 0) {
+            list_position_inlocation.push(name_location_dupli);
         }
 
     }
-    function sliderr(n) {
 
+    //end function in menu
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+    function clearSelection() {
+        if (selectedShape) {
+            if (selectedShape.type !== 'marker') {
+                selectedShape.setEditable(false);
+            }
+            selectedShape = null;
+        }
+    }
+
+    function setSelection(shape) {
+        if (shape.type !== 'marker') {
+            clearSelection();
+            shape.setEditable(true);
+            selectColor(shape.get('fillColor') || shape.get('strokeColor'));
+        }
+        selectedShape = shape;
+    }
+
+    function deleteSelectedShape() {
+        if (selectedShape) {
+            selectedShape.setMap(null);
+        }
+    }
+
+    function selectColor(color) {
+        selectedColor = color;
+        for (var i = 0; i < colors.length; ++i) {
+            var currColor = colors[i];
+            colorButtons[currColor].style.border = currColor == color ? '2px solid #789' : '2px solid #fff';
+        }
+
+        // Retrieves the current options from the drawing manager and replaces the
+        // stroke or fill color as appropriate.
+        var polylineOptions = drawingManager.get('polylineOptions');
+        polylineOptions.strokeColor = color;
+        drawingManager.set('polylineOptions', polylineOptions);
+
+        var rectangleOptions = drawingManager.get('rectangleOptions');
+        rectangleOptions.fillColor = color;
+        drawingManager.set('rectangleOptions', rectangleOptions);
+
+        var circleOptions = drawingManager.get('circleOptions');
+        circleOptions.fillColor = color;
+        drawingManager.set('circleOptions', circleOptions);
+
+        var polygonOptions = drawingManager.get('polygonOptions');
+        polygonOptions.fillColor = color;
+        drawingManager.set('polygonOptions', polygonOptions);
+    }
+
+    function setSelectedShapeColor(color) {
+        if (selectedShape) {
+            if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
+                selectedShape.set('strokeColor', color);
+            } else {
+                selectedShape.set('fillColor', color);
+            }
+        }
+    }
+
+    function makeColorButton(color) {
+        var button = document.createElement('span');
+        button.className = 'color-button';
+        button.style.backgroundColor = color;
+        google.maps.event.addDomListener(button, 'click', function () {
+            selectColor(color);
+            setSelectedShapeColor(color);
+        });
+
+        return button;
+    }
+
+    function buildColorPalette() {
+        var colorPalette = document.getElementById('color-palette');
+        for (var i = 0; i < colors.length; ++i) {
+            var currColor = colors[i];
+            var colorButton = makeColorButton(currColor);
+            colorPalette.appendChild(colorButton);
+            colorButtons[currColor] = colorButton;
+        }
+        selectColor(colors[0]);
+    }
+
+    function Select1() {
+        var isChecked = document.getElementById("s1").checked;
+        document.getElementById("selectarea").disabled = !isChecked;
+    }
+    function Select2() {
+        var isChecked = document.getElementById("s2").checked;
+        document.getElementById("selectriverarea").disabled = !isChecked;
+    }
+    function sliderr(n) {
         var dis = $('#ss-' + n).css('display');
+        console.log(dis);
         if (dis == 'none') {
             $("#ss-" + n).css("display", "block");
             $("#sd-" + n).css("height", "auto");
@@ -286,33 +615,6 @@
         } else {
             $("#ss-" + n).css("display", "none");
             $("#sd-" + n).css("height", "0px");
-        }
-
-    }
-    function list_ssdd(i) {
-        var dis = $('#lss-' + i).css('display');
-
-        if (dis == 'none') {
-            $("#lss-" + i).css("display", "block");
-
-            var styleElem = document.head.appendChild(document.createElement("style"));
-            styleElem.innerHTML = ".sll-sm-text-" + i + "::before {content: '-';}";
-        } else {
-            $("#lss-" + i).css("display", "none");
-            var styleElem = document.head.appendChild(document.createElement("style"));
-            styleElem.innerHTML = ".sll-sm-text-" + i + "::before {content: '+';}";
-        }
-    }
-    function slt_this_list(j) {
-        $(".ssed").css("background-color", "#fff");
-        var dis = $('#list-' + j).css('background-color');
-        if (dis == '#fff' || dis == 'rgb(255, 255, 255)') {
-
-            $("#list-" + j).css("background-color", "#ffff00");
-
-        } else {
-
-            $("#list-" + j).css("background-color", "#fff");
         }
     }
     function ss_l_menu() {
@@ -343,5 +645,672 @@
         }
 
     }
-</script>
+    function hideresulte() {
+        $("#Resulte").hide();
+        $(".specify").show();
+        $("#okbtn").hide();
+    }
 
+    function enable_layer(e) {
+        var kmlLayer;
+        var id = $(e).val();
+        if ($(e).is(":checked")) {
+            kmlLayer = new google.maps.KmlLayer(kml[id].url, {
+                suppressInfoWindows: true,
+                preserveViewport: true
+            });
+            kmlLayer.addListener('click', function (kmlEvent) {
+                var text = kmlEvent.featureData.description;
+
+                /*showInContentWindow(text);*/
+            });
+
+            function showInContentWindow(text) {
+                var sidediv = document.getElementById('divResults');
+                sidediv.innerHTML = text;
+            }
+            kml[id].obj = kmlLayer;
+            kml[id].obj.setMap(map);
+        } else {
+            console.log('close');
+            kml[id].obj.setMap(null);
+            delete kml[id].obj;
+        }
+    }
+    function removeAll() {
+        var Select2 = document.getElementById('list');
+        Select2.remove(Select2.selectedIndex);
+    }
+
+    function loadGeoJsonString(geoString) {
+        var geojson = JSON.parse(geoString);
+        map.data.addGeoJson(geojson);
+        zoom(map);
+    }
+    function zoom(map) {
+        var bounds = new google.maps.LatLngBounds();
+        map.data.forEach(function (feature) {
+            processPoints(feature.getGeometry(), bounds.extend, bounds);
+        });
+        map.fitBounds(bounds);
+    }
+    function processPoints(geometry, callback, thisArg) {
+        if (geometry instanceof google.maps.LatLng) {
+            callback.call(thisArg, geometry);
+        } else if (geometry instanceof google.maps.Data.Point) {
+            callback.call(thisArg, geometry.get());
+        } else {
+            geometry.getArray().forEach(function (g) {
+                processPoints(g, callback, thisArg);
+            });
+        }
+    }
+    function handleDrop(e) {
+        var files = e.dataTransfer.files;
+        if (files.length) {
+            // process file(s) being dropped
+            // grab the file data from each file
+            for (var i = 0, file; file = files[i]; i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    loadGeoJsonString(e.target.result);
+                };
+                reader.onerror = function (e) {
+                    console.error('reading failed');
+                };
+                reader.readAsText(file);
+            }
+        } else {
+            // process non-file (e.g. text or html) content being dropped
+            // grab the plain text version of the data
+            var plainText = e.dataTransfer.getData('text/plain');
+            if (plainText) {
+                loadGeoJsonString(plainText);
+            }
+        }
+
+        // prevent drag event from bubbling further
+        return false;
+    }
+    function thisFileUpload() {
+        $("#files").click();
+        }
+
+        //แปลง UTM
+    function utmToLatLng(zone, easting, northing) {
+        var a = 6378137;
+        var e = 0.081819191;
+        var e1sq = 0.006739497;
+        var k0 = 0.9996;
+
+        var arc = northing / k0;
+        var mu = arc / (a * (1 - Math.pow(e, 2) / 4.0 - 3 * Math.pow(e, 4) / 64.0 - 5 * Math.pow(e, 6) / 256.0));
+
+        var ei = (1 - Math.pow((1 - e * e), (1 / 2.0))) / (1 + Math.pow((1 - e * e), (1 / 2.0)));
+
+        var ca = 3 * ei / 2 - 27 * Math.pow(ei, 3) / 32.0;
+
+        var cb = 21 * Math.pow(ei, 2) / 16 - 55 * Math.pow(ei, 4) / 32;
+        var cc = 151 * Math.pow(ei, 3) / 96;
+        var cd = 1097 * Math.pow(ei, 4) / 512;
+        var phi1 = mu + ca * Math.sin(2 * mu) + cb * Math.sin(4 * mu) + cc * Math.sin(6 * mu) + cd * Math.sin(8 * mu);
+
+        var n0 = a / Math.pow((1 - Math.pow((e * Math.sin(phi1)), 2)), (1 / 2.0));
+
+        var r0 = a * (1 - e * e) / Math.pow((1 - Math.pow((e * Math.sin(phi1)), 2)), (3 / 2.0));
+        var fact1 = n0 * Math.tan(phi1) / r0;
+
+        var _a1 = 500000 - easting;
+        var dd0 = _a1 / (n0 * k0);
+        var fact2 = dd0 * dd0 / 2;
+
+        var t0 = Math.pow(Math.tan(phi1), 2);
+        var Q0 = e1sq * Math.pow(Math.cos(phi1), 2);
+        var fact3 = (5 + 3 * t0 + 10 * Q0 - 4 * Q0 * Q0 - 9 * e1sq) * Math.pow(dd0, 4) / 24;
+
+        var fact4 = (61 + 90 * t0 + 298 * Q0 + 45 * t0 * t0 - 252 * e1sq - 3 * Q0 * Q0) * Math.pow(dd0, 6) / 720;
+
+        var lof1 = _a1 / (n0 * k0);
+        var lof2 = (1 + 2 * t0 + Q0) * Math.pow(dd0, 3) / 6.0;
+        var lof3 = (5 - 2 * Q0 + 28 * t0 - 3 * Math.pow(Q0, 2) + 8 * e1sq + 24 * Math.pow(t0, 2)) * Math.pow(dd0, 5) / 120;
+        var _a2 = (lof1 - lof2 + lof3) / Math.cos(phi1);
+        var _a3 = _a2 * 180 / Math.PI;
+
+        var latitude = 180 * (phi1 - fact1 * (fact2 + fact3 + fact4)) / Math.PI;
+
+
+        var longitude = ((zone > 0) && (6 * zone - 183.0) || 3.0) - _a3;
+
+        var obj = {
+            latitude: latitude,
+            longitude: longitude
+        };
+
+
+        return obj;
+    }
+//หาพื้นที่
+    $(function () {
+        var data_duplicate = [];
+        var loop_mng = [];
+        // let json = require('Indrustry1.geojson');
+        //
+        var loop_mng = [];
+        var data = [];
+
+        //let json = require('นิคมอุตสาหกรรม1.json');
+        $.getJSON('https://raw.githubusercontent.com/Naphatsanan1280/Kmlfile/master/Indrustry.geojson', function (data) {
+            var array_set = [];
+            for (var i = 0; i < data.features.length; i++) {
+                var data_sort = data.features[i].geometry.coordinates[0][0];
+                //console.log(data.features[0].geometry.coordinates[0][0]);
+                var data_set = [];
+                for (var j = 0; j < data_sort.length; j++) {
+                    data_set.push(data_sort[j][0]);
+                    data_set.push(data_sort[j][1]);
+                }
+                array_set[i] = {
+                    id_companyy: data.features[i].properties.Id,
+                    name_companny: data.features[i].properties.Name,
+                    lat_long: data_set
+                };
+                //console.log(array_set[i]);
+                
+            }
+
+            for (var i = 0; i < array_set.length; i++) {
+                for (var j = 0; j < array_set.length; j++) {
+                    let inttersection = array_set[i].lat_long.filter(x => array_set[j].lat_long.includes(x));
+                    if (inttersection.length > 0 && i != j) {
+                        if (!(loop_mng.includes(i))) {
+                            loop_mng.push(i);
+                            data_duplicate.push({
+                                id_company1: array_set[i].id_companyy,
+                                name_companny1: array_set[i].name_companny,
+                                id_company2: array_set[j].id_companyy,
+                                name_companny2: array_set[j].name_companny,
+                                lat_long_duplicate1: inttersection
+                            });
+                        }
+                    }
+                }
+            }
+            //console.log(data_duplicate);
+            
+        });
+
+    });
+
+
+
+var toGeoJSON = (function() {
+    'use strict';
+
+    var removeSpace = /\s*/g,
+        trimSpace = /^\s*|\s*$/g,
+        splitSpace = /\s+/;
+    // generate a short, numeric hash of a string
+    function okhash(x) {
+        if (!x || !x.length) return 0;
+        for (var i = 0, h = 0; i < x.length; i++) {
+            h = ((h << 5) - h) + x.charCodeAt(i) | 0;
+        } return h;
+    }
+    // all Y children of X
+    function get(x, y) { return x.getElementsByTagName(y); }
+    function attr(x, y) { return x.getAttribute(y); }
+    function attrf(x, y) { return parseFloat(attr(x, y)); }
+    // one Y child of X, if any, otherwise null
+    function get1(x, y) { var n = get(x, y); return n.length ? n[0] : null; }
+    // https://developer.mozilla.org/en-US/docs/Web/API/Node.normalize
+    function norm(el) { if (el.normalize) { el.normalize(); } return el; }
+    // cast array x into numbers
+    function numarray(x) {
+        for (var j = 0, o = []; j < x.length; j++) { o[j] = parseFloat(x[j]); }
+        return o;
+    }
+    // get the content of a text node, if any
+    function nodeVal(x) {
+        if (x) { norm(x); }
+        return (x && x.textContent) || '';
+    }
+    // get the contents of multiple text nodes, if present
+    function getMulti(x, ys) {
+        var o = {}, n, k;
+        for (k = 0; k < ys.length; k++) {
+            n = get1(x, ys[k]);
+            if (n) o[ys[k]] = nodeVal(n);
+        }
+        return o;
+    }
+    // add properties of Y to X, overwriting if present in both
+    function extend(x, y) { for (var k in y) x[k] = y[k]; }
+    // get one coordinate from a coordinate array, if any
+    function coord1(v) { return numarray(v.replace(removeSpace, '').split(',')); }
+    // get all coordinates from a coordinate array as [[],[]]
+    function coord(v) {
+        var coords = v.replace(trimSpace, '').split(splitSpace),
+            o = [];
+        for (var i = 0; i < coords.length; i++) {
+            o.push(coord1(coords[i]));
+        }
+        return o;
+    }
+    function coordPair(x) {
+        var ll = [attrf(x, 'lon'), attrf(x, 'lat')],
+            ele = get1(x, 'ele'),
+            // handle namespaced attribute in browser
+            heartRate = get1(x, 'gpxtpx:hr') || get1(x, 'hr'),
+            time = get1(x, 'time'),
+            e;
+        if (ele) {
+            e = parseFloat(nodeVal(ele));
+            if (!isNaN(e)) {
+                ll.push(e);
+            }
+        }
+        return {
+            coordinates: ll,
+            time: time ? nodeVal(time) : null,
+            heartRate: heartRate ? parseFloat(nodeVal(heartRate)) : null
+        };
+    }
+
+    // create a new feature collection parent object
+    function fc() {
+        return {
+            type: 'FeatureCollection',
+            features: []
+        };
+    }
+
+    var serializer;
+    if (typeof XMLSerializer !== 'undefined') {
+        /* istanbul ignore next */
+        serializer = new XMLSerializer();
+    } else {
+        var isNodeEnv = (typeof process === 'object' && !process.browser);
+        var isTitaniumEnv = (typeof Titanium === 'object');
+        if (typeof exports === 'object' && (isNodeEnv || isTitaniumEnv)) {
+            serializer = new (require('xmldom').XMLSerializer)();
+        } else {
+            throw new Error('Unable to initialize serializer');
+        }
+    }
+    function xml2str(str) {
+        // IE9 will create a new XMLSerializer but it'll crash immediately.
+        // This line is ignored because we don't run coverage tests in IE9
+        /* istanbul ignore next */
+        if (str.xml !== undefined) return str.xml;
+        return serializer.serializeToString(str);
+    }
+
+    var t = {
+        kml: function(doc) {
+
+            var gj = fc(),
+                // styleindex keeps track of hashed styles in order to match features
+                styleIndex = {}, styleByHash = {},
+                // stylemapindex keeps track of style maps to expose in properties
+                styleMapIndex = {},
+                // atomic geospatial types supported by KML - MultiGeometry is
+                // handled separately
+                geotypes = ['Polygon', 'LineString', 'Point', 'Track', 'gx:Track'],
+                // all root placemarks in the file
+                placemarks = get(doc, 'Placemark'),
+                styles = get(doc, 'Style'),
+                styleMaps = get(doc, 'StyleMap');
+
+            for (var k = 0; k < styles.length; k++) {
+                var hash = okhash(xml2str(styles[k])).toString(16);
+                styleIndex['#' + attr(styles[k], 'id')] = hash;
+                styleByHash[hash] = styles[k];
+            }
+            for (var l = 0; l < styleMaps.length; l++) {
+                styleIndex['#' + attr(styleMaps[l], 'id')] = okhash(xml2str(styleMaps[l])).toString(16);
+                var pairs = get(styleMaps[l], 'Pair');
+                var pairsMap = {};
+                for (var m = 0; m < pairs.length; m++) {
+                    pairsMap[nodeVal(get1(pairs[m], 'key'))] = nodeVal(get1(pairs[m], 'styleUrl'));
+                }
+                styleMapIndex['#' + attr(styleMaps[l], 'id')] = pairsMap;
+
+            }
+            for (var j = 0; j < placemarks.length; j++) {
+                gj.features = gj.features.concat(getPlacemark(placemarks[j]));
+            }
+            function kmlColor(v) {
+                var color, opacity;
+                v = v || '';
+                if (v.substr(0, 1) === '#') { v = v.substr(1); }
+                if (v.length === 6 || v.length === 3) { color = v; }
+                if (v.length === 8) {
+                    opacity = parseInt(v.substr(0, 2), 16) / 255;
+                    color = '#' + v.substr(6, 2) +
+                        v.substr(4, 2) +
+                        v.substr(2, 2);
+                }
+                return [color, isNaN(opacity) ? undefined : opacity];
+            }
+            function gxCoord(v) { return numarray(v.split(' ')); }
+            function gxCoords(root) {
+                var elems = get(root, 'coord', 'gx'), coords = [], times = [];
+                if (elems.length === 0) elems = get(root, 'gx:coord');
+                for (var i = 0; i < elems.length; i++) coords.push(gxCoord(nodeVal(elems[i])));
+                var timeElems = get(root, 'when');
+                for (var j = 0; j < timeElems.length; j++) times.push(nodeVal(timeElems[j]));
+                return {
+                    coords: coords,
+                    times: times
+                };
+            }
+            function getGeometry(root) {
+                var geomNode, geomNodes, i, j, k, geoms = [], coordTimes = [];
+                if (get1(root, 'MultiGeometry')) { return getGeometry(get1(root, 'MultiGeometry')); }
+                if (get1(root, 'MultiTrack')) { return getGeometry(get1(root, 'MultiTrack')); }
+                if (get1(root, 'gx:MultiTrack')) { return getGeometry(get1(root, 'gx:MultiTrack')); }
+                for (i = 0; i < geotypes.length; i++) {
+                    geomNodes = get(root, geotypes[i]);
+                    if (geomNodes) {
+                        for (j = 0; j < geomNodes.length; j++) {
+                            geomNode = geomNodes[j];
+                            if (geotypes[i] === 'Point') {
+                                geoms.push({
+                                    type: 'Point',
+                                    coordinates: coord1(nodeVal(get1(geomNode, 'coordinates')))
+                                });
+                            } else if (geotypes[i] === 'LineString') {
+                                geoms.push({
+                                    type: 'LineString',
+                                    coordinates: coord(nodeVal(get1(geomNode, 'coordinates')))
+                                });
+                            } else if (geotypes[i] === 'Polygon') {
+                                var rings = get(geomNode, 'LinearRing'),
+                                    coords = [];
+                                for (k = 0; k < rings.length; k++) {
+                                    coords.push(coord(nodeVal(get1(rings[k], 'coordinates'))));
+                                }
+                                geoms.push({
+                                    type: 'Polygon',
+                                    coordinates: coords
+                                });
+                            } else if (geotypes[i] === 'Track' ||
+                                geotypes[i] === 'gx:Track') {
+                                var track = gxCoords(geomNode);
+                                geoms.push({
+                                    type: 'LineString',
+                                    coordinates: track.coords
+                                });
+                                if (track.times.length) coordTimes.push(track.times);
+                            }
+                        }
+                    }
+                }
+                return {
+                    geoms: geoms,
+                    coordTimes: coordTimes
+                };
+            }
+            function getPlacemark(root) {
+                var geomsAndTimes = getGeometry(root), i, properties = {},
+                    name = nodeVal(get1(root, 'name')),
+                    address = nodeVal(get1(root, 'address')),
+                    styleUrl = nodeVal(get1(root, 'styleUrl')),
+                    description = nodeVal(get1(root, 'description')),
+                    timeSpan = get1(root, 'TimeSpan'),
+                    timeStamp = get1(root, 'TimeStamp'),
+                    extendedData = get1(root, 'ExtendedData'),
+                    lineStyle = get1(root, 'LineStyle'),
+                    polyStyle = get1(root, 'PolyStyle'),
+                    visibility = get1(root, 'visibility');
+
+                if (!geomsAndTimes.geoms.length) return [];
+                if (name) properties.name = name;
+                if (address) properties.address = address;
+                if (styleUrl) {
+                    if (styleUrl[0] !== '#') {
+                        styleUrl = '#' + styleUrl;
+                    }
+
+                    properties.styleUrl = styleUrl;
+                    if (styleIndex[styleUrl]) {
+                        properties.styleHash = styleIndex[styleUrl];
+                    }
+                    if (styleMapIndex[styleUrl]) {
+                        properties.styleMapHash = styleMapIndex[styleUrl];
+                        properties.styleHash = styleIndex[styleMapIndex[styleUrl].normal];
+                    }
+                    // Try to populate the lineStyle or polyStyle since we got the style hash
+                    var style = styleByHash[properties.styleHash];
+                    if (style) {
+                        if (!lineStyle) lineStyle = get1(style, 'LineStyle');
+                        if (!polyStyle) polyStyle = get1(style, 'PolyStyle');
+                        var iconStyle = get1(style, 'IconStyle');
+                        if (iconStyle) {
+                            var icon = get1(iconStyle, 'Icon');
+                            if (icon) {
+                                var href = nodeVal(get1(icon, 'href'));
+                                if (href) properties.icon = href;
+                            }
+                        }
+                    }
+                }
+                if (description) properties.description = description;
+                if (timeSpan) {
+                    var begin = nodeVal(get1(timeSpan, 'begin'));
+                    var end = nodeVal(get1(timeSpan, 'end'));
+                    properties.timespan = { begin: begin, end: end };
+                }
+                if (timeStamp) {
+                    properties.timestamp = nodeVal(get1(timeStamp, 'when'));
+                }
+                if (lineStyle) {
+                    var linestyles = kmlColor(nodeVal(get1(lineStyle, 'color'))),
+                        color = linestyles[0],
+                        opacity = linestyles[1],
+                        width = parseFloat(nodeVal(get1(lineStyle, 'width')));
+                    if (color) properties.stroke = color;
+                    if (!isNaN(opacity)) properties['stroke-opacity'] = opacity;
+                    if (!isNaN(width)) properties['stroke-width'] = width;
+                }
+                if (polyStyle) {
+                    var polystyles = kmlColor(nodeVal(get1(polyStyle, 'color'))),
+                        pcolor = polystyles[0],
+                        popacity = polystyles[1],
+                        fill = nodeVal(get1(polyStyle, 'fill')),
+                        outline = nodeVal(get1(polyStyle, 'outline'));
+                    if (pcolor) properties.fill = pcolor;
+                    if (!isNaN(popacity)) properties['fill-opacity'] = popacity;
+                    if (fill) properties['fill-opacity'] = fill === '1' ? properties['fill-opacity'] || 1 : 0;
+                    if (outline) properties['stroke-opacity'] = outline === '1' ? properties['stroke-opacity'] || 1 : 0;
+                }
+                if (extendedData) {
+                    var datas = get(extendedData, 'Data'),
+                        simpleDatas = get(extendedData, 'SimpleData');
+
+                    for (i = 0; i < datas.length; i++) {
+                        properties[datas[i].getAttribute('name')] = nodeVal(get1(datas[i], 'value'));
+                    }
+                    for (i = 0; i < simpleDatas.length; i++) {
+                        properties[simpleDatas[i].getAttribute('name')] = nodeVal(simpleDatas[i]);
+                    }
+                }
+                if (visibility) {
+                    properties.visibility = nodeVal(visibility);
+                }
+                if (geomsAndTimes.coordTimes.length) {
+                    properties.coordTimes = (geomsAndTimes.coordTimes.length === 1) ?
+                        geomsAndTimes.coordTimes[0] : geomsAndTimes.coordTimes;
+                }
+                var feature = {
+                    type: 'Feature',
+                    geometry: (geomsAndTimes.geoms.length === 1) ? geomsAndTimes.geoms[0] : {
+                        type: 'GeometryCollection',
+                        geometries: geomsAndTimes.geoms
+                    },
+                    properties: properties
+                };
+                if (attr(root, 'id')) feature.id = attr(root, 'id');
+                return [feature];
+            }
+            return gj;
+        },
+        gpx: function(doc) {
+            var i,
+                tracks = get(doc, 'trk'),
+                routes = get(doc, 'rte'),
+                waypoints = get(doc, 'wpt'),
+                // a feature collection
+                gj = fc(),
+                feature;
+            for (i = 0; i < tracks.length; i++) {
+                feature = getTrack(tracks[i]);
+                if (feature) gj.features.push(feature);
+            }
+            for (i = 0; i < routes.length; i++) {
+                feature = getRoute(routes[i]);
+                if (feature) gj.features.push(feature);
+            }
+            for (i = 0; i < waypoints.length; i++) {
+                gj.features.push(getPoint(waypoints[i]));
+            }
+            function initializeArray(arr, size) {
+                for (var h = 0; h < size; h++) {
+                    arr.push(null);
+                }
+                return arr;
+            }
+            function getPoints(node, pointname) {
+                var pts = get(node, pointname),
+                    line = [],
+                    times = [],
+                    heartRates = [],
+                    l = pts.length;
+                if (l < 2) return {};  // Invalid line in GeoJSON
+                for (var i = 0; i < l; i++) {
+                    var c = coordPair(pts[i]);
+                    line.push(c.coordinates);
+                    if (c.time) times.push(c.time);
+                    if (c.heartRate || heartRates.length) {
+                        if (!heartRates.length) initializeArray(heartRates, i);
+                        heartRates.push(c.heartRate || null);
+                    }
+                }
+                return {
+                    line: line,
+                    times: times,
+                    heartRates: heartRates
+                };
+            }
+            function getTrack(node) {
+                var segments = get(node, 'trkseg'),
+                    track = [],
+                    times = [],
+                    heartRates = [],
+                    line;
+                for (var i = 0; i < segments.length; i++) {
+                    line = getPoints(segments[i], 'trkpt');
+                    if (line) {
+                        if (line.line) track.push(line.line);
+                        if (line.times && line.times.length) times.push(line.times);
+                        if (heartRates.length || (line.heartRates && line.heartRates.length)) {
+                            if (!heartRates.length) {
+                                for (var s = 0; s < i; s++) {
+                                    heartRates.push(initializeArray([], track[s].length));
+                                }
+                            }
+                            if (line.heartRates && line.heartRates.length) {
+                                heartRates.push(line.heartRates);
+                            } else {
+                                heartRates.push(initializeArray([], line.line.length || 0));
+                            }
+                        }
+                    }
+                }
+                if (track.length === 0) return;
+                var properties = getProperties(node);
+                extend(properties, getLineStyle(get1(node, 'extensions')));
+                if (times.length) properties.coordTimes = track.length === 1 ? times[0] : times;
+                if (heartRates.length) properties.heartRates = track.length === 1 ? heartRates[0] : heartRates;
+                return {
+                    type: 'Feature',
+                    properties: properties,
+                    geometry: {
+                        type: track.length === 1 ? 'LineString' : 'MultiLineString',
+                        coordinates: track.length === 1 ? track[0] : track
+                    }
+                };
+            }
+            function getRoute(node) {
+                var line = getPoints(node, 'rtept');
+                if (!line.line) return;
+                var prop = getProperties(node);
+                extend(prop, getLineStyle(get1(node, 'extensions')));
+                var routeObj = {
+                    type: 'Feature',
+                    properties: prop,
+                    geometry: {
+                        type: 'LineString',
+                        coordinates: line.line
+                    }
+                };
+                return routeObj;
+            }
+            function getPoint(node) {
+                var prop = getProperties(node);
+                extend(prop, getMulti(node, ['sym']));
+                return {
+                    type: 'Feature',
+                    properties: prop,
+                    geometry: {
+                        type: 'Point',
+                        coordinates: coordPair(node).coordinates
+                    }
+                };
+            }
+            function getLineStyle(extensions) {
+                var style = {};
+                if (extensions) {
+                    var lineStyle = get1(extensions, 'line');
+                    if (lineStyle) {
+                        var color = nodeVal(get1(lineStyle, 'color')),
+                            opacity = parseFloat(nodeVal(get1(lineStyle, 'opacity'))),
+                            width = parseFloat(nodeVal(get1(lineStyle, 'width')));
+                        if (color) style.stroke = color;
+                        if (!isNaN(opacity)) style['stroke-opacity'] = opacity;
+                        // GPX width is in mm, convert to px with 96 px per inch
+                        if (!isNaN(width)) style['stroke-width'] = width * 96 / 25.4;
+                    }
+                }
+                return style;
+            }
+            function getProperties(node) {
+                var prop = getMulti(node, ['name', 'cmt', 'desc', 'type', 'time', 'keywords']),
+                    links = get(node, 'link');
+                if (links.length) prop.links = [];
+                for (var i = 0, link; i < links.length; i++) {
+                    link = { href: attr(links[i], 'href') };
+                    extend(link, getMulti(links[i], ['text', 'type']));
+                    prop.links.push(link);
+                }
+                return prop;
+            }
+            return gj;
+        }
+    };
+    return t;
+})();
+
+if (typeof module !== 'undefined') module.exports = toGeoJSON;
+
+
+
+
+
+
+
+
+
+
+
+    </script>

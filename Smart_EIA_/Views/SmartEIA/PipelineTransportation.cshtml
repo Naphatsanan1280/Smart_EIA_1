@@ -5,11 +5,13 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd33TLAVehao--qEJ9u7j7ZNSjN1315C0&libraries=drawing&callback=initMap"
-                async defer></script>
+
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/template/")styles/Style2.css" />
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/29ba5ebcbb.js" crossorigin="anonymous"></script>
+
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -61,6 +63,9 @@
                 padding: 5px;
                 border: solid 2px gray;
             }
+
+
+
         </style>
 
     </head>
@@ -114,10 +119,7 @@
                                     <button onclick="call()">Draw line or shape</button>
 
                                     <select id="testdraw" class="txa-50" size="5" onchange="test()">
-                                        <option value="1">พื้นทีี่ A </option>
-                                        <option value="2">พื้นที่ B</option>
-                                        <option value="3">พื้นทีี่ C</option>
-                                        <option value="4">พื้นที่ D</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -135,8 +137,7 @@
                                     <button class="ee-bb" onclick="check_inmap(2)">OK</button>
                                     <input type="file" id="files" hidden />
                                     <select class="txa-50" size="5" id="list">
-                                        <option onclick="pipe()">ท่อ5.kmz</option>
-                                        <!-- <option onclick="pipe1()">2017-5FTP.kmz</option>-->
+                                        
 
                                     </select>
                                 </div>
@@ -160,128 +161,144 @@
                         <div class="nopadding ">
                             <div class="data-col">
                                 <div class="specify">
+
                                     <p class="ddda" style="margin-top: 10px;">
                                         2.ระบุรายละเอียดโครงการ
                                     </p>
-                                    <div class="type">
-                                        <p>
-                                            ประเภทปิโตรเลียม  <i class="fa fa-info-circle" data-toggle="tooltip" title="ตามกฎหมายว่าด้วยปิโตรเลียม"></i>
-                                            <select id="selecttypes" class="form-control">
-                                                <option value="none" selected>--เลือกประเภทปิโตรเลียม--</option>
-                                                <option value="ng">ก๊าซธรรมชาติ (Natural Gas)</option>
-                                                <option value="ngl"> ก๊าซปิโตรเลียมเหลว (Liquefied Petroleum Gas) </option>
-                                                <option value="lpg">ก๊าซโซลีนธรรมชาติ (Natural Gasoline)  </option>
-                                                <option value="oil">น้ำมันเชื้อเพลิง (Fuel Oil)</option>
-                                                <option value="hydrocarbon">ปิโตรเลียมอื่น ๆ (Other Petroleum) </option>
-                                            </select>
-                                        </p>
+                                    <!-------*************************************-->
+                                    <div id="panel">
+                                        <div class="type">
+                                            <p>
+                                                ประเภทปิโตรเลียม  <i class="fa fa-info-circle" data-toggle="tooltip" title="ตามกฎหมายว่าด้วยปิโตรเลียม"></i>
+                                                <select id="selecttypes" class="form-control">
+                                                    <option value="none" selected>--เลือกประเภทปิโตรเลียม--</option>
+                                                    <option value="ng">ก๊าซธรรมชาติ (Natural Gas)</option>
+                                                    <option value="ngl"> ก๊าซปิโตรเลียมเหลว (Liquefied Petroleum Gas) </option>
+                                                    <option value="lpg">ก๊าซโซลีนธรรมชาติ (Natural Gasoline)  </option>
+                                                    <option value="oil">น้ำมันเชื้อเพลิง (Fuel Oil)</option>
+                                                    <option value="hydrocarbon">ปิโตรเลียมอื่น ๆ (Other Petroleum) </option>
+                                                </select>
+                                            </p>
+                                        </div>
+
+                                        <div class="GasSystem">
+                                            <p>
+                                                พื้นที่วางท่อ
+                                                <select id="selectGasSystem" class="form-control">
+                                                    <option value="none" selected>--เลือกพื้นที่วางท่อ-</option>
+                                                    <option value="ground">บนบก</option>
+                                                    <option value="water">ในทะเล</option>
+                                                </select>
+                                            </p>
+                                        </div>
+
+                                        <div class="status">
+                                            <p>
+                                                สถานะ
+                                                <select id="selectstatus" class="form-control">
+                                                    <option value="none" selected>--เลือกสถานะ--</option>
+                                                    <option value="gas">ก๊าซ (Gas) เช่น CNG NG </option>
+                                                    <option value="liquid">ของเหลว (Liquid) เช่น LNG</option>
+                                                </select>
+                                            </p>
+                                        </div>
+
+                                        <div class="pressure">
+                                            <p>
+                                                ความดันใช้งานสูงสุด (Maximum Operating Pressure; MOP)   <i class="fa fa-info-circle" data-toggle="tooltip" title="20 barg = 290 psig (1 barg = 14.5 psig)"></i>
+
+                                                <select id="selectpressure" class="form-control">
+                                                    <option value="none" selected>--เลือกความดัน--</option>
+                                                    <option value="1">น้อยกว่า 20 บาร์ (barg) หรือ เท่ากับ 20 บาร์ (barg)</option>
+                                                    <option value="2">มากกว่า 20 บาร์ (barg)</option>
+                                                </select>
+                                            </p>
+
+                                        </div>
+
+                                        <div class="size">
+                                            <p>
+                                                ขนาดเส้นผ่านศูนย์กลางของท่อ   <i class="fa fa-info-circle" data-toggle="tooltip" title="Nominal Pipe Size "></i>
+                                                <select id="selectsize" class="form-control">
+                                                    <option value="" selected>--เลือกขนาดท่อ--</option>
+                                                    <option value="1">น้อยกว่า 16 นิ้ว หรือ เท่ากับ 16 นิ้ว</option>
+                                                    <option value="2">มากกว่า 16 นิ้ว</option>
+                                                </select>
+                                            </p>
+                                        </div>
+
+                                        <div id="okbtn" class="pc-btn">
+                                            <hr />
+                                            <button class="ee-bb" id="Btnok">ตกลง</button>
+                                        </div>
+
+                                        <!-------*************************************-->
                                     </div>
-
-                                    <div class="GasSystem">
-                                        <p>
-                                            พื้นที่วางท่อ
-                                            <select id="selectGasSystem" class="form-control">
-                                                <option value="none" selected>--เลือกพื้นที่วางท่อ-</option>
-                                                <option value="ground">บนบก</option>
-                                                <option value="water">ในทะเล</option>
-                                            </select>
-                                        </p>
+                                    <div id="flip">
+                                        <div class="btn-flip">
+                                            <i class="fas fa-chevron-down ic_up" id="icond"></i>
+                                        </div>
                                     </div>
+                                   
+                                        <div class="area">
+                                            <p>
+                                                แนวท่อทั้งหมดอยู่ในเขตนิคมอุตสาหกรรม
+                                                <div class="detail_duplicate_location"></div>
+                                                <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" />  กำหนดเอง</label>
+                                                <!-- แก้ข้อความตรงนี้ -->
+                                                <input type="text" id="show_detail_upload_file" />
+                                                <select id="selectarea" class="form-control" disabled>
+                                                    <option value="in" selected>อยู่</option>
+                                                    <option value="out1">อยู่บางส่วน</option>
+                                                    <option value="out">ไม่อยู่</option>
 
-                                    <div class="status">
-                                        <p>
-                                            สถานะ
-                                            <select id="selectstatus" class="form-control">
-                                                <option value="none" selected>--เลือกสถานะ--</option>
-                                                <option value="gas">ก๊าซ (Gas) เช่น CNG NG </option>
-                                                <option value="liquid">ของเหลว (Liquid) เช่น LNG</option>
-                                            </select>
-                                        </p>
-                                    </div>
+                                                </select>
+                                                <br />
+                                                <div class="pc-btn"><button id="Btnarea" class="ee-bb"> ตกลง </button></div>
+                                            </p>
+                                        </div>
+                                    
 
-                                    <div class="pressure">
-                                        <p>
-                                            ความดันใช้งานสูงสุด (Maximum Operating Pressure; MOP)   <i class="fa fa-info-circle" data-toggle="tooltip" title="20 barg = 290 psig (1 barg = 14.5 psig)"></i>
-
-                                            <select id="selectpressure" class="form-control">
-                                                <option value="none" selected>--เลือกความดัน--</option>
-                                                <option value="1">น้อยกว่า 20 บาร์ (barg) หรือ เท่ากับ 20 บาร์ (barg)</option>
-                                                <option value="2">มากกว่า 20 บาร์ (barg)</option>
-                                            </select>
-                                        </p>
-
-                                    </div>
-
-                                    <div class="size">
-                                        <p>
-                                            ขนาดเส้นผ่านศูนย์กลางของท่อ   <i class="fa fa-info-circle" data-toggle="tooltip" title="Nominal Pipe Size "></i>
-                                            <select id="selectsize" class="form-control">
-                                                <option value="" selected>--เลือกขนาดท่อ--</option>
-                                                <option value="1">น้อยกว่า 16 นิ้ว หรือ เท่ากับ 16 นิ้ว</option>
-                                                <option value="2">มากกว่า 16 นิ้ว</option>
-                                            </select>
-                                        </p>
-                                    </div>
-
-                                    <div id="okbtn" class="pc-btn">
-                                        <hr />
-                                        <button class="ee-bb" id="Btnok">ตกลง</button>
-                                    </div>
-
-                                    <div class="area">
-                                        <p>
-                                            แนวท่อทั้งหมดอยู่ในเขตนิคมอุตสาหกรรม
-                                            <div class="detail_duplicate_location"></div>
-                                            <label style="float:right;"><input type="checkbox" id="s1" onClick="Select1()" />  กำหนดเอง</label>
-                                            <!-- แก้ข้อความตรงนี้ -->
-                                            <input type="text" id="show_detail_upload_file" />
-                                            <select id="selectarea" class="form-control" disabled>
-                                                <option value="in" selected>อยู่</option>
-                                                <option value="out1">อยู่บางส่วน</option>
-                                                <option value="out">ไม่อยู่</option>
-
-                                            </select>
+                                   
+                                        <div class="riverarea">
+                                            <p>
+                                                อยู่ในพื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1  <label style="float:right;"><input type="checkbox" id="s2" onClick="Select2()" />  กำหนดเอง</label>
+                                                <select id="selectriverarea" class="form-control" disabled>
+                                                        <option value="y" selected>อยู่</option>
+                                                        <option value="n">อยู่บางส่วน</option>
+                                                        <option value="n">ไม่อยู่</option>
+                                                </select>
+                                            </p>
                                             <br />
-                                            <div class="pc-btn"><button id="Btnarea" class="ee-bb"> ตกลง </button></div>
-                                        </p>
-                                    </div>
+                                            <div class="pc-btn">  <button id="Btnriverarea" class="ee-bb"> ตกลง </button></div>
+                                        </div>
+                                    
 
-                                    <div class="riverarea">
-                                        <p>
-                                            อยู่ในพื้นที่ชั้นคุณภาพลุ่มน้ำ ชั้น 1  <label style="float:right;"><input type="checkbox" id="s2" onClick="Select2()" />  กำหนดเอง</label>
-                                            <select id="selectriverarea" class="form-control" disabled>
-                                                <option value="y" selected>อยู่</option>
-                                                <option value="n">ไม่อยู่</option>
-                                            </select>
-                                        </p>
-                                        <br />
-                                        <div class="pc-btn">  <button id="Btnriverarea" class="ee-bb"> ตกลง </button></div>
-                                    </div>
 
                                 </div>
-                                <div id="Resulte">
-                                    <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
-                                    <h5 id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</h5>
-                                    <hr />
-                                    <div id="inresulte">
-                                        <h5 id="label2">ประเภท</h5>
-                                        <h5 id="labeltype">
-                                            EHIA
-                                        </h5>
-                                        <!--   <hr />
-         <h5 id="label3">เสนอต่อ</h5>
-         <p style="width:100%;">
-           <img id="imglogo" src="" width="50px" height="50px" style="background-color:white;" />
-        <p id="labeloffer">สผ.</p>
-        </p>
-        <hr />
-        <h5 id="label4">ตามกฎหมาย</h5>
-        <p id="labellaw">เรื่อง...</p>
-        <hr />-->
+                                    <div id="Resulte">
+                                        <h4 style="width:100%; text-align:left;"><u>สรุปผล</u></h4>
+                                        <h5 id="label1">โครงการ กิจการ หรือการดำเนินการ <u id="changeLabel" style="color:red;">เข้าข่าย</u> ต้องจัดทำรายงานด้านสิ่งแวดล้อม</h5>
+                                        <hr />
+                                        <div id="inresulte">
+                                            <h5 id="label2">ประเภท</h5>
+                                            <h5 id="labeltype">
+                                                EHIA
+                                            </h5>
+                                            <!--   <hr />
+             <h5 id="label3">เสนอต่อ</h5>
+             <p style="width:100%;">
+               <img id="imglogo" src="" width="50px" height="50px" style="background-color:white;" />
+            <p id="labeloffer">สผ.</p>
+            </p>
+            <hr />
+            <h5 id="label4">ตามกฎหมาย</h5>
+            <p id="labellaw">เรื่อง...</p>
+            <hr />-->
+                                        </div>
+                                        <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
                                     </div>
-                                    <div class="pc-btn">  <button class="ee-bb" onclick="hideresulte()">&uarr; ย้อนกลับ</button></div><br />
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -294,6 +311,23 @@
         </div>
     </div>
 </body>
+
+
+<script>
+    $(document).ready(function () {
+        $("#flip").click(function () {
+            if ($("#icond").hasClass('ic_up')) {
+                $("#icond").removeClass('ic_up');
+                $("#icond").addClass('ic_down');
+            } else if  ($("#icond").hasClass('ic_down')) {
+                    $("#icond").removeClass('ic_down');
+                    $("#icond").addClass('ic_up');
+            }
+            $("#panel").slideToggle("slow");
+        });
+
+    });
+</script>
 
 <script>
   //  var file_map_data = ["C:/Users/Admin/source/repos/PTT_Smart_EIA/PTT_Smart_EIA/App_Data/UploadedFiles/data_DB.json"];
@@ -308,143 +342,7 @@
     function del() {
         bermudaTriangle.setMap(null);
     }
-    function test() {
-        $("#testdraw").change(function () {
-            var test = $("#testdraw").find(":selected").val();
-            if (test == "1") {
-                /*in y */
-                var triangleCoords = [
-                    { lat: 13.134223768510942, lng: 101.16901142676424 },
-                    { lat: 13.128790657872644, lng: 101.16789562781405 },
-                    { lat: 13.129501148402044, lng: 101.16115791876864 },
-                    { lat: 13.134808865564281, lng: 101.16253120978426 }
-                ];
 
-                // Construct the polygon.
-                var bermudaTriangle = new google.maps.Polygon({
-                    paths: triangleCoords,
-                    strokeColor: '#4B0082',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                });
-
-                map.panTo({ lat: 13.134223768510942, lng: 101.16901142676424 });
-                map.setZoom(15);
-                bermudaTriangle.setMap(map);
-                // bermudaTriangle.setMap(map);
-                // Set option selected onchange
-                var test = $("#testdraw").find(":selected").val();
-                value = "in";
-                // Set selected
-                $('#selectarea').val(value);
-                $('#selectarea').val('in').trigger('change');
-                $('#selectriverarea').val(value);
-                $('#selectriverarea').val('y').trigger('change');
-            }
-            else if (test == "2") {
-                /*out n*/
-                var triangleCoords = [
-                    { lat: 13.144456493669955, lng: 101.14824183191638 },
-                    { lat: 13.144874402855818, lng: 101.15257628168445 },
-                    { lat: 13.139483319727729, lng: 101.15270502771716 },
-                    { lat: 13.13931615246638, lng: 101.14841349329333 }
-                ];
-
-                // Construct the polygon.
-                var bermudaTriangle = new google.maps.Polygon({
-                    paths: triangleCoords,
-                    strokeColor: '#4B0082',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                });
-
-                map.panTo({ lat: 13.134223768510942, lng: 101.16901142676424 });
-                map.setZoom(15);
-                bermudaTriangle.setMap(map);
-                // bermudaTriangle.setMap(map);
-                // Set option selected onchange
-                var test = $("#testdraw").find(":selected").val();
-                value = "in";
-                // Set selected
-                $('#selectarea').val(value);
-                $('#selectarea').val('out').trigger('change');
-                $('#selectriverarea').val(value);
-                $('#selectriverarea').val('n').trigger('change');
-            }
-            else if (test == "3") {
-                /*in n*/
-
-                /* */
-                var triangleCoords = [
-                    { lat: 13.120348201394401, lng: 101.15845425208163 },
-                    { lat: 13.123909790559647, lng: 101.16442680358887 },
-                    { lat: 13.124778437495687, lng: 101.1527035959537 },
-                    { lat: 13.121393075595345, lng: 101.15150196631502 }
-                ];
-
-                // Construct the polygon.
-                var bermudaTriangle = new google.maps.Polygon({
-                    paths: triangleCoords,
-                    strokeColor: '#4B0082',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#4B0082',
-                    fillOpacity: 0.35
-                });
-
-                map.panTo({ lat: 13.123909790559647, lng: 101.16442680358887 });
-                map.setZoom(15);
-                bermudaTriangle.setMap(map);
-                // bermudaTriangle.setMap(map);
-                // Set option selected onchange
-                var test = $("#testdraw").find(":selected").val();
-                value = "in";
-                // Set selected
-                $('#selectarea').val(value);
-                $('#selectarea').val('in').trigger('change');
-                $('#selectriverarea').val(value);
-                $('#selectriverarea').val('n').trigger('change');
-
-            }
-            else {
-                /*in y */
-                // bermudaTriangle.setMap(null);
-                var triangleCoords = [
-                    { lat: 13.129250387273366, lng: 101.1504719980533 },
-                    { lat: 13.133095363113823, lng: 101.15141613562655 },
-                    { lat: 13.13342970599428, lng: 101.14467842658114 },
-                    { lat: 13.129793702728612, lng: 101.14347679694247 }
-                ];
-                // Construct the polygon.
-                var bermudaTriangle = new google.maps.Polygon({
-                    paths: triangleCoords,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                });
-                map.panTo({ lat: 13.129250387273366, lng: 101.1504719980533 });
-                map.setZoom(15);
-
-                bermudaTriangle.setMap(map);
-
-                var test = $("#testdraw").find(":selected").val();
-                value = "out";
-                // Set selected
-                $('#selectarea').val(value);
-                $('#selectarea').val('out').trigger('change');
-                $('#selectriverarea').val(value);
-                $('#selectriverarea').val('y').trigger('change');
-
-
-            }
-        });
-    }
     function handleFileSelect(evt) {
         var files = evt.target.files; // FileList object
 
@@ -497,8 +395,7 @@
         //for (var fl = 0; fl < file_map_data.length; fl++) {
             countyLayer = new google.maps.Data();
         //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\App_Data\UploadedFiles\data_DB.json
-        //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\Views\SmartEIA\PipelineTransportation.cshtml
-        // ;
+        //C:\Users\Admin\source\repos\PTT_Smart_EIA\PTT_Smart_EIA\Views\SmartEIA\PipelineTransportation.cshtml;
             countyLayer.loadGeoJson('/Scripts/mng_view/data_DB.json');//data_DB.json
             countyLayer.setStyle({
                 strokeColor: 'red',
@@ -509,7 +406,7 @@
 
         // Creates a drawing manager attached to the map that allows the user to draw
         // markers, lines, and shapes.
-        drawingManager = new google.maps.drawing.DrawingManager({
+      /*  drawingManager = new google.maps.drawing.DrawingManager({
             drawingMode: google.maps.drawing.OverlayType.POLYGON,
             markerOptions: {
                 draggable: true
@@ -571,10 +468,10 @@
         // Clear the current selection when the drawing mode is changed, or when the
         // map is clicked.
         google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
-        google.maps.event.addListener(map, 'click', clearSelection);
-        google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', deleteSelectedShape);
+        //google.maps.event.addListener(map, 'click', clearSelection);
+        //google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', deleteSelectedShape);
 
-        buildColorPalette();
+        //buildColorPalette();
 
 
         var ctaLayer = new google.maps.KmlLayer({
@@ -582,7 +479,7 @@
         });
         ctaLayer.setMap(map);
 
-
+*/
 
 
         var latlngcl = [];
@@ -800,30 +697,12 @@
     //end function in menu
 
     google.maps.event.addDomListener(window, 'load', initMap);
-    function pipe1() {
-        //<option>ท่อ5.kmz</option>
-
-        var Layer = new google.maps.KmlLayer({
-            url: 'https://github.com/Naphatsanan1280/Kmlfile/blob/master/2017-5FTP.kmz?raw=true'
-        });
-        Layer.setMap(map);
-
-    }
-
-
-    function pipe() {
-        //<option>ท่อ5.kmz</option>
-        var ctaLayer = new google.maps.KmlLayer({
-            url: 'https://github.com/Naphatsanan1280/Kmlfile/blob/master/%E0%B8%97%E0%B9%88%E0%B8%AD%205.kmz?raw=true'
-        });
-        ctaLayer.setMap(map);
-    }
+   
     function clearSelection() {
         if (selectedShape) {
             if (selectedShape.type !== 'marker') {
                 selectedShape.setEditable(false);
             }
-
             selectedShape = null;
         }
     }
@@ -834,7 +713,6 @@
             shape.setEditable(true);
             selectColor(shape.get('fillColor') || shape.get('strokeColor'));
         }
-
         selectedShape = shape;
     }
 
@@ -1010,6 +888,9 @@
                                             if (size == "none") {
                                                 $("#okbtn").hide();
                                             } else if (size == "1") {/*size <= 16*/
+                                                $("#okbtn").show();
+                                                $("#Btnok").click(function () { 
+
                                                 $("#okbtn").hide();
                                                 $(".riverarea").show();
                                                 $(".area").hide();
@@ -1024,8 +905,11 @@
                                                         P_2_1();
                                                     }
                                                 });
+                                                });
                                             }
                                             else if (size == "2") {/*size > 16*/
+                                                $("#okbtn").show();
+                                                $("#Btnok").click(function () { 
                                                 $(".riverarea").hide();
                                                 $(".area").show();
                                                 $("#Btnarea").click(function () {
@@ -1049,6 +933,7 @@
                                                         $(".riverarea").hide();
                                                         P_2_4();
                                                     }
+                                                });
                                                 });
                                             }
                                         });
@@ -1155,6 +1040,7 @@
         var Select2 = document.getElementById('list');
         Select2.remove(Select2.selectedIndex);
     }
+
     function loadGeoJsonString(geoString) {
         var geojson = JSON.parse(geoString);
         map.data.addGeoJson(geojson);

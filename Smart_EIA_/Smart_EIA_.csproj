@@ -170,6 +170,7 @@
     <Content Include="Content\template\img\Web ptt v9 16.9--14.jpg" />
     <Content Include="Content\template\img\Web ptt v9 16.9--15.jpg" />
     <Content Include="Content\template\img\Web ptt v9 16.9--16.jpg" />
+    <Content Include="Content\template\styles\Style2.css" />
     <Content Include="Content\template\styles\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="geoxml3\kmz\geoxml3.js" />
@@ -198,6 +199,7 @@
     <Content Include="Image\document %281%29.png" />
     <Content Include="Image\document.png" />
     <Content Include="Image\footer.jpg" />
+    <Content Include="Image\iconPTT.png" />
     <Content Include="Image\icon\icon-01.jpg" />
     <Content Include="Image\icon\icon-02.jpg" />
     <Content Include="Image\icon\icon-03.jpg" />
@@ -434,6 +436,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\SmartImap_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

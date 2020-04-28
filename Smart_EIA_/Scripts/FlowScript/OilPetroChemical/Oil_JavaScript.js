@@ -8,8 +8,8 @@
 
 function Oil_11_1() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a"> รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+         '<div id = "b">' + '<h5 id="a"> รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -21,8 +21,8 @@ function Oil_11_1() {
 
 function GasTran_6_1() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a"> รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+         '<div id = "b">' + '<h5 id="a"> รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -33,8 +33,8 @@ function GasTran_6_1() {
 }
 function RailTran_11_1() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a"> รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+         '<div id = "b">' + '<h5 id="a"> รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"

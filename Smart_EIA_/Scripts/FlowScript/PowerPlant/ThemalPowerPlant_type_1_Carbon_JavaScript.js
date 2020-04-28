@@ -14,8 +14,8 @@ function resulte() {
 
 function C_8_56() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
        
@@ -24,8 +24,8 @@ function C_8_56() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + ' <img id = "im2" width = "50px" height = "50px" src = "/Image/กนอ.jpg" /> &nbsp; การนิคมอุตสาหกรรมแห่งประเทศไทย (กนอ.)' + "<h5> ตามกฎหมาย </h5>"
         + '- ข้อกำหนดการขออนุญาตของการนิคมอุตสาหกรรมแห่งประเทศไทย พ.ศ.2562 '
@@ -34,8 +34,8 @@ function C_8_56() {
 }
 function C_8_57() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -45,16 +45,16 @@ function C_8_57() {
 }
 function C_8_58() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id = "im1" width = "50px" height = "50px" src = "/Image/กรมป่าไม้.png" /> &nbsp; กรมป่าไม้ '
         + "<h5> ตามกฎหมาย </h5>"
         + "-มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ.2554"
         + '</div>'
         + '<br />'
-        + '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+        +
+          '<div id = "b">' + '<h5 id="a">2.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + ' <img id = "im2" width = "50px" height = "50px" src = "/Image/กนอ.jpg" /> &nbsp; การนิคมอุตสาหกรรมแห่งประเทศไทย (กนอ.)' + "<h5> ตามกฎหมาย </h5>"
         + '- ข้อกำหนดการขออนุญาตของการนิคมอุตสาหกรรมแห่งประเทศไทย พ.ศ.2562 '
@@ -64,8 +64,8 @@ function C_8_58() {
 }
 function C_8_59() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + '<br />'
@@ -83,8 +83,8 @@ function C_8_59() {
 }
 function C_8_60() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + '<br />'
@@ -93,8 +93,8 @@ function C_8_60() {
         + '- มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ.2554'
         + '</div>'
         + '<br />'
-        + '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + ' <img id = "im2" width = "50px" height = "50px" src = "/Image/กนอ.jpg" /> &nbsp; การนิคมอุตสาหกรรมแห่งประเทศไทย (กนอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -105,8 +105,8 @@ function C_8_60() {
 }
 function C_8_61() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
      + ' <img id = "im2" width = "50px" height = "50px" src = "/Image/กนอ.jpg" /> &nbsp; การนิคมอุตสาหกรรมแห่งประเทศไทย (กนอ.)'
      + "<h5> ตามกฎหมาย </h5>"
@@ -116,8 +116,8 @@ function C_8_61() {
 }
 function C_8_62() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
 
@@ -126,8 +126,8 @@ function C_8_62() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -138,8 +138,8 @@ function C_8_62() {
 }
 function C_8_63() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -149,16 +149,16 @@ function C_8_63() {
 }
 function C_8_64() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
         + "- ข้อกำหนดการขออนุญาตของการนิคมอุตสาหกรรมแห่งประเทศไทย พ.ศ.2562 "
         + '</div>'
 
-        +'<h5 id="a">รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
-        + '<div id = "b">'
+        +
+          '<div id = "b">' +'<h5 id="a">2.รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id = "im1" width = "50px" height = "50px" src = "/Image/กรมป่าไม้.png" /> &nbsp; กรมป่าไม้ '
         + "<h5> ตามกฎหมาย </h5>"
@@ -166,8 +166,8 @@ function C_8_64() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">3.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -178,8 +178,8 @@ function C_8_64() {
 }
 function C_8_65() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"       
         + '<img id = "im1" width = "50px" height = "50px" src = "/Image/กรมป่าไม้.png" /> &nbsp; กรมป่าไม้ '
         + "<h5> ตามกฎหมาย </h5>"
@@ -194,8 +194,8 @@ function C_8_65() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -206,16 +206,15 @@ function C_8_65() {
 }
 function C_8_66() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
         + "- ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ.เพชรบุรี และ จ.ประจวบคีรีขันธ์ พ.ศ. 2561 "
         + '</div>'
-
-        '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+                
+        +  '<div id = "b">' +'<h5 id="a">2.รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + '<br />'
@@ -225,8 +224,8 @@ function C_8_66() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">3.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -238,16 +237,16 @@ function C_8_66() {
 function C_8_67() {
 
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
         + "- ประกาศกระทรวงทรัพยากรธรรมชาติและสิ่งแวดล้อม เรื่อง กำหนดเขตพื้นที่และมาตรการคุ้มครองสิ่งแวดล้อมฯ จ.เพชรบุรี และ จ.ประจวบคีรีขันธ์ พ.ศ. 2561 "
         + '</div>'
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -257,8 +256,8 @@ function C_8_67() {
 }
 function C_8_68() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML =
+          '<div id = "b">' + '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -269,8 +268,8 @@ function C_8_68() {
 function C_8_69() {
     resulte();
     document.getElementById('labeltype').innerHTML =
-    '<h5 id="a">รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
-        + '<div id = "b">'
+   
+          '<div id = "b">' + '<h5 id="a">1.รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id = "im1" width = "50px" height = "50px" src = "/Image/กรมป่าไม้.png" /> &nbsp; กรมป่าไม้ '
         + "<h5> ตามกฎหมาย </h5>"
@@ -278,8 +277,8 @@ function C_8_69() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -290,8 +289,8 @@ function C_8_69() {
 }
 function C_8_70() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + '<br />'
@@ -300,8 +299,8 @@ function C_8_70() {
         + '- มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ.2554'
         + '</div>'
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -311,8 +310,8 @@ function C_8_70() {
 }
 function C_8_71() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + '<br />'
@@ -321,8 +320,8 @@ function C_8_71() {
         + '- มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ.2554'
         + '</div>'
         + '<br />'
-        + '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -332,8 +331,8 @@ function C_8_71() {
 }
 function C_8_72() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานเกี่ยวกับการศึกษามาตรการป้องกันและแก้ไขผลกระทบต่อคุณภาพสิ่งแวดล้อมและความปลอดภัย (ESA)</h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/กรอ.png" /> &nbsp;กรมโรงงานอุตสาหกรรม (กรอ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -343,8 +342,8 @@ function C_8_72() {
 }
 function C_8_73() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML =
+          '<div id = "b">' + '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -355,8 +354,8 @@ function C_8_73() {
 function C_8_74() {
     resulte();
 
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม สำหรับโครงการ กิจการ หรือการดำเนินการฯ ที่อาจมีผลกระทบอย่างรุนแรง (EHIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม สำหรับโครงการ กิจการ หรือการดำเนินการฯ ที่อาจมีผลกระทบอย่างรุนแรง (EHIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -365,8 +364,8 @@ function C_8_74() {
         + "<hr />"; }
 function C1() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -376,8 +375,8 @@ function C1() {
 }
 function C2() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML =
+          '<div id = "b">' + '<h5 id="a">1.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -388,8 +387,8 @@ function C2() {
         + '</div>'
 
         + '<br />'
-        + '<h5 id="a">รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายการข้อมูลด้านสิ่งแวดล้อม (Environmental Checklist) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id = "im1" width = "50px" height = "50px" src = "/Image/กรมป่าไม้.png" /> &nbsp; กรมป่าไม้ '
         + "<h5> ตามกฎหมาย </h5>"
@@ -401,8 +400,8 @@ function C2() {
 }
 function C3() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
 
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
@@ -426,8 +425,8 @@ function C3() {
 }
 function C4() {
     resulte();
-    document.getElementById('labeltype').innerHTML = '<h5 id="a">รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML = 
+          '<div id = "b">' +'<h5 id="a">1.รายงานการประเมินผลกระทบสิ่งแวดล้อม (EIA) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + '<br />'
@@ -436,8 +435,8 @@ function C4() {
         + '- มติคณะรัฐมนตรีเกี่ยวกับป่าอนุรักษ์เพิ่มเติม พ.ศ.2554'
         + '</div>'
         + '<br />'
-        + '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+        + 
+          '<div id = "b">' +'<h5 id="a">2.รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"
@@ -452,8 +451,8 @@ function C4() {
 function C5() {
 
     resulte();
-    document.getElementById('labeltype').innerHTML =  '<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
-        + '<div id = "b">'
+    document.getElementById('labeltype').innerHTML =  
+          '<div id = "b">' +'<h5 id="a">รายงานผลกระทบสิ่งแวดล้อมเบื้องต้น (IEE) </h5>'
         + "<h5> เสนอต่อ </h5>"
         + '<img id="im2" width="50px" height="50px" src="/Image/สผ.png" /> &nbsp; สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม (สผ.)'
         + "<h5> ตามกฎหมาย </h5>"

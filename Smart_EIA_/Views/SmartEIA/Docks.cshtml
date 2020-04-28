@@ -60,25 +60,38 @@
                 <div class="l-menu bg-gg nopadding">
                     <div class="data-col">
                         <p class="ddda">
-                            1.ระบุที่ตั้งโครงการ
+                            ระบุที่ตั้งโครงการ
                         </p>
                         <div class="pp-list">
-                            <div class="list-p" onclick="sliderr(1)">
+                            <div class="list-p" id="ls_active_4" onclick="sliderr(4)">
+                                <p class="hh">
+                                    พื้นที่
+                                </p>
+                            </div>
+                            <div class="dt-slide" id="ss-4">
+                                <div class="sl-input" id="sd-4">
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                        
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="list-p" id="ls_active_1" onclick="sliderr(1)">
                                 <p class="hh">
                                     พิกัดที่ตั้ง
                                 </p>
                             </div>
                             <div class="dt-slide" id="ss-1">
                                 <div class="sl-input" id="sd-1">
-                                    <h5> ระบุพิกัด UTM WGS 84 </h5>
-                                    <p>Zone:  <select><option>47</option> <option>48</option></select></p>
-                                    <hr />
-                                    <p>East:  <input type="text" /></p>
-                                    <p>North: <input type="text" /></p>
-                                    <button class="ee-bb">OK</button>
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
+                                    <textarea class="txa-50" rows="5" cols="50">
+                                    
+                                        </textarea>
                                 </div>
                             </div>
-                            <div class="list-p" onclick="sliderr(2)">
+                            <div class="list-p" id="ls_active_2" onclick="sliderr(2)">
                                 <p class="hh">
                                     กำหนดเอง
                                 </p>
@@ -89,38 +102,25 @@
                                     <button>Draw line or shape</button>
                                     <textarea class="txa-50" rows="5" cols="50">
                                         
-                                     </textarea>
+                                        </textarea>
                                 </div>
                             </div>
-                            <div class="list-p" onclick="sliderr(3)">
+                            <div class="list-p" id="ls_active_3" onclick="sliderr(3)">
                                 <p class="hh">
                                     ตำแหน่งจากข้อมูล kmz ไฟล์
                                 </p>
+
                             </div>
                             <div class="dt-slide" id="ss-3">
                                 <div class="sl-input" id="sd-3">
-                                    <button>Import Kmz</button>
-                                    <button>Clear</button>
+                                    <button>Add placemark</button>
+                                    <button>Draw line or shape</button>
                                     <textarea class="txa-50" rows="5" cols="50">
                                         
                                         </textarea>
                                 </div>
                             </div>
-                            <div class="list-p" onclick="sliderr(4)">
-                                <p class="hh">
-                                    ไม่ระบุที่ตั้งโครงการ
-                                </p>
-                            </div>
-                            <!--
-        <div class="dt-slide" id="ss-4">
-            <div class="sl-input" id="sd-4">
-                <button>Add placemark</button>
-                <button>Draw line or shape</button>
-                <textarea class="txa-50" rows="5" cols="50">
 
-                </textarea>
-            </div>
-        </div>-->
                         </div>
                     </div>
 
